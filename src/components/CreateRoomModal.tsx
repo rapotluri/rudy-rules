@@ -17,15 +17,14 @@ export default function CreateRoomModal({ onClose }: CreateRoomModalProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
-
     if (!hostName.trim()) {
       setError('Please enter your name');
       return;
     }
 
     try {
-      const roomCode = await createRoom(hostName);
+      const { roomCode, playerId } = await createRoom(hostName);
+      localStorage.setItem(`room_${roomCode}_player`, playerId);
       router.push(`/room/${roomCode}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to create room');
