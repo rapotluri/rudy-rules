@@ -162,3 +162,28 @@ export const VOTE_PROMPTS: Partial<Prompt>[] = [
     syncNeeded: true
   }
 ];
+
+export const TWO_OPTION_PROMPTS: Partial<Prompt>[] = [
+  {
+    type: PromptType.TWO_OPTION_VOTE,
+    title: "Would You Rather",
+    prompt: "Would you rather live in extreme heat or extreme cold?",
+    voteOptions: [
+      { id: "heat", text: "Extreme Heat", votes: [] },
+      { id: "cold", text: "Extreme Cold", votes: [] }
+    ],
+    spiceLevel: 0,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.TWO_OPTION_VOTE,
+    title: "Over/Under",
+    prompt: "Is Taco Bell overrated or underrated?",
+    voteOptions: [
+      { id: "over", text: "Overrated", votes: [] },
+      { id: "under", text: "Underrated", votes: [] }
+    ],
+    spiceLevel: 0,
+    drinkLevel: 1
+  }
+];

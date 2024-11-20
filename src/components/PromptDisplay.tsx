@@ -5,6 +5,7 @@ import { Prompt, PromptType } from '@/types/prompt';
 import { Player } from '@/types/game';
 import { useEffect, useState } from 'react';
 import VotingPrompt from './prompts/VotingPrompt';
+import TwoOptionPrompt from './prompts/TwoOptionPrompt';
 
 interface PromptDisplayProps {
   prompt: Prompt;
@@ -51,6 +52,12 @@ const promptThemes: Record<PromptType, {
     emoji: '✋',
     garnish: '🫐' // Blueberry
   },
+  [PromptType.TWO_OPTION_VOTE]: {
+    color: '#FF9933',
+    title: 'Vote',
+    emoji: '⚖️',
+    garnish: '🍊'
+  },
   [PromptType.MINIGAME]: {
     color: '#FF7F50',
     title: 'Mini Game',
@@ -80,6 +87,17 @@ export default function PromptDisplay({
       case PromptType.VOTE:
         return (
           <VotingPrompt
+            prompt={prompt}
+            currentPlayer={currentPlayer}
+            allPlayers={allPlayers}
+            isCurrentPlayer={isCurrentPlayer}
+            onVote={onVote!}
+            onComplete={onComplete}
+          />
+        );
+      case PromptType.TWO_OPTION_VOTE:
+        return (
+          <TwoOptionPrompt
             prompt={prompt}
             currentPlayer={currentPlayer}
             allPlayers={allPlayers}
@@ -270,7 +288,9 @@ export default function PromptDisplay({
         {renderPromptContent()}
 
         {/* Action Button (only for non-voting prompts) */}
-        {prompt.type !== PromptType.VOTE && isCurrentPlayer && (
+        {prompt.type !== PromptType.VOTE && 
+         prompt.type !== PromptType.TWO_OPTION_VOTE && 
+         isCurrentPlayer && (
           <motion.div
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}

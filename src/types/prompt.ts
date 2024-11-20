@@ -4,6 +4,7 @@ export enum PromptType {
   DRINK = 'DRINK',
   GROUP_DRINK = 'GROUP_DRINK',
   VOTE = 'VOTE',
+  TWO_OPTION_VOTE = 'TWO_OPTION_VOTE',
   MINIGAME = 'MINIGAME'
 }
 
