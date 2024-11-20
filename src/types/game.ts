@@ -35,4 +35,5 @@ export interface Room {
   createdAt: number;
   updatedAt: number;
   settings: GameSettings;
+  usedChallenges?: string[];
 } 

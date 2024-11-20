@@ -17,10 +17,14 @@ import {
 const INACTIVE_TIMEOUT = 60000; // 60 seconds of inactivity before marking as disconnected
 const HEARTBEAT_INTERVAL = 30000; // Send heartbeat every 30 seconds
 
+// Add a testing flag (we can remove this later)
+const TESTING_VOTE_CHALLENGES = true;
+
 export const useRoom = () => {
   const [room, setRoom] = useState<Room | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [usedChallenges, setUsedChallenges] = useState<Set<string>>(new Set());
 
   const createRoom = async (hostName: string): Promise<{ roomCode: string; playerId: string }> => {
     try {
@@ -125,11 +129,12 @@ export const useRoom = () => {
         // Randomly select first player
         const firstPlayer = roomData.players[Math.floor(Math.random() * roomData.players.length)];
 
-        // Create first challenge
+        // Create first challenge - pass the players array
         const firstChallenge = createNewChallenge(
           roomData.settings.spiceLevel,
           roomData.settings.drinkLevel,
-          firstPlayer.id
+          firstPlayer.id,
+          roomData.players
         );
 
         transaction.update(roomRef, {
@@ -155,21 +160,25 @@ export const useRoom = () => {
 
         const roomData = roomDoc.data() as Room;
         
-        // Create new challenge for current player
-        const newChallenge: Challenge = {
-          ...createNewChallenge(
-            roomData.settings.spiceLevel,
-            roomData.settings.drinkLevel,
-            roomData.currentTurn!
-          ),
-          spiceLevel: roomData.settings.spiceLevel,
-          drinkLevel: roomData.settings.drinkLevel,
-          completed: false
-        };
+        // Get used challenges from room data
+        const usedChallenges = roomData.usedChallenges || [];
+
+        // Create new challenge, avoiding used ones
+        const newChallenge = createNewChallenge(
+          roomData.settings.spiceLevel,
+          roomData.settings.drinkLevel,
+          roomData.currentTurn!,
+          roomData.players,
+          usedChallenges // Pass used challenges to avoid repetition
+        );
+
+        // Add new challenge to used challenges
+        const updatedUsedChallenges = [...usedChallenges, newChallenge.prompt];
 
         transaction.update(roomRef, {
           currentChallenge: newChallenge,
           showChallenge: true,
+          usedChallenges: updatedUsedChallenges,
           updatedAt: serverTimestamp(),
         });
       });
@@ -197,6 +206,7 @@ export const useRoom = () => {
         const nextPlayerIndex = (currentPlayerIndex + 1) % connectedPlayers.length;
         const nextPlayer = connectedPlayers[nextPlayerIndex];
 
+        // Update room state
         transaction.update(roomRef, {
           currentTurn: nextPlayer.id,
           currentChallenge: null,
@@ -358,6 +368,60 @@ export const useRoom = () => {
     }
   };
 
+  // Add vote handling
+  const submitVote = async (roomCode: string, playerId: string, optionId: string) => {
+    try {
+      const roomRef = doc(db, 'rooms', roomCode);
+      await runTransaction(db, async (transaction) => {
+        const roomDoc = await transaction.get(roomRef);
+        if (!roomDoc.exists()) throw new Error('Room not found');
+
+        const roomData = roomDoc.data() as Room;
+        if (!roomData.currentChallenge?.voteOptions) return;
+
+        // Update vote counts
+        const updatedOptions = roomData.currentChallenge.voteOptions.map(option => {
+          if (option.id === optionId) {
+            const votes = option.votes.filter(v => v !== playerId);
+            votes.push(playerId);
+            return { ...option, votes };
+          } else {
+            return { ...option, votes: option.votes.filter(v => v !== playerId) };
+          }
+        });
+
+        // Check if all players have voted
+        const totalVotes = updatedOptions.reduce((sum, option) => sum + option.votes.length, 0);
+        const votingComplete = totalVotes === roomData.players.length;
+
+        if (votingComplete) {
+          // Sort options by votes to determine winner/loser
+          const sortedOptions = [...updatedOptions].sort((a, b) => b.votes.length - a.votes.length);
+          const winnerDrinks = Math.random() < 0.5; // Random but synchronized
+
+          transaction.update(roomRef, {
+            'currentChallenge.voteOptions': updatedOptions,
+            'currentChallenge.votingComplete': true,
+            'currentChallenge.winnerDrinks': winnerDrinks,
+            'currentChallenge.results': {
+              winner: sortedOptions[0],
+              loser: sortedOptions[sortedOptions.length - 1]
+            },
+            updatedAt: serverTimestamp(),
+          });
+        } else {
+          transaction.update(roomRef, {
+            'currentChallenge.voteOptions': updatedOptions,
+            updatedAt: serverTimestamp(),
+          });
+        }
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to submit vote');
+      throw err;
+    }
+  };
+
   return {
     room,
     loading,
@@ -367,6 +431,7 @@ export const useRoom = () => {
     startGame,
     startTurn,
     completeChallenge,
+    submitVote,
     subscribeToRoom,
     updateGameSettings,
     kickPlayer

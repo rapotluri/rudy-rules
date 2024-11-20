@@ -7,6 +7,12 @@ export enum ChallengeType {
   MINIGAME = 'MINIGAME'
 }
 
+export interface VoteOption {
+  id: string;
+  text: string;
+  votes: string[];  // Array of player IDs who voted for this option
+}
+
 export interface Challenge {
   id: string;
   type: ChallengeType;
@@ -20,6 +26,14 @@ export interface Challenge {
   style?: string;
   syncNeeded?: boolean;
   groupResponse?: boolean;
+  // Voting specific properties
+  voteOptions?: VoteOption[];
+  votingComplete?: boolean;
+  winnerDrinks?: boolean;
+  results?: {
+    winner: VoteOption;
+    loser: VoteOption;
+  };
 }
 
 // Basic challenge library

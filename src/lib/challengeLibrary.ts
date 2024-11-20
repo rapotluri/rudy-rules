@@ -1,4 +1,5 @@
 import { Challenge, ChallengeType } from '@/types/challenge';
+import { Player } from '@/types/game';
 
 // Basic truth challenges from DrinkRoyale
 export const TRUTH_CHALLENGES: Partial<Challenge>[] = [
@@ -69,49 +70,145 @@ export const TRUTH_CHALLENGES: Partial<Challenge>[] = [
   }
 ];
 
-// Function to get challenges based on spice and drink levels
-export const getChallenges = (spiceLevel: number, drinkLevel: number) => {
-  return TRUTH_CHALLENGES.filter(challenge => 
+// Add Voting Challenges
+export const VOTE_CHALLENGES: Partial<Challenge>[] = [
+  {
+    type: ChallengeType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who is most likely to become a millionaire?",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    groupResponse: true,
+    syncNeeded: true
+  },
+  {
+    type: ChallengeType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who is most likely to become famous?",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    groupResponse: true,
+    syncNeeded: true
+  },
+  {
+    type: ChallengeType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who is most likely to get arrested?",
+    spiceLevel: 1,
+    drinkLevel: 1,
+    groupResponse: true,
+    syncNeeded: true
+  },
+  {
+    type: ChallengeType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who would survive the longest in a zombie apocalypse?",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    groupResponse: true,
+    syncNeeded: true
+  },
+  {
+    type: ChallengeType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who would win in a fight?",
+    spiceLevel: 1,
+    drinkLevel: 1,
+    groupResponse: true,
+    syncNeeded: true
+  },
+  {
+    type: ChallengeType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who would make the best superhero?",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    groupResponse: true,
+    syncNeeded: true
+  },
+  {
+    type: ChallengeType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who would be the first to survive on a desert island?",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    groupResponse: true,
+    syncNeeded: true
+  },
+  {
+    type: ChallengeType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who is most likely to become president?",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    groupResponse: true,
+    syncNeeded: true
+  },
+  {
+    type: ChallengeType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who is most likely to sleep through an important event?",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    groupResponse: true,
+    syncNeeded: true
+  },
+  {
+    type: ChallengeType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who would be the best stand-up comedian?",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    groupResponse: true,
+    syncNeeded: true
+  }
+];
+
+// Update getChallenges to handle both types
+export const getChallenges = (spiceLevel: number, drinkLevel: number, votingOnly = false) => {
+  const challenges = votingOnly ? VOTE_CHALLENGES : [...TRUTH_CHALLENGES, ...VOTE_CHALLENGES];
+  return challenges.filter(challenge => 
     (challenge.spiceLevel || 0) <= spiceLevel && 
     (challenge.drinkLevel || 0) <= drinkLevel
   );
 };
 
-// Function to create a complete challenge
+// Update createNewChallenge to handle both types
 export const createNewChallenge = (
   spiceLevel: number, 
   drinkLevel: number, 
-  targetPlayerId: string
+  targetPlayerId: string,
+  players: Player[],
+  usedChallenges: string[] = []
 ): Challenge => {
-  const availableChallenges = getChallenges(spiceLevel, drinkLevel);
+  // Get available challenges
+  let availableChallenges = getChallenges(spiceLevel, drinkLevel, true)
+    .filter(challenge => !usedChallenges.includes(challenge.prompt || ''));
   
+  // If all challenges have been used, reset the pool
   if (availableChallenges.length === 0) {
-    return {
-      id: crypto.randomUUID(),
-      type: ChallengeType.TRUTH,
-      title: 'Truth',
-      prompt: 'Tell us something interesting about yourself',
-      targetPlayers: [targetPlayerId],
-      spiceLevel: 0,
-      drinkLevel: 0,
-      completed: false,
-      syncNeeded: false,
-      groupResponse: false
-    };
+    availableChallenges = VOTE_CHALLENGES;
   }
 
+  // Get a random challenge from available ones
   const template = availableChallenges[Math.floor(Math.random() * availableChallenges.length)];
   
   return {
     id: crypto.randomUUID(),
-    type: template.type || ChallengeType.TRUTH,
-    title: template.title || 'Challenge',
-    prompt: template.prompt || '',
+    type: ChallengeType.VOTE,
+    title: template.title || 'Vote',
+    prompt: template.prompt || 'Who is most likely to...',
     targetPlayers: [targetPlayerId],
-    spiceLevel: spiceLevel,
-    drinkLevel: drinkLevel,
+    spiceLevel: template.spiceLevel || spiceLevel,
+    drinkLevel: template.drinkLevel || drinkLevel,
     completed: false,
-    syncNeeded: template.syncNeeded || false,
-    groupResponse: template.groupResponse || false
+    syncNeeded: true,
+    groupResponse: true,
+    voteOptions: players.map(player => ({
+      id: player.id,
+      text: player.name,
+      votes: []
+    })),
+    votingComplete: false
   };
 }; 

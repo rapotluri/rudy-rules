@@ -4,12 +4,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Challenge, ChallengeType } from '@/types/challenge';
 import { Player } from '@/types/game';
 import { useEffect, useState } from 'react';
+import VotingChallenge from './challenges/VotingChallenge';
 
 interface ChallengeDisplayProps {
   challenge: Challenge;
   currentPlayer: Player;
+  allPlayers: Player[];
   isCurrentPlayer: boolean;
   onComplete: () => void;
+  onVote?: (optionId: string) => void;
 }
 
 const challengeThemes: Record<ChallengeType, { 
@@ -59,8 +62,10 @@ const challengeThemes: Record<ChallengeType, {
 export default function ChallengeDisplay({
   challenge,
   currentPlayer,
+  allPlayers,
   isCurrentPlayer,
-  onComplete
+  onComplete,
+  onVote
 }: ChallengeDisplayProps) {
   const [showPrompt, setShowPrompt] = useState(false);
   const theme = challengeThemes[challenge.type];
@@ -69,6 +74,73 @@ export default function ChallengeDisplay({
     const timer = setTimeout(() => setShowPrompt(true), 500);
     return () => clearTimeout(timer);
   }, []);
+
+  const renderChallengeContent = () => {
+    switch (challenge.type) {
+      case ChallengeType.VOTE:
+        return (
+          <VotingChallenge
+            challenge={challenge}
+            currentPlayer={currentPlayer}
+            allPlayers={allPlayers}
+            isCurrentPlayer={isCurrentPlayer}
+            onVote={onVote!}
+            onComplete={onComplete}
+          />
+        );
+      default:
+        return (
+          <AnimatePresence>
+            {showPrompt && (
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                className="bg-black/40 backdrop-blur-md rounded-2xl p-8 shadow-2xl"
+              >
+                <p className="text-white text-2xl text-center mb-6">
+                  {challenge.prompt}
+                </p>
+
+                {/* Difficulty Indicators */}
+                <div className="flex justify-center gap-6">
+                  {challenge.spiceLevel > 0 && (
+                    <div className="flex items-center gap-1">
+                      {[...Array(challenge.spiceLevel)].map((_, i) => (
+                        <motion.span
+                          key={i}
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          transition={{ delay: i * 0.1 }}
+                          className="text-2xl"
+                        >
+                          🌶️
+                        </motion.span>
+                      ))}
+                    </div>
+                  )}
+                  {challenge.drinkLevel > 0 && (
+                    <div className="flex items-center gap-1">
+                      {[...Array(challenge.drinkLevel)].map((_, i) => (
+                        <motion.span
+                          key={i}
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          transition={{ delay: i * 0.1 }}
+                          className="text-2xl"
+                        >
+                          🍺
+                        </motion.span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        );
+    }
+  };
 
   return (
     <div className="min-h-[80vh] flex flex-col items-center justify-between p-4 relative overflow-hidden">
@@ -195,57 +267,10 @@ export default function ChallengeDisplay({
         </motion.div>
 
         {/* Challenge Content */}
-        <AnimatePresence>
-          {showPrompt && (
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              className="bg-black/50 rounded-2xl p-8 shadow-xl border border-white/10"
-            >
-              <p className="text-white text-2xl text-center font-medium mb-6">
-                {challenge.prompt}
-              </p>
+        {renderChallengeContent()}
 
-              {/* Difficulty Indicators */}
-              <div className="flex justify-center gap-6">
-                {challenge.spiceLevel > 0 && (
-                  <div className="flex items-center gap-1">
-                    {[...Array(challenge.spiceLevel)].map((_, i) => (
-                      <motion.span
-                        key={i}
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ delay: i * 0.1 }}
-                        className="text-2xl"
-                      >
-                        🌶️
-                      </motion.span>
-                    ))}
-                  </div>
-                )}
-                {challenge.drinkLevel > 0 && (
-                  <div className="flex items-center gap-1">
-                    {[...Array(challenge.drinkLevel)].map((_, i) => (
-                      <motion.span
-                        key={i}
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ delay: i * 0.1 }}
-                        className="text-2xl"
-                      >
-                        🍺
-                      </motion.span>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Action Button */}
-        {isCurrentPlayer && (
+        {/* Action Button (only for non-voting challenges) */}
+        {challenge.type !== ChallengeType.VOTE && isCurrentPlayer && (
           <motion.div
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}

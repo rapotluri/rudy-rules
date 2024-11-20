@@ -14,7 +14,7 @@ export default function RoomPage() {
   const params = useParams();
   const roomCode = params.code as string;
   const [playerId, setPlayerId] = useState<string | null>(null);
-  const { room, loading, error, subscribeToRoom, startGame, startTurn, completeChallenge } = useRoom();
+  const { room, loading, error, subscribeToRoom, startGame, startTurn, completeChallenge, submitVote } = useRoom();
 
   useEffect(() => {
     const storedPlayerId = localStorage.getItem(`room_${roomCode}_player`);
@@ -30,6 +30,11 @@ export default function RoomPage() {
   }, [roomCode, playerId, subscribeToRoom]);
 
   const isHost = room?.players.find(p => p.id === playerId)?.isHost ?? false;
+
+  const handleVote = async (optionId: string) => {
+    if (!roomCode || !playerId) return;
+    await submitVote(roomCode, playerId, optionId);
+  };
 
   if (loading) {
     return (
@@ -117,19 +122,23 @@ export default function RoomPage() {
           ) : (
             <>
               {/* Game Content */}
-              {room.showChallenge && room.currentChallenge ? (
-                <ChallengeDisplay
-                  challenge={room.currentChallenge}
-                  currentPlayer={room.players.find(p => p.id === room.currentTurn)!}
-                  isCurrentPlayer={playerId === room.currentTurn}
-                  onComplete={() => completeChallenge(roomCode)}
-                />
-              ) : (
-                <TurnScreen
-                  currentPlayer={room.players.find(p => p.id === room.currentTurn)!}
-                  isCurrentPlayer={playerId === room.currentTurn}
-                  onStartTurn={() => startTurn(roomCode)}
-                />
+              {room.gameState === GameState.PLAYING && (
+                room.showChallenge && room.currentChallenge ? (
+                  <ChallengeDisplay
+                    challenge={room.currentChallenge}
+                    currentPlayer={room.players.find(p => p.id === room.currentTurn)!}
+                    allPlayers={room.players}
+                    isCurrentPlayer={playerId === room.currentTurn}
+                    onComplete={() => completeChallenge(roomCode)}
+                    onVote={handleVote}
+                  />
+                ) : (
+                  <TurnScreen
+                    currentPlayer={room.players.find(p => p.id === room.currentTurn)!}
+                    isCurrentPlayer={playerId === room.currentTurn}
+                    onStartTurn={() => startTurn(roomCode)}
+                  />
+                )
               )}
             </>
           )}
