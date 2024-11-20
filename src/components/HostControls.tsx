@@ -2,45 +2,39 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { DrinkLevel, SpiceLevel, Player } from '@/types/game';
+import { Player } from '@/types/game';
 
 interface HostControlsProps {
   players: Player[];
   onKickPlayer: (playerId: string) => void;
-  onUpdateSettings: (settings: { drinkLevel: DrinkLevel; spiceLevel: SpiceLevel }) => void;
+  onUpdateSettings: (settings: { drinkLevel: number; spiceLevel: number }) => void;
   currentSettings: {
-    drinkLevel: DrinkLevel;
-    spiceLevel: SpiceLevel;
+    drinkLevel: number;
+    spiceLevel: number;
   };
 }
-
-const defaultSettings = {
-  drinkLevel: DrinkLevel.CASUAL,
-  spiceLevel: SpiceLevel.FAMILY
-};
 
 export default function HostControls({
   players,
   onKickPlayer,
   onUpdateSettings,
-  currentSettings = defaultSettings,
+  currentSettings = { drinkLevel: 0, spiceLevel: 0 },
 }: HostControlsProps) {
   const [showSettings, setShowSettings] = useState(false);
 
-  const drinkLevelLabels = {
-    [DrinkLevel.CASUAL]: '🍺 Casual (1-2 sips)',
-    [DrinkLevel.MODERATE]: '🍻 Moderate (2-3 sips)',
-    [DrinkLevel.HEAVY]: '🥂 Heavy (4-5 sips)'
+  const drinkLevelLabels: Record<number, string> = {
+    0: '🍺 Casual (1-2 sips)',
+    1: '🍻 Moderate (2-3 sips)',
+    2: '🥂 Heavy (4-5 sips)'
   };
 
-  const spiceLevelLabels = {
-    [SpiceLevel.FAMILY]: '😊 Family Friendly',
-    [SpiceLevel.SPICY]: '🌶️ Spicy',
-    [SpiceLevel.EXTRA_SPICY]: '🔥 Extra Spicy'
+  const spiceLevelLabels: Record<number, string> = {
+    0: '😊 Family Friendly',
+    1: '🌶️ Spicy',
+    2: '🔥 Extra Spicy'
   };
 
-  // Ensure settings are defined
-  const settings = currentSettings || defaultSettings;
+  const settings = currentSettings || { drinkLevel: 0, spiceLevel: 0 };
 
   return (
     <div className="bg-gray-900/80 rounded-lg p-4 mb-6">
@@ -68,7 +62,7 @@ export default function HostControls({
               <div>
                 <label className="block text-white mb-2">Drink Level</label>
                 <div className="grid grid-cols-3 gap-2">
-                  {Object.values(DrinkLevel).map((level) => (
+                  {[0, 1, 2].map((level) => (
                     <button
                       key={level}
                       onClick={() => onUpdateSettings({ ...settings, drinkLevel: level })}
@@ -87,7 +81,7 @@ export default function HostControls({
               <div>
                 <label className="block text-white mb-2">Spice Level</label>
                 <div className="grid grid-cols-3 gap-2">
-                  {Object.values(SpiceLevel).map((level) => (
+                  {[0, 1, 2].map((level) => (
                     <button
                       key={level}
                       onClick={() => onUpdateSettings({ ...settings, spiceLevel: level })}

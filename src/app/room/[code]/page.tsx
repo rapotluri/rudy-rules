@@ -2,25 +2,19 @@
 
 import { useEffect, useState } from 'react';
 import { useRoom } from '@/hooks/useRoom';
-import { GameState, DrinkLevel, SpiceLevel } from '@/types/game';
+import { GameState } from '@/types/game';
 import { motion } from 'framer-motion';
 import Layout from '@/components/Layout';
 import { useParams } from 'next/navigation';
 import HostControls from '@/components/HostControls';
+import ChallengeDisplay from '@/components/ChallengeDisplay';
+import TurnScreen from '@/components/TurnScreen';
 
 export default function RoomPage() {
   const params = useParams();
   const roomCode = params.code as string;
   const [playerId, setPlayerId] = useState<string | null>(null);
-  const { 
-    room, 
-    loading, 
-    error, 
-    subscribeToRoom, 
-    startGame,
-    updateGameSettings,
-    kickPlayer 
-  } = useRoom();
+  const { room, loading, error, subscribeToRoom, startGame, startTurn, completeChallenge, submitVote } = useRoom();
 
   useEffect(() => {
     const storedPlayerId = localStorage.getItem(`room_${roomCode}_player`);
@@ -37,14 +31,9 @@ export default function RoomPage() {
 
   const isHost = room?.players.find(p => p.id === playerId)?.isHost ?? false;
 
-  const handleKickPlayer = async (playerIdToKick: string) => {
-    if (!isHost || !roomCode) return;
-    await kickPlayer(roomCode, playerIdToKick);
-  };
-
-  const handleUpdateSettings = async (settings: { drinkLevel: DrinkLevel; spiceLevel: SpiceLevel }) => {
-    if (!isHost || !roomCode) return;
-    await updateGameSettings(roomCode, settings);
+  const handleVote = async (optionId: string) => {
+    if (!roomCode || !playerId) return;
+    await submitVote(roomCode, playerId, optionId);
   };
 
   if (loading) {
@@ -71,6 +60,7 @@ export default function RoomPage() {
     <Layout>
       <div className="min-h-screen p-4">
         <div className="max-w-4xl mx-auto">
+          {/* Room Header */}
           <div className="bg-gray-900/80 rounded-lg p-4 mb-6">
             <div className="flex items-center justify-between">
               <h1 className="text-2xl font-bold text-emerald-400">
@@ -88,54 +78,69 @@ export default function RoomPage() {
             </div>
           </div>
 
-          {isHost && room.gameState === GameState.LOBBY && (
-            <HostControls
-              players={room.players}
-              onKickPlayer={handleKickPlayer}
-              onUpdateSettings={handleUpdateSettings}
-              currentSettings={room.settings}
-            />
-          )}
+          {/* Lobby or Game Content */}
+          {room.gameState === GameState.LOBBY ? (
+            <>
+              {/* Players List */}
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
+                {room.players.map((player) => (
+                  <motion.div
+                    key={player.id}
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    className="bg-gray-900/80 rounded-lg p-4"
+                  >
+                    <div
+                      className="w-4 h-4 rounded-full mb-2"
+                      style={{ backgroundColor: player.color }}
+                    />
+                    <div className="text-white font-semibold">
+                      {player.name}
+                      {player.isHost && (
+                        <span className="ml-2 text-emerald-400 text-sm">(Host)</span>
+                      )}
+                    </div>
+                    <div className="text-sm text-gray-400">
+                      {player.isConnected ? 'Connected' : 'Disconnected'}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
-            {room.players.map((player) => (
-              <motion.div
-                key={player.id}
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                className="bg-gray-900/80 rounded-lg p-4"
-              >
-                <div
-                  className="w-4 h-4 rounded-full mb-2"
-                  style={{ backgroundColor: player.color }}
-                />
-                <div className="text-white font-semibold">
-                  {player.name}
-                  {player.isHost && (
-                    <span className="ml-2 text-emerald-400 text-sm">(Host)</span>
-                  )}
-                </div>
-                <div className="text-sm text-gray-400">
-                  {player.isConnected ? 'Connected' : 'Disconnected'}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {room.gameState === GameState.LOBBY && (
-            <motion.button
-              whileHover={isHost ? { scale: 1.05 } : {}}
-              whileTap={isHost ? { scale: 0.95 } : {}}
-              onClick={() => isHost && startGame(roomCode)}
-              className={`w-full py-3 rounded-lg font-semibold text-lg transition-colors ${
-                isHost 
-                  ? 'bg-emerald-500 text-white hover:bg-emerald-600 cursor-pointer' 
-                  : 'bg-gray-600 text-gray-300 cursor-not-allowed'
-              }`}
-              disabled={!isHost}
-            >
-              {isHost ? 'Start Game' : 'Waiting for host to start...'}
-            </motion.button>
+              {/* Host Controls */}
+              {isHost && (
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => startGame(roomCode)}
+                  className="w-full bg-emerald-500 text-white py-3 rounded-lg font-semibold text-lg hover:bg-emerald-600 transition-colors"
+                >
+                  Start Game
+                </motion.button>
+              )}
+            </>
+          ) : (
+            <>
+              {/* Game Content */}
+              {room.gameState === GameState.PLAYING && (
+                room.showChallenge && room.currentChallenge ? (
+                  <ChallengeDisplay
+                    challenge={room.currentChallenge}
+                    currentPlayer={room.players.find(p => p.id === room.currentTurn)!}
+                    allPlayers={room.players}
+                    isCurrentPlayer={playerId === room.currentTurn}
+                    onComplete={() => completeChallenge(roomCode)}
+                    onVote={handleVote}
+                  />
+                ) : (
+                  <TurnScreen
+                    currentPlayer={room.players.find(p => p.id === room.currentTurn)!}
+                    isCurrentPlayer={playerId === room.currentTurn}
+                    onStartTurn={() => startTurn(roomCode)}
+                  />
+                )
+              )}
+            </>
           )}
         </div>
       </div>

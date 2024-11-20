@@ -38,3 +38,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+src/lib/challengeLibrary.ts
+src/lib/challengeLibrary.ts
