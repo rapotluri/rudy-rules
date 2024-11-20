@@ -1,4 +1,4 @@
-import type { Challenge } from './challenge';
+import type { Prompt } from './prompt';
 
 export enum GameState {
   LOBBY = 'LOBBY',
@@ -29,11 +29,11 @@ export interface Room {
   players: Player[];
   gameState: GameState;
   currentTurn: string | null;
-  currentChallenge: Challenge | null;
-  showChallenge: boolean;
+  currentPrompt: Prompt | null;
+  showPrompt: boolean;
   roundNumber: number;
   createdAt: number;
   updatedAt: number;
   settings: GameSettings;
-  usedChallenges?: string[];
+  usedPrompts?: string[];
 } 
