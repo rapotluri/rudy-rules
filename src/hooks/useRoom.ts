@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import { db } from '@/lib/firebase';
-import { Room, Player, GameState, DrinkLevel, SpiceLevel } from '@/types/game';
+import { Room, Player, GameState } from '@/types/game';
+import { Challenge } from '@/types/challenge';
+import { createNewChallenge } from '@/lib/challengeLibrary';
 import { generateRoomCode } from '@/utils/roomCode';
 import {
   doc,
@@ -43,12 +45,13 @@ export const useRoom = () => {
         gameState: GameState.LOBBY,
         currentTurn: null,
         currentChallenge: null,
+        showChallenge: false,
         roundNumber: 0,
         createdAt: Date.now(),
         updatedAt: Date.now(),
         settings: {
-          drinkLevel: DrinkLevel.CASUAL,
-          spiceLevel: SpiceLevel.FAMILY
+          drinkLevel: 0,
+          spiceLevel: 0
         }
       };
 
@@ -122,9 +125,17 @@ export const useRoom = () => {
         // Randomly select first player
         const firstPlayer = roomData.players[Math.floor(Math.random() * roomData.players.length)];
 
+        // Create first challenge
+        const firstChallenge = createNewChallenge(
+          roomData.settings.spiceLevel,
+          roomData.settings.drinkLevel,
+          firstPlayer.id
+        );
+
         transaction.update(roomRef, {
           gameState: GameState.PLAYING,
           currentTurn: firstPlayer.id,
+          currentChallenge: firstChallenge,
           roundNumber: 1,
           updatedAt: serverTimestamp(),
         });
@@ -135,7 +146,7 @@ export const useRoom = () => {
     }
   };
 
-  const endTurn = async (roomCode: string) => {
+  const startTurn = async (roomCode: string) => {
     try {
       const roomRef = doc(db, 'rooms', roomCode);
       await runTransaction(db, async (transaction) => {
@@ -143,17 +154,59 @@ export const useRoom = () => {
         if (!roomDoc.exists()) throw new Error('Room not found');
 
         const roomData = roomDoc.data() as Room;
-        const currentPlayerIndex = roomData.players.findIndex(p => p.id === roomData.currentTurn);
-        const nextPlayerIndex = (currentPlayerIndex + 1) % roomData.players.length;
+        
+        // Create new challenge for current player
+        const newChallenge: Challenge = {
+          ...createNewChallenge(
+            roomData.settings.spiceLevel,
+            roomData.settings.drinkLevel,
+            roomData.currentTurn!
+          ),
+          spiceLevel: roomData.settings.spiceLevel,
+          drinkLevel: roomData.settings.drinkLevel,
+          completed: false
+        };
 
         transaction.update(roomRef, {
-          currentTurn: roomData.players[nextPlayerIndex].id,
-          currentChallenge: null,
+          currentChallenge: newChallenge,
+          showChallenge: true,
           updatedAt: serverTimestamp(),
         });
       });
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to end turn');
+      setError(err instanceof Error ? err.message : 'Failed to start turn');
+      throw err;
+    }
+  };
+
+  const completeChallenge = async (roomCode: string) => {
+    try {
+      const roomRef = doc(db, 'rooms', roomCode);
+      await runTransaction(db, async (transaction) => {
+        const roomDoc = await transaction.get(roomRef);
+        if (!roomDoc.exists()) throw new Error('Room not found');
+
+        const roomData = roomDoc.data() as Room;
+        if (!roomData.currentChallenge) return;
+
+        // Get next player (only from connected players)
+        const connectedPlayers = roomData.players.filter(p => p.isConnected);
+        if (connectedPlayers.length === 0) return;
+
+        const currentPlayerIndex = connectedPlayers.findIndex(p => p.id === roomData.currentTurn);
+        const nextPlayerIndex = (currentPlayerIndex + 1) % connectedPlayers.length;
+        const nextPlayer = connectedPlayers[nextPlayerIndex];
+
+        transaction.update(roomRef, {
+          currentTurn: nextPlayer.id,
+          currentChallenge: null,
+          showChallenge: false,
+          roundNumber: roomData.roundNumber + 1,
+          updatedAt: serverTimestamp(),
+        });
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to complete challenge');
       throw err;
     }
   };
@@ -253,17 +306,7 @@ export const useRoom = () => {
       (doc) => {
         if (doc.exists()) {
           const roomData = doc.data() as Room;
-          
-          // Update connected status based on lastActive timestamp
-          const updatedRoom = {
-            ...roomData,
-            players: roomData.players.map(player => ({
-              ...player,
-              isConnected: (Date.now() - player.lastActive) < INACTIVE_TIMEOUT
-            }))
-          };
-          
-          setRoom(updatedRoom);
+          setRoom(roomData);
           setError(null);
         } else {
           setRoom(null);
@@ -275,21 +318,12 @@ export const useRoom = () => {
       }
     );
 
-    // Set up presence system if playerId is provided
-    let cleanupPresence = () => {};
-    if (playerId) {
-      cleanupPresence = setupPresence(roomCode, playerId);
-    }
-
-    return () => {
-      unsubscribe();
-      cleanupPresence();
-    };
-  }, [setupPresence]);
+    return unsubscribe;
+  }, []);
 
   const updateGameSettings = async (
     roomCode: string,
-    settings: { drinkLevel: DrinkLevel; spiceLevel: SpiceLevel }
+    settings: { drinkLevel: number; spiceLevel: number }
   ) => {
     try {
       const roomRef = doc(db, 'rooms', roomCode);
@@ -331,8 +365,8 @@ export const useRoom = () => {
     createRoom,
     joinRoom,
     startGame,
-    endTurn,
-    updatePlayerConnection,
+    startTurn,
+    completeChallenge,
     subscribeToRoom,
     updateGameSettings,
     kickPlayer
