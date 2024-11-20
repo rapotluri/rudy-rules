@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { useRoom } from '@/hooks/useRoom';
-import { Room, Player, GameState, DrinkLevel, SpiceLevel } from '@/types/game';
-import { motion, AnimatePresence } from 'framer-motion';
+import { GameState, DrinkLevel, SpiceLevel } from '@/types/game';
+import { motion } from 'framer-motion';
 import Layout from '@/components/Layout';
 import { useParams } from 'next/navigation';
 import HostControls from '@/components/HostControls';

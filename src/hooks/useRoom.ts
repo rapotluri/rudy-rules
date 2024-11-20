@@ -1,10 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { db } from '@/lib/firebase';
-import { Room, Player, GameState, Challenge, DrinkLevel, SpiceLevel } from '@/types/game';
+import { Room, Player, GameState, DrinkLevel, SpiceLevel } from '@/types/game';
 import { generateRoomCode } from '@/utils/roomCode';
 import {
   doc,
-  collection,
   setDoc,
   getDoc,
   updateDoc,

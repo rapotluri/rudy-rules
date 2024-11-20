@@ -29,7 +29,7 @@ export interface Challenge {
   type: ChallengeType;
   prompt: string;
   targetPlayers: string[];
-  result?: any;
+  result?: unknown;
   timeLimit?: number;
 }
 
