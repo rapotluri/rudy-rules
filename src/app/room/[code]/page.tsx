@@ -6,16 +6,27 @@ import { GameState } from '@/types/game';
 import { motion } from 'framer-motion';
 import Layout from '@/components/Layout';
 import { useParams } from 'next/navigation';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import HostControls from '@/components/HostControls';
-import ChallengeDisplay from '@/components/ChallengeDisplay';
 import TurnScreen from '@/components/TurnScreen';
+import PromptDisplay from '@/components/PromptDisplay';
+import Image from 'next/image';
 
 export default function RoomPage() {
   const params = useParams();
   const roomCode = params.code as string;
   const [playerId, setPlayerId] = useState<string | null>(null);
-  const { room, loading, error, subscribeToRoom, startGame, startTurn, completeChallenge, submitVote } = useRoom();
+  const { 
+    room, 
+    loading, 
+    error, 
+    subscribeToRoom, 
+    startGame, 
+    startTurn, 
+    completePrompt, 
+    submitVote,
+    updateGameSettings, 
+    kickPlayer
+  } = useRoom();
 
   useEffect(() => {
     const storedPlayerId = localStorage.getItem(`room_${roomCode}_player`);
@@ -36,6 +47,50 @@ export default function RoomPage() {
     if (!roomCode || !playerId) return;
     await submitVote(roomCode, playerId, optionId);
   };
+
+  const isKicked = playerId && room && !room.players.find(p => p.id === playerId);
+
+  if (isKicked) {
+    return (
+      <Layout>
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="bg-gray-900/80 p-8 rounded-lg text-center max-w-md">
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+            >
+              <div className="mb-6">
+                <Image
+                  src="/images/kicked.png"
+                  alt="Kicked from room"
+                  width={200}
+                  height={200}
+                  className="mx-auto"
+                />
+              </div>
+              <h2 className="text-2xl font-bold text-red-500 mb-4">
+                You have been kicked from the room
+              </h2>
+              <p className="text-gray-300 mb-6">
+                The host has removed you from this game session.
+              </p>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => {
+                  localStorage.removeItem(`room_${roomCode}_player`);
+                  window.location.href = '/';
+                }}
+                className="bg-emerald-500 text-white px-6 py-2 rounded-lg hover:bg-emerald-600"
+              >
+                Return to Home
+              </motion.button>
+            </motion.div>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
 
   if (loading) {
     return (
@@ -82,6 +137,16 @@ export default function RoomPage() {
           {/* Lobby or Game Content */}
           {room.gameState === GameState.LOBBY ? (
             <>
+              {/* Host Controls */}
+              {isHost && (
+                <HostControls
+                  players={room.players}
+                  onKickPlayer={(playerId) => kickPlayer(roomCode, playerId)}
+                  onUpdateSettings={(settings) => updateGameSettings(roomCode, settings)}
+                  currentSettings={room.settings}
+                />
+              )}
+
               {/* Players List */}
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
                 {room.players.map((player) => (
@@ -108,7 +173,7 @@ export default function RoomPage() {
                 ))}
               </div>
 
-              {/* Host Controls */}
+              {/* Start Game Button */}
               {isHost && (
                 <motion.button
                   whileHover={{ scale: 1.05 }}
@@ -124,13 +189,13 @@ export default function RoomPage() {
             <>
               {/* Game Content */}
               {room.gameState === GameState.PLAYING && (
-                room.showChallenge && room.currentChallenge ? (
-                  <ChallengeDisplay
-                    challenge={room.currentChallenge}
+                room.showPrompt && room.currentPrompt ? (
+                  <PromptDisplay
+                    prompt={room.currentPrompt}
                     currentPlayer={room.players.find(p => p.id === room.currentTurn)!}
                     allPlayers={room.players}
                     isCurrentPlayer={playerId === room.currentTurn}
-                    onComplete={() => completeChallenge(roomCode)}
+                    onComplete={() => completePrompt(roomCode)}
                     onVote={handleVote}
                   />
                 ) : (

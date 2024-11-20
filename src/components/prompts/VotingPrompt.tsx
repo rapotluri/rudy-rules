@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Challenge } from '@/types/challenge';
+import { Prompt } from '@/types/prompt';
 import { Player } from '@/types/game';
 
-interface VotingChallengeProps {
-  challenge: Challenge;
+interface VotingPromptProps {
+  prompt: Prompt;
   currentPlayer: Player;
   allPlayers: Player[];
   isCurrentPlayer: boolean;
@@ -29,25 +29,25 @@ const getDrinkingMessage = (drinkLevel: number, playerName: string, isWinner: bo
   }
 };
 
-export default function VotingChallenge({
-  challenge,
+export default function VotingPrompt({
+  prompt,
   currentPlayer,
   allPlayers,
   isCurrentPlayer,
   onVote,
   onComplete
-}: VotingChallengeProps) {
+}: VotingPromptProps) {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [timeLeft, setTimeLeft] = useState(VOTING_TIME_LIMIT);
   const [votingEnded, setVotingEnded] = useState(false);
 
   // Calculate total votes
-  const totalVotes = challenge.voteOptions?.reduce((sum, option) => sum + option.votes.length, 0) || 0;
+  const totalVotes = prompt.voteOptions?.reduce((sum, option) => sum + option.votes.length, 0) || 0;
   const allVoted = totalVotes === allPlayers.length;
 
   // Get synchronized results
-  const winnerDrinks = challenge.winnerDrinks;
-  const results = challenge.results;
+  const winnerDrinks = prompt.winnerDrinks;
+  const results = prompt.results;
   
   const winningPlayer = results?.winner ? 
     allPlayers.find(p => p.id === results.winner.id) : 
@@ -106,12 +106,12 @@ export default function VotingChallenge({
         animate={{ y: 0, opacity: 1 }}
         className="text-3xl font-bold text-center mb-12"
       >
-        {challenge.prompt}
+        {prompt.prompt}
       </motion.h2>
 
       {/* Voting Options or Results */}
       <div className="w-full max-w-md space-y-4">
-        {challenge.voteOptions?.map((option) => (
+        {prompt.voteOptions?.map((option) => (
           <motion.div
             key={option.id}
             className="relative"
@@ -221,7 +221,7 @@ export default function VotingChallenge({
           animate={{ opacity: 1, y: 0 }}
           className="mt-8 text-2xl font-bold text-center text-white"
         >
-          {getDrinkingMessage(challenge.drinkLevel, drinkingPlayer.name, winnerDrinks || false)}
+          {getDrinkingMessage(prompt.drinkLevel, drinkingPlayer.name, winnerDrinks || false)}
         </motion.div>
       )}
 

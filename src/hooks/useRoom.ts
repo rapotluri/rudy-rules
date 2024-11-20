@@ -1,8 +1,8 @@
 import { useState, useCallback } from 'react';
 import { db } from '@/lib/firebase';
 import { Room, Player, GameState } from '@/types/game';
-import { Challenge } from '@/types/challenge';
-import { createNewChallenge } from '@/lib/challengeLibrary';
+import { Prompt } from '@/types/prompt';
+import { createNewPrompt } from '@/lib/promptLibrary';
 import { generateRoomCode } from '@/utils/roomCode';
 import {
   doc,
@@ -14,17 +14,14 @@ import {
   runTransaction,
 } from 'firebase/firestore';
 
-const INACTIVE_TIMEOUT = 60000; // 60 seconds of inactivity before marking as disconnected
-const HEARTBEAT_INTERVAL = 30000; // Send heartbeat every 30 seconds
-
-// Add a testing flag (we can remove this later)
-const TESTING_VOTE_CHALLENGES = true;
+const INACTIVE_TIMEOUT = 60000; // 60 seconds
+const HEARTBEAT_INTERVAL = 30000; // 30 seconds
 
 export const useRoom = () => {
   const [room, setRoom] = useState<Room | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [usedChallenges, setUsedChallenges] = useState<Set<string>>(new Set());
+  const [usedPrompts, setUsedPrompts] = useState<Set<string>>(new Set());
 
   const createRoom = async (hostName: string): Promise<{ roomCode: string; playerId: string }> => {
     try {
@@ -48,8 +45,8 @@ export const useRoom = () => {
         }],
         gameState: GameState.LOBBY,
         currentTurn: null,
-        currentChallenge: null,
-        showChallenge: false,
+        currentPrompt: null,
+        showPrompt: false,
         roundNumber: 0,
         createdAt: Date.now(),
         updatedAt: Date.now(),
@@ -130,7 +127,7 @@ export const useRoom = () => {
         const firstPlayer = roomData.players[Math.floor(Math.random() * roomData.players.length)];
 
         // Create first challenge - pass the players array
-        const firstChallenge = createNewChallenge(
+        const firstPrompt = createNewPrompt(
           roomData.settings.spiceLevel,
           roomData.settings.drinkLevel,
           firstPlayer.id,
@@ -140,7 +137,7 @@ export const useRoom = () => {
         transaction.update(roomRef, {
           gameState: GameState.PLAYING,
           currentTurn: firstPlayer.id,
-          currentChallenge: firstChallenge,
+          currentPrompt: firstPrompt,
           roundNumber: 1,
           updatedAt: serverTimestamp(),
         });
@@ -160,25 +157,25 @@ export const useRoom = () => {
 
         const roomData = roomDoc.data() as Room;
         
-        // Get used challenges from room data
-        const usedChallenges = roomData.usedChallenges || [];
+        // Get used prompts from room data
+        const usedPrompts = roomData.usedPrompts || [];
 
-        // Create new challenge, avoiding used ones
-        const newChallenge = createNewChallenge(
+        // Create new prompt, avoiding used ones
+        const newPrompt = createNewPrompt(
           roomData.settings.spiceLevel,
           roomData.settings.drinkLevel,
           roomData.currentTurn!,
           roomData.players,
-          usedChallenges // Pass used challenges to avoid repetition
+          usedPrompts // Pass used prompts to avoid repetition
         );
 
-        // Add new challenge to used challenges
-        const updatedUsedChallenges = [...usedChallenges, newChallenge.prompt];
+        // Add new prompt to used prompts
+        const updatedUsedPrompts = [...usedPrompts, newPrompt.prompt];
 
         transaction.update(roomRef, {
-          currentChallenge: newChallenge,
-          showChallenge: true,
-          usedChallenges: updatedUsedChallenges,
+          currentPrompt: newPrompt,
+          showPrompt: true,
+          usedPrompts: updatedUsedPrompts,
           updatedAt: serverTimestamp(),
         });
       });
@@ -188,7 +185,7 @@ export const useRoom = () => {
     }
   };
 
-  const completeChallenge = async (roomCode: string) => {
+  const completePrompt = async (roomCode: string) => {
     try {
       const roomRef = doc(db, 'rooms', roomCode);
       await runTransaction(db, async (transaction) => {
@@ -196,7 +193,7 @@ export const useRoom = () => {
         if (!roomDoc.exists()) throw new Error('Room not found');
 
         const roomData = roomDoc.data() as Room;
-        if (!roomData.currentChallenge) return;
+        if (!roomData.currentPrompt) return;
 
         // Get next player (only from connected players)
         const connectedPlayers = roomData.players.filter(p => p.isConnected);
@@ -209,8 +206,8 @@ export const useRoom = () => {
         // Update room state
         transaction.update(roomRef, {
           currentTurn: nextPlayer.id,
-          currentChallenge: null,
-          showChallenge: false,
+          currentPrompt: null,
+          showPrompt: false,
           roundNumber: roomData.roundNumber + 1,
           updatedAt: serverTimestamp(),
         });
@@ -331,10 +328,7 @@ export const useRoom = () => {
     return unsubscribe;
   }, []);
 
-  const updateGameSettings = async (
-    roomCode: string,
-    settings: { drinkLevel: number; spiceLevel: number }
-  ) => {
+  const updateGameSettings = async (roomCode: string, settings: { drinkLevel: number; spiceLevel: number }) => {
     try {
       const roomRef = doc(db, 'rooms', roomCode);
       await updateDoc(roomRef, {
@@ -377,10 +371,10 @@ export const useRoom = () => {
         if (!roomDoc.exists()) throw new Error('Room not found');
 
         const roomData = roomDoc.data() as Room;
-        if (!roomData.currentChallenge?.voteOptions) return;
+        if (!roomData.currentPrompt?.voteOptions) return;
 
         // Update vote counts
-        const updatedOptions = roomData.currentChallenge.voteOptions.map(option => {
+        const updatedOptions = roomData.currentPrompt.voteOptions.map(option => {
           if (option.id === optionId) {
             const votes = option.votes.filter(v => v !== playerId);
             votes.push(playerId);
@@ -400,10 +394,10 @@ export const useRoom = () => {
           const winnerDrinks = Math.random() < 0.5; // Random but synchronized
 
           transaction.update(roomRef, {
-            'currentChallenge.voteOptions': updatedOptions,
-            'currentChallenge.votingComplete': true,
-            'currentChallenge.winnerDrinks': winnerDrinks,
-            'currentChallenge.results': {
+            'currentPrompt.voteOptions': updatedOptions,
+            'currentPrompt.votingComplete': true,
+            'currentPrompt.winnerDrinks': winnerDrinks,
+            'currentPrompt.results': {
               winner: sortedOptions[0],
               loser: sortedOptions[sortedOptions.length - 1]
             },
@@ -411,7 +405,7 @@ export const useRoom = () => {
           });
         } else {
           transaction.update(roomRef, {
-            'currentChallenge.voteOptions': updatedOptions,
+            'currentPrompt.voteOptions': updatedOptions,
             updatedAt: serverTimestamp(),
           });
         }
@@ -430,7 +424,7 @@ export const useRoom = () => {
     joinRoom,
     startGame,
     startTurn,
-    completeChallenge,
+    completePrompt,
     submitVote,
     subscribeToRoom,
     updateGameSettings,

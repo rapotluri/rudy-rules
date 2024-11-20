@@ -1,13 +1,13 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { Challenge, ChallengeType } from '@/types/challenge';
+import { Prompt, PromptType } from '@/types/prompt';
 import { Player } from '@/types/game';
 import { useEffect, useState } from 'react';
-import VotingChallenge from './challenges/VotingChallenge';
+import VotingPrompt from './prompts/VotingPrompt';
 
-interface ChallengeDisplayProps {
-  challenge: Challenge;
+interface PromptDisplayProps {
+  prompt: Prompt;
   currentPlayer: Player;
   allPlayers: Player[];
   isCurrentPlayer: boolean;
@@ -15,43 +15,43 @@ interface ChallengeDisplayProps {
   onVote?: (optionId: string) => void;
 }
 
-const challengeThemes: Record<ChallengeType, { 
+const promptThemes: Record<PromptType, { 
   color: string; 
   title: string; 
   emoji: string;
   garnish: string;
 }> = {
-  [ChallengeType.TRUTH]: {
+  [PromptType.TRUTH]: {
     color: '#87CEEB',
     title: 'Truth',
     emoji: '🤔',
     garnish: '🍋' // Lemon
   },
-  [ChallengeType.DARE]: {
+  [PromptType.DARE]: {
     color: '#FF69B4',
     title: 'Dare',
     emoji: '😈',
     garnish: '🍒' // Cherry
   },
-  [ChallengeType.DRINK]: {
+  [PromptType.DRINK]: {
     color: '#98FB98',
     title: 'Drink',
     emoji: '🍸',
     garnish: '🌿' // Mint
   },
-  [ChallengeType.GROUP_DRINK]: {
+  [PromptType.GROUP_DRINK]: {
     color: '#FFD700',
     title: 'Group Drink',
     emoji: '🍹',
     garnish: '🍊' // Orange
   },
-  [ChallengeType.VOTE]: {
+  [PromptType.VOTE]: {
     color: '#DDA0DD',
     title: 'Vote',
     emoji: '✋',
     garnish: '🫐' // Blueberry
   },
-  [ChallengeType.MINIGAME]: {
+  [PromptType.MINIGAME]: {
     color: '#FF7F50',
     title: 'Mini Game',
     emoji: '🎮',
@@ -59,28 +59,28 @@ const challengeThemes: Record<ChallengeType, {
   }
 };
 
-export default function ChallengeDisplay({
-  challenge,
+export default function PromptDisplay({
+  prompt,
   currentPlayer,
   allPlayers,
   isCurrentPlayer,
   onComplete,
   onVote
-}: ChallengeDisplayProps) {
+}: PromptDisplayProps) {
   const [showPrompt, setShowPrompt] = useState(false);
-  const theme = challengeThemes[challenge.type];
+  const theme = promptThemes[prompt.type];
 
   useEffect(() => {
     const timer = setTimeout(() => setShowPrompt(true), 500);
     return () => clearTimeout(timer);
   }, []);
 
-  const renderChallengeContent = () => {
-    switch (challenge.type) {
-      case ChallengeType.VOTE:
+  const renderPromptContent = () => {
+    switch (prompt.type) {
+      case PromptType.VOTE:
         return (
-          <VotingChallenge
-            challenge={challenge}
+          <VotingPrompt
+            prompt={prompt}
             currentPlayer={currentPlayer}
             allPlayers={allPlayers}
             isCurrentPlayer={isCurrentPlayer}
@@ -99,14 +99,14 @@ export default function ChallengeDisplay({
                 className="bg-black/40 backdrop-blur-md rounded-2xl p-8 shadow-2xl"
               >
                 <p className="text-white text-2xl text-center mb-6">
-                  {challenge.prompt}
+                  {prompt.prompt}
                 </p>
 
                 {/* Difficulty Indicators */}
                 <div className="flex justify-center gap-6">
-                  {challenge.spiceLevel > 0 && (
+                  {prompt.spiceLevel > 0 && (
                     <div className="flex items-center gap-1">
-                      {[...Array(challenge.spiceLevel)].map((_, i) => (
+                      {[...Array(prompt.spiceLevel)].map((_, i) => (
                         <motion.span
                           key={i}
                           initial={{ scale: 0 }}
@@ -119,9 +119,9 @@ export default function ChallengeDisplay({
                       ))}
                     </div>
                   )}
-                  {challenge.drinkLevel > 0 && (
+                  {prompt.drinkLevel > 0 && (
                     <div className="flex items-center gap-1">
-                      {[...Array(challenge.drinkLevel)].map((_, i) => (
+                      {[...Array(prompt.drinkLevel)].map((_, i) => (
                         <motion.span
                           key={i}
                           initial={{ scale: 0 }}
@@ -190,7 +190,7 @@ export default function ChallengeDisplay({
                 scale: 1
               }}
               transition={{
-                duration: 20 + i * 5, // Different duration for each garnish
+                duration: 20 + i * 5,
                 repeat: Infinity,
                 ease: "linear",
                 times: [0, 0.33, 0.66, 1],
@@ -255,7 +255,7 @@ export default function ChallengeDisplay({
 
       {/* Content */}
       <div className="relative z-10 w-full max-w-2xl mx-auto">
-        {/* Challenge Title */}
+        {/* Prompt Title */}
         <motion.div
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -266,11 +266,11 @@ export default function ChallengeDisplay({
           </h2>
         </motion.div>
 
-        {/* Challenge Content */}
-        {renderChallengeContent()}
+        {/* Prompt Content */}
+        {renderPromptContent()}
 
-        {/* Action Button (only for non-voting challenges) */}
-        {challenge.type !== ChallengeType.VOTE && isCurrentPlayer && (
+        {/* Action Button (only for non-voting prompts) */}
+        {prompt.type !== PromptType.VOTE && isCurrentPlayer && (
           <motion.div
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -284,7 +284,7 @@ export default function ChallengeDisplay({
               className="bg-white/10 text-white px-12 py-4 rounded-lg text-xl font-bold shadow-lg border-2"
               style={{ borderColor: theme.color }}
             >
-              Complete Challenge
+              Complete Prompt
             </motion.button>
           </motion.div>
         )}
