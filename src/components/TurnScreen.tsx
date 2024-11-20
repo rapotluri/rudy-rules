@@ -26,8 +26,8 @@ export default function TurnScreen({
         <motion.h1 
           initial={{ y: -20 }}
           animate={{ y: 0 }}
-          className="text-4xl font-bold mb-2"
-          style={{ color: currentPlayer.color }}
+          className="text-4xl font-bold mb-2 text-white"
+          style={{ textShadow: '0 0 10px rgba(0, 0, 0, 0.5)' }}
         >
           {currentPlayer.name}&apos;s Turn
         </motion.h1>
@@ -75,23 +75,6 @@ export default function TurnScreen({
             Waiting for {currentPlayer.name} to start their turn...
           </motion.p>
         )}
-      </div>
-
-      {/* Turn Order */}
-      <div className="w-full mt-8">
-        <p className="text-gray-500 text-center mb-4 text-sm uppercase tracking-wider">Next Players</p>
-        <div className="flex justify-center gap-3">
-          {Array(5).fill(0).map((_, i) => (
-            <motion.div
-              key={i}
-              className="w-2 h-2 rounded-full"
-              style={{
-                backgroundColor: i === 0 ? currentPlayer.color : 'rgba(255,255,255,0.1)',
-                transform: `scale(${1 - i * 0.1})`
-              }}
-            />
-          ))}
-        </div>
       </div>
     </motion.div>
   );
