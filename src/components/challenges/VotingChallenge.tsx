@@ -193,9 +193,9 @@ export default function VotingChallenge({
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="text-center text-red-400 mt-6 font-semibold"
+          className="text-center text-red-400 mt-4"
         >
-          Time's up! You didn't vote!
+          Time&apos;s up! You didn&apos;t vote!
         </motion.p>
       )}
 

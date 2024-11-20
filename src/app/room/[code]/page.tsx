@@ -6,6 +6,7 @@ import { GameState } from '@/types/game';
 import { motion } from 'framer-motion';
 import Layout from '@/components/Layout';
 import { useParams } from 'next/navigation';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import HostControls from '@/components/HostControls';
 import ChallengeDisplay from '@/components/ChallengeDisplay';
 import TurnScreen from '@/components/TurnScreen';
