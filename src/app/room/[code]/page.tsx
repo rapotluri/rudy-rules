@@ -53,7 +53,7 @@ export default function RoomPage() {
     // Handle Keep Three selections
     if (room?.currentPrompt?.type === PromptType.KEEP_THREE) {
       await submitKeepThreeSelection(roomCode, optionId.split(','));
-    } else if (room?.currentPrompt?.type === PromptType.MINIGAME) {
+    } else if (room?.currentPrompt?.type === PromptType.REACTIONGAME) {
       // Handle reaction game
       await submitReactionTime(roomCode, playerId, optionId);
     } else {

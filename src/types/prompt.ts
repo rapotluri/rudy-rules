@@ -6,7 +6,7 @@ export enum PromptType {
   VOTE = 'VOTE',
   TWO_OPTION_VOTE = 'TWO_OPTION_VOTE',
   KEEP_THREE = 'KEEP_THREE',
-  MINIGAME = 'MINIGAME',
+  REACTIONGAME = 'REACTIONGAME',
   TIMED = 'TIMED'
 }
 
@@ -30,7 +30,7 @@ export interface TimedPromptOptions {
   style: 'fast_money' | 'tongue_twister';
 }
 
-export interface MinigameOptions {
+export interface ReactionGameOptions {
   style: 'reaction';
   instructions: string;
   prize: string;
@@ -62,7 +62,7 @@ export interface Prompt {
   keepThreeOptions?: KeepThreeOptions;
   selectedOptions?: string[];
   timedOptions?: TimedPromptOptions;
-  minigameOptions?: MinigameOptions;
+  ReactionGameOptions?: ReactionGameOptions;
 }
 
 // Basic challenge library

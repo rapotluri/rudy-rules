@@ -8,7 +8,7 @@ import VotingPrompt from './prompts/VotingPrompt';
 import TwoOptionPrompt from './prompts/TwoOptionPrompt';
 import KeepThreePrompt from './prompts/KeepThreePrompt';
 import TimedPrompt from './prompts/TimedPrompt';
-import ReactionPrompt from './prompts/ReactionPrompt';
+import ReactionPrompt from './minigames/ReactionGame';
 
 interface PromptDisplayProps {
   prompt: Prompt;
@@ -62,10 +62,10 @@ const promptThemes: Record<PromptType, {
     emoji: '⚖️',
     garnish: '🍊'
   },
-  [PromptType.MINIGAME]: {
+  [PromptType.REACTIONGAME]: {
     color: '#FF7F50',
     title: 'Mini Game',
-    emoji: '🎮',
+    emoji: '⚡',
     garnish: '🍓' // Strawberry
   },
   [PromptType.KEEP_THREE]: {
@@ -166,8 +166,8 @@ export default function PromptDisplay({
             showTimedCategory={showTimedCategory}
           />
         );
-      case PromptType.MINIGAME:
-        if (prompt.minigameOptions?.style === 'reaction') {
+      case PromptType.REACTIONGAME:
+        if (prompt.ReactionGameOptions?.style === 'reaction') {
           return (
             <ReactionPrompt
               prompt={prompt}
@@ -368,7 +368,7 @@ export default function PromptDisplay({
          prompt.type !== PromptType.TWO_OPTION_VOTE && 
          prompt.type !== PromptType.KEEP_THREE &&
          prompt.type !== PromptType.TIMED &&
-         prompt.type !== PromptType.MINIGAME &&
+         prompt.type !== PromptType.REACTIONGAME &&
          isCurrentPlayer && (
           <motion.div
             initial={{ y: 50, opacity: 0 }}

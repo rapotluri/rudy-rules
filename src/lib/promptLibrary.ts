@@ -36,7 +36,7 @@ export const createNewPrompt = (
   // Create base prompt
   const basePrompt: Partial<Prompt> = {
     id: crypto.randomUUID(),
-    type: template.type || PromptType.MINIGAME,
+    type: template.type || PromptType.REACTIONGAME,
     title: template.title || 'Reaction Test',
     prompt: template.prompt || 'Tap when the screen turns red',
     targetPlayers: [targetPlayerId],
@@ -45,7 +45,7 @@ export const createNewPrompt = (
     completed: false,
     syncNeeded: true,
     groupResponse: true,
-    minigameOptions: template.minigameOptions
+    ReactionGameOptions: template.ReactionGameOptions
   };
 
   return basePrompt as Prompt;

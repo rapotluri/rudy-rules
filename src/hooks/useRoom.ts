@@ -465,19 +465,19 @@ export const useRoom = () => {
         if (!roomDoc.exists()) throw new Error('Room not found');
 
         const roomData = roomDoc.data() as Room;
-        if (!roomData.currentPrompt?.minigameOptions) return;
+        if (!roomData.currentPrompt?.ReactionGameOptions) return;
 
         // If it's the 'start' signal, just set reactionStarted to true
         if (reactionTime === 'start') {
           transaction.update(roomRef, {
-            'currentPrompt.minigameOptions.reactionStarted': true,
+            'currentPrompt.ReactionGameOptions.reactionStarted': true,
             updatedAt: serverTimestamp(),
           });
           return;
         }
 
         // Get current reaction times
-        const currentTimes = roomData.currentPrompt.minigameOptions.allReactionTimes || {};
+        const currentTimes = roomData.currentPrompt.ReactionGameOptions.allReactionTimes || {};
         
         // Add this player's time
         const updatedTimes = {
@@ -486,7 +486,7 @@ export const useRoom = () => {
         };
 
         transaction.update(roomRef, {
-          'currentPrompt.minigameOptions.allReactionTimes': updatedTimes,
+          'currentPrompt.ReactionGameOptions.allReactionTimes': updatedTimes,
           updatedAt: serverTimestamp(),
         });
       });

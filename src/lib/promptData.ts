@@ -371,10 +371,10 @@ const TONGUE_TWISTER_PROMPTS: Partial<Prompt>[] = [
 
 const REACTION_PROMPTS: Partial<Prompt>[] = [
   {
-    type: PromptType.MINIGAME,
+    type: PromptType.REACTIONGAME,
     title: "Reaction Test",
     prompt: "Tap when the screen turns red",
-    minigameOptions: {
+    ReactionGameOptions: {
       style: 'reaction',
       instructions: "Tap when the screen turns red. The player with the slowest reaction time drinks!",
       prize: "Slowest player drinks!"

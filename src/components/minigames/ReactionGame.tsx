@@ -51,11 +51,11 @@ export default function ReactionPrompt({
 
   // Sync with Firebase
   useEffect(() => {
-    if (prompt.minigameOptions?.reactionStarted) {
+    if (prompt.ReactionGameOptions?.reactionStarted) {
       setReactionStarted(true);
       setStartTime(Date.now());
     }
-  }, [prompt.minigameOptions?.reactionStarted]);
+  }, [prompt.ReactionGameOptions?.reactionStarted]);
 
   const handleClick = () => {
     if (!reactionStarted) {
@@ -76,7 +76,7 @@ export default function ReactionPrompt({
   };
 
   // Get all reaction times and find the slowest player
-  const allReactionTimes = prompt.minigameOptions?.allReactionTimes || {};
+  const allReactionTimes = prompt.ReactionGameOptions?.allReactionTimes || {};
   const allPlayersResponded = Object.keys(allReactionTimes).length === allPlayers.length;
   
   const sortedResults = Object.entries(allReactionTimes)
@@ -99,7 +99,7 @@ export default function ReactionPrompt({
         >
           <div className="text-xl text-gray-300 max-w-xl mx-auto mb-4">
             <p>
-              {prompt.minigameOptions?.instructions}
+              {prompt.ReactionGameOptions?.instructions}
             </p>
           </div>
           <div className="text-4xl font-bold text-white">
