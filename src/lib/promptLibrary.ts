@@ -1,12 +1,11 @@
 import { Prompt, PromptType } from '@/types/prompt';
 import { Player } from '@/types/game';
-import { TRUTH_PROMPTS, VOTE_PROMPTS, TWO_OPTION_PROMPTS } from '@/lib/promptData';
+import { REACTION_PROMPTS } from './promptData';
 
 // Get prompts function
 export const getPrompts = (spiceLevel: number, drinkLevel: number, votingOnly = false) => {
-  const prompts = votingOnly 
-    ? [...VOTE_PROMPTS, ...TWO_OPTION_PROMPTS] 
-    : [...TRUTH_PROMPTS, ...VOTE_PROMPTS, ...TWO_OPTION_PROMPTS];
+  // For testing, only return Reaction prompts
+  const prompts = REACTION_PROMPTS;
   
   return prompts.filter(prompt => 
     (prompt.spiceLevel || 0) <= spiceLevel && 
@@ -28,8 +27,7 @@ export const createNewPrompt = (
   
   // If all prompts have been used, reset the pool
   if (availablePrompts.length === 0) {
-    //availablePrompts = [...VOTE_PROMPTS, ...TWO_OPTION_PROMPTS];
-    availablePrompts = [...TWO_OPTION_PROMPTS];
+    availablePrompts = REACTION_PROMPTS;
   }
 
   // Get a random prompt from available ones
@@ -38,35 +36,17 @@ export const createNewPrompt = (
   // Create base prompt
   const basePrompt: Partial<Prompt> = {
     id: crypto.randomUUID(),
-    type: template.type || PromptType.VOTE,
-    title: template.title || 'Vote',
-    prompt: template.prompt || 'Who is most likely to...',
+    type: template.type || PromptType.MINIGAME,
+    title: template.title || 'Reaction Test',
+    prompt: template.prompt || 'Tap when the screen turns red',
     targetPlayers: [targetPlayerId],
     spiceLevel: template.spiceLevel || spiceLevel,
     drinkLevel: template.drinkLevel || drinkLevel,
     completed: false,
     syncNeeded: true,
     groupResponse: true,
-    votingComplete: false
+    minigameOptions: template.minigameOptions
   };
 
-  // Add type-specific properties
-  if (template.type === PromptType.TWO_OPTION_VOTE) {
-    return {
-      ...basePrompt,
-      voteOptions: template.voteOptions || [
-        { id: 'option1', text: 'Option 1', votes: [] },
-        { id: 'option2', text: 'Option 2', votes: [] }
-      ]
-    } as Prompt;
-  } else {
-    return {
-      ...basePrompt,
-      voteOptions: players.map(player => ({
-        id: player.id,
-        text: player.name,
-        votes: []
-      }))
-    } as Prompt;
-  }
+  return basePrompt as Prompt;
 }; 

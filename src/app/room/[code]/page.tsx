@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRoom } from '@/hooks/useRoom';
 import { GameState } from '@/types/game';
+import { PromptType } from '@/types/prompt';
 import { motion } from 'framer-motion';
 import Layout from '@/components/Layout';
 import { useParams } from 'next/navigation';
@@ -24,8 +25,11 @@ export default function RoomPage() {
     startTurn, 
     completePrompt, 
     submitVote,
+    submitKeepThreeSelection, 
+    showTimedCategory, 
     updateGameSettings, 
-    kickPlayer
+    kickPlayer,
+    submitReactionTime
   } = useRoom();
 
   useEffect(() => {
@@ -45,7 +49,17 @@ export default function RoomPage() {
 
   const handleVote = async (optionId: string) => {
     if (!roomCode || !playerId) return;
-    await submitVote(roomCode, playerId, optionId);
+    
+    // Handle Keep Three selections
+    if (room?.currentPrompt?.type === PromptType.KEEP_THREE) {
+      await submitKeepThreeSelection(roomCode, optionId.split(','));
+    } else if (room?.currentPrompt?.type === PromptType.MINIGAME) {
+      // Handle reaction game
+      await submitReactionTime(roomCode, playerId, optionId);
+    } else {
+      // Handle regular voting
+      await submitVote(roomCode, playerId, optionId);
+    }
   };
 
   const isKicked = playerId && room && !room.players.find(p => p.id === playerId);
@@ -197,6 +211,7 @@ export default function RoomPage() {
                     isCurrentPlayer={playerId === room.currentTurn}
                     onComplete={() => completePrompt(roomCode)}
                     onVote={handleVote}
+                    showTimedCategory={() => showTimedCategory(roomCode)}
                   />
                 ) : (
                   <TurnScreen

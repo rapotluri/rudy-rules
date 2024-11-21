@@ -5,13 +5,37 @@ export enum PromptType {
   GROUP_DRINK = 'GROUP_DRINK',
   VOTE = 'VOTE',
   TWO_OPTION_VOTE = 'TWO_OPTION_VOTE',
-  MINIGAME = 'MINIGAME'
+  KEEP_THREE = 'KEEP_THREE',
+  MINIGAME = 'MINIGAME',
+  TIMED = 'TIMED'
 }
 
 export interface VoteOption {
   id: string;
   text: string;
   votes: string[];  // Array of player IDs who voted for this option
+}
+
+export interface KeepThreeOptions {
+  items: string[];
+  category: string;
+  selectedOptions?: string[];
+}
+
+export interface TimedPromptOptions {
+  category?: string;
+  instructions: string;
+  timeLimit: number;  // in seconds
+  showCategory: boolean;  // to control when to show category
+  style: 'fast_money' | 'tongue_twister';
+}
+
+export interface MinigameOptions {
+  style: 'reaction';
+  instructions: string;
+  prize: string;
+  reactionStarted?: boolean;
+  allReactionTimes?: Record<string, number>;
 }
 
 export interface Prompt {
@@ -35,6 +59,10 @@ export interface Prompt {
     winner: VoteOption;
     loser: VoteOption;
   };
+  keepThreeOptions?: KeepThreeOptions;
+  selectedOptions?: string[];
+  timedOptions?: TimedPromptOptions;
+  minigameOptions?: MinigameOptions;
 }
 
 // Basic challenge library

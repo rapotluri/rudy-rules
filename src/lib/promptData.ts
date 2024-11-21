@@ -1,7 +1,7 @@
 import { Prompt, PromptType } from '@/types/prompt';
 
 // Basic truth prompts from DrinkRoyale
-export const TRUTH_PROMPTS: Partial<Prompt>[] = [
+const TRUTH_PROMPTS: Partial<Prompt>[] = [
   {
     type: PromptType.TRUTH,
     title: "Truth",
@@ -70,7 +70,7 @@ export const TRUTH_PROMPTS: Partial<Prompt>[] = [
 ];
 
 // Add Voting Challenges
-export const VOTE_PROMPTS: Partial<Prompt>[] = [
+const VOTE_PROMPTS: Partial<Prompt>[] = [
   {
     type: PromptType.VOTE,
     title: "Most Likely To...",
@@ -163,7 +163,7 @@ export const VOTE_PROMPTS: Partial<Prompt>[] = [
   }
 ];
 
-export const TWO_OPTION_PROMPTS: Partial<Prompt>[] = [
+const TWO_OPTION_PROMPTS: Partial<Prompt>[] = [
   {
     type: PromptType.TWO_OPTION_VOTE,
     title: "Would You Rather",
@@ -185,5 +185,212 @@ export const TWO_OPTION_PROMPTS: Partial<Prompt>[] = [
     ],
     spiceLevel: 0,
     drinkLevel: 1
+  },
+  {
+    type: PromptType.TWO_OPTION_VOTE,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if your date still has their ex on social media?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 1,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.TWO_OPTION_VOTE,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they live with their parents at 25?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 1,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.TWO_OPTION_VOTE,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they don't drink alcohol?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 1,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.TWO_OPTION_VOTE,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they're still friends with all their exes?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 2,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.TWO_OPTION_VOTE,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they don't have any close friends?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 1,
+    drinkLevel: 1
   }
 ];
+
+const KEEP_THREE_PROMPTS: Partial<Prompt>[] = [
+  {
+    type: PromptType.KEEP_THREE,
+    title: "Keep 3",
+    prompt: "Which 3 apps would you keep if you had to delete the rest?",
+    keepThreeOptions: {
+      category: "Apps",
+      items: [
+        "Instagram",
+        "TikTok",
+        "Snapchat",
+        "Twitter/X",
+        "WhatsApp",
+        "YouTube",
+        "Spotify",
+        "Netflix"
+      ]
+    },
+    spiceLevel: 0,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.KEEP_THREE,
+    title: "Keep 3",
+    prompt: "Which 3 fast food places would you keep if the rest disappeared?",
+    keepThreeOptions: {
+      category: "Fast Food",
+      items: [
+        "McDonald's",
+        "Burger King",
+        "Wendy's",
+        "Taco Bell",
+        "KFC",
+        "Subway",
+        "Chipotle",
+        "Five Guys"
+      ]
+    },
+    spiceLevel: 0,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.KEEP_THREE,
+    title: "Keep 3",
+    prompt: "Which 3 superpowers would you choose?",
+    keepThreeOptions: {
+      category: "Superpowers",
+      items: [
+        "Invisibility",
+        "Flight",
+        "Mind Reading",
+        "Time Travel",
+        "Super Strength",
+        "Teleportation",
+        "Healing",
+        "Shape Shifting"
+      ]
+    },
+    spiceLevel: 0,
+    drinkLevel: 1
+  }
+];
+
+const FAST_MONEY_PROMPTS: Partial<Prompt>[] = [
+  {
+    type: PromptType.TIMED,
+    title: "Fast Money",
+    prompt: "List as many items as you can",
+    timedOptions: {
+      category: "Disney Movies",
+      instructions: "List as many Disney movies as you can. Give out that many sips, or drink if you can't name any!",
+      timeLimit: 15,
+      showCategory: false,
+      style: "fast_money"
+    },
+    spiceLevel: 0,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.TIMED,
+    title: "Fast Money",
+    prompt: "List as many items as you can",
+    timedOptions: {
+      category: "Alcoholic Drinks",
+      instructions: "List as many alcoholic drinks as you can. Give out that many sips, or drink if you can't name any!",
+      timeLimit: 15,
+      showCategory: false,
+      style: "fast_money"
+    },
+    spiceLevel: 0,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.TIMED,
+    title: "Fast Money",
+    prompt: "List as many items as you can",
+    timedOptions: {
+      category: "Fast Food Menu Items",
+      instructions: "List as many fast food menu items as you can. Give out that many sips, or drink if you can't name any!",
+      timeLimit: 15,
+      showCategory: false,
+      style: "fast_money"
+    },
+    spiceLevel: 0,
+    drinkLevel: 1
+  }
+];
+
+const TONGUE_TWISTER_PROMPTS: Partial<Prompt>[] = [
+  {
+    type: PromptType.TIMED,
+    title: "Tongue Twister",
+    prompt: "Say it 3 times fast",
+    timedOptions: {
+      category: "She sells seashells by the seashore",
+      instructions: "Say the tongue twister 3 times fast. Give out 3 sips if you succeed, drink if you fail!",
+      timeLimit: 15,
+      showCategory: false,
+      style: "tongue_twister"
+    },
+    spiceLevel: 0,
+    drinkLevel: 1
+  },
+  // Add more tongue twisters here
+];
+
+const REACTION_PROMPTS: Partial<Prompt>[] = [
+  {
+    type: PromptType.MINIGAME,
+    title: "Reaction Test",
+    prompt: "Tap when the screen turns red",
+    minigameOptions: {
+      style: 'reaction',
+      instructions: "Tap when the screen turns red. The player with the slowest reaction time drinks!",
+      prize: "Slowest player drinks!"
+    },
+    spiceLevel: 0,
+    drinkLevel: 1
+  }
+];
+
+// Single export statement
+export {
+  TRUTH_PROMPTS,
+  VOTE_PROMPTS,
+  TWO_OPTION_PROMPTS,
+  KEEP_THREE_PROMPTS,
+  FAST_MONEY_PROMPTS,
+  TONGUE_TWISTER_PROMPTS,
+  REACTION_PROMPTS
+};

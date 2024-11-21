@@ -6,6 +6,9 @@ import { Player } from '@/types/game';
 import { useEffect, useState } from 'react';
 import VotingPrompt from './prompts/VotingPrompt';
 import TwoOptionPrompt from './prompts/TwoOptionPrompt';
+import KeepThreePrompt from './prompts/KeepThreePrompt';
+import TimedPrompt from './prompts/TimedPrompt';
+import ReactionPrompt from './prompts/ReactionPrompt';
 
 interface PromptDisplayProps {
   prompt: Prompt;
@@ -14,6 +17,7 @@ interface PromptDisplayProps {
   isCurrentPlayer: boolean;
   onComplete: () => void;
   onVote?: (optionId: string) => void;
+  showTimedCategory?: () => void;
 }
 
 const promptThemes: Record<PromptType, { 
@@ -63,7 +67,41 @@ const promptThemes: Record<PromptType, {
     title: 'Mini Game',
     emoji: '🎮',
     garnish: '🍓' // Strawberry
+  },
+  [PromptType.KEEP_THREE]: {
+    color: '#98FB98',  // Light green
+    title: 'Keep 3',
+    emoji: '🎯',
+    garnish: '🍀'  // Four leaf clover
+  },
+  [PromptType.TIMED]: {
+    color: '#FF6B6B',  // This will be overridden based on style
+    title: '',  // This will be overridden based on style
+    emoji: '⏱️',
+    garnish: '🌶️'
+  },
+};
+
+const getTimedTheme = (prompt: Prompt) => {
+  const baseTheme = promptThemes[PromptType.TIMED];
+  
+  if (prompt.timedOptions?.style === 'fast_money') {
+    return {
+      ...baseTheme,
+      color: '#FF6B6B',  // Coral red
+      title: 'Fast Money',
+      emoji: '⏱️'
+    };
+  } else if (prompt.timedOptions?.style === 'tongue_twister') {
+    return {
+      ...baseTheme,
+      color: '#9370DB',  // Medium purple
+      title: 'Tongue Twister',
+      emoji: '👅'
+    };
   }
+  
+  return baseTheme;
 };
 
 export default function PromptDisplay({
@@ -72,10 +110,11 @@ export default function PromptDisplay({
   allPlayers,
   isCurrentPlayer,
   onComplete,
-  onVote
+  onVote,
+  showTimedCategory
 }: PromptDisplayProps) {
   const [showPrompt, setShowPrompt] = useState(false);
-  const theme = promptThemes[prompt.type];
+  const theme = prompt.type === PromptType.TIMED ? getTimedTheme(prompt) : promptThemes[prompt.type];
 
   useEffect(() => {
     const timer = setTimeout(() => setShowPrompt(true), 500);
@@ -106,6 +145,41 @@ export default function PromptDisplay({
             onComplete={onComplete}
           />
         );
+      case PromptType.KEEP_THREE:
+        return (
+          <KeepThreePrompt
+            prompt={prompt}
+            currentPlayer={currentPlayer}
+            isCurrentPlayer={isCurrentPlayer}
+            onComplete={onComplete}
+            onVote={onVote}
+          />
+        );
+      case PromptType.TIMED:
+        return (
+          <TimedPrompt
+            prompt={prompt}
+            currentPlayer={currentPlayer}
+            isCurrentPlayer={isCurrentPlayer}
+            onComplete={onComplete}
+            onVote={onVote}
+            showTimedCategory={showTimedCategory}
+          />
+        );
+      case PromptType.MINIGAME:
+        if (prompt.minigameOptions?.style === 'reaction') {
+          return (
+            <ReactionPrompt
+              prompt={prompt}
+              currentPlayer={currentPlayer}
+              allPlayers={allPlayers}
+              isCurrentPlayer={isCurrentPlayer}
+              onComplete={onComplete}
+              onVote={onVote}
+            />
+          );
+        }
+        return null;
       default:
         return (
           <AnimatePresence>
@@ -277,19 +351,24 @@ export default function PromptDisplay({
         <motion.div
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className="text-center mb-12"
+          className="text-center mb-12 px-4"
         >
-          <h2 className="text-5xl font-bold" style={{ color: theme.color }}>
-            {theme.emoji} {theme.title} {theme.emoji}
+          <h2 className="text-4xl md:text-5xl font-bold flex items-center justify-center gap-3 whitespace-nowrap">
+            <span className="inline-flex items-center justify-center w-12 h-12">{theme.emoji}</span>
+            <span>{prompt.title || theme.title}</span>
+            <span className="inline-flex items-center justify-center w-12 h-12">{theme.emoji}</span>
           </h2>
         </motion.div>
 
         {/* Prompt Content */}
         {renderPromptContent()}
 
-        {/* Action Button (only for non-voting prompts) */}
+        {/* Action Button (only for non-voting/non-timed/non-minigame prompts) */}
         {prompt.type !== PromptType.VOTE && 
          prompt.type !== PromptType.TWO_OPTION_VOTE && 
+         prompt.type !== PromptType.KEEP_THREE &&
+         prompt.type !== PromptType.TIMED &&
+         prompt.type !== PromptType.MINIGAME &&
          isCurrentPlayer && (
           <motion.div
             initial={{ y: 50, opacity: 0 }}
