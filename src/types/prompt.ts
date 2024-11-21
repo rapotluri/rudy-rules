@@ -7,7 +7,8 @@ export enum PromptType {
   TWO_OPTION_VOTE = 'TWO_OPTION_VOTE',
   KEEP_THREE = 'KEEP_THREE',
   REACTIONGAME = 'REACTIONGAME',
-  TIMED = 'TIMED'
+  TIMED = 'TIMED',
+  POPLOCK = 'POPLOCK'
 }
 
 export interface VoteOption {
@@ -38,6 +39,16 @@ export interface ReactionGameOptions {
   allReactionTimes?: Record<string, number>;
 }
 
+export interface PopLockOptions {
+  style: 'poplock';
+  instructions: string;
+  prize: string;
+  speed?: number;
+  targetScore?: number;
+  scores?: Record<string, number>;
+  gameEnded?: boolean;
+}
+
 export interface Prompt {
   id: string;
   type: PromptType;
@@ -63,6 +74,7 @@ export interface Prompt {
   selectedOptions?: string[];
   timedOptions?: TimedPromptOptions;
   ReactionGameOptions?: ReactionGameOptions;
+  PopLockOptions?: PopLockOptions;
 }
 
 // Basic challenge library

@@ -384,6 +384,58 @@ const REACTION_PROMPTS: Partial<Prompt>[] = [
   }
 ];
 
+// Add this alongside your REACTION_PROMPTS
+const POPLOCK_PROMPTS: Partial<Prompt>[] = [
+  {
+    type: PromptType.POPLOCK,
+    title: "Pop the Lock",
+    prompt: "Tap when the line hits the dot! First to 5 wins!",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    PopLockOptions: {
+      style: 'poplock',
+      instructions: "Tap when the line hits the dot!",
+      prize: "Lowest score drinks!",
+      speed: 2,
+      targetScore: 5
+    }
+  },
+  {
+    type: PromptType.POPLOCK,
+    title: "Speed Lock",
+    prompt: "Tap when the line hits the dot! Watch out, it gets faster!",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    PopLockOptions: {
+      style: 'poplock',
+      instructions: "Tap when the line hits the dot!",
+      prize: "Lowest score drinks!",
+      speed: 1.5,
+      targetScore: 3
+    }
+  },
+  {
+    type: PromptType.POPLOCK,
+    title: "Master Lock",
+    prompt: "Tap when the line hits the dot! High stakes version!",
+    spiceLevel: 0,
+    drinkLevel: 2,
+    syncNeeded: true,
+    groupResponse: true,
+    PopLockOptions: {
+      style: 'poplock',
+      instructions: "Tap when the line hits the dot!",
+      prize: "Winner gives out drinks, loser takes them!",
+      speed: 1,
+      targetScore: 7
+    }
+  }
+];
+
 // Single export statement
 export {
   TRUTH_PROMPTS,
@@ -392,5 +444,6 @@ export {
   KEEP_THREE_PROMPTS,
   FAST_MONEY_PROMPTS,
   TONGUE_TWISTER_PROMPTS,
-  REACTION_PROMPTS
+  REACTION_PROMPTS,
+  POPLOCK_PROMPTS
 };

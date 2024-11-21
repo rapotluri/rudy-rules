@@ -1,11 +1,11 @@
 import { Prompt, PromptType } from '@/types/prompt';
 import { Player } from '@/types/game';
-import { REACTION_PROMPTS } from './promptData';
+import { REACTION_PROMPTS, POPLOCK_PROMPTS } from './promptData';
 
 // Get prompts function
 export const getPrompts = (spiceLevel: number, drinkLevel: number, votingOnly = false) => {
-  // For testing, only return Reaction prompts
-  const prompts = REACTION_PROMPTS;
+  // Include both Reaction and Pop Lock prompts
+  const prompts = [...REACTION_PROMPTS, ...POPLOCK_PROMPTS];
   
   return prompts.filter(prompt => 
     (prompt.spiceLevel || 0) <= spiceLevel && 
@@ -27,7 +27,7 @@ export const createNewPrompt = (
   
   // If all prompts have been used, reset the pool
   if (availablePrompts.length === 0) {
-    availablePrompts = REACTION_PROMPTS;
+    availablePrompts = [...REACTION_PROMPTS, ...POPLOCK_PROMPTS];
   }
 
   // Get a random prompt from available ones
@@ -45,8 +45,14 @@ export const createNewPrompt = (
     completed: false,
     syncNeeded: true,
     groupResponse: true,
-    ReactionGameOptions: template.ReactionGameOptions
   };
+
+  // Add game-specific options based on type
+  if (template.type === PromptType.REACTIONGAME) {
+    basePrompt.ReactionGameOptions = template.ReactionGameOptions;
+  } else if (template.type === PromptType.POPLOCK) {
+    basePrompt.PopLockOptions = template.PopLockOptions;
+  }
 
   return basePrompt as Prompt;
 }; 

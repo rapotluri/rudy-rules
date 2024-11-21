@@ -496,6 +496,48 @@ export const useRoom = () => {
     }
   };
 
+  const submitPopLockScore = async (roomCode: string, playerId: string, score: string) => {
+    try {
+      const roomRef = doc(db, 'rooms', roomCode);
+      await runTransaction(db, async (transaction) => {
+        const roomDoc = await transaction.get(roomRef);
+        if (!roomDoc.exists()) throw new Error('Room not found');
+
+        const roomData = roomDoc.data() as Room;
+        if (!roomData.currentPrompt?.PopLockOptions) return;
+
+        // Get current scores
+        const currentScores = roomData.currentPrompt.PopLockOptions.scores || {};
+        
+        // Initialize scores for all players if this is the first submission
+        if (Object.keys(currentScores).length === 0) {
+          roomData.players.forEach(player => {
+            currentScores[player.id] = 0;
+          });
+        }
+        
+        // Add this player's score
+        const updatedScores = {
+          ...currentScores,
+          [playerId]: parseInt(score)
+        };
+
+        // Check if game should end - only if someone reaches target score
+        const targetScore = roomData.currentPrompt.PopLockOptions.targetScore || 5;
+        const shouldEndGame = parseInt(score) >= targetScore;
+
+        transaction.update(roomRef, {
+          'currentPrompt.PopLockOptions.scores': updatedScores,
+          'currentPrompt.PopLockOptions.gameEnded': shouldEndGame,
+          updatedAt: serverTimestamp(),
+        });
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to submit score');
+      throw err;
+    }
+  };
+
   return {
     room,
     loading,
@@ -512,5 +554,6 @@ export const useRoom = () => {
     kickPlayer,
     showTimedCategory,
     submitReactionTime,
+    submitPopLockScore,
   };
 }; 

@@ -29,7 +29,8 @@ export default function RoomPage() {
     showTimedCategory, 
     updateGameSettings, 
     kickPlayer,
-    submitReactionTime
+    submitReactionTime,
+    submitPopLockScore
   } = useRoom();
 
   useEffect(() => {
@@ -56,6 +57,9 @@ export default function RoomPage() {
     } else if (room?.currentPrompt?.type === PromptType.REACTIONGAME) {
       // Handle reaction game
       await submitReactionTime(roomCode, playerId, optionId);
+    } else if (room?.currentPrompt?.type === PromptType.POPLOCK) {
+      // Handle Pop Lock game
+      await submitPopLockScore(roomCode, playerId, optionId);
     } else {
       // Handle regular voting
       await submitVote(roomCode, playerId, optionId);
