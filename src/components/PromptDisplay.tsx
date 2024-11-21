@@ -11,6 +11,7 @@ import TimedPrompt from './prompts/TimedPrompt';
 import ReactionPrompt from './minigames/ReactionGame';
 import PopLockGame from './minigames/PopLockGame';
 import BattleshipGame from './minigames/BattleshipGame';
+import WordRaceGame from './minigames/WordRaceGame';
 
 interface PromptDisplayProps {
   prompt: Prompt;
@@ -93,6 +94,12 @@ const promptThemes: Record<PromptType, {
     title: 'Battlesips',
     emoji: '⛵',
     garnish: '🌊'
+  },
+  [PromptType.WORDRACE]: {
+    color: '#9370DB',  // Medium purple
+    title: 'Word Race',
+    emoji: '🔎',
+    garnish: '📝'
   }
 };
 
@@ -212,6 +219,20 @@ export default function PromptDisplay({
         if (prompt.BattleshipOptions?.style === 'ships') {
           return (
             <BattleshipGame
+              prompt={prompt}
+              currentPlayer={currentPlayer}
+              allPlayers={allPlayers}
+              isCurrentPlayer={isCurrentPlayer}
+              onComplete={onComplete}
+              onVote={onVote}
+            />
+          );
+        }
+        return null;
+      case PromptType.WORDRACE:
+        if (prompt.WordRaceOptions?.style === 'wordle') {
+          return (
+            <WordRaceGame
               prompt={prompt}
               currentPlayer={currentPlayer}
               allPlayers={allPlayers}
@@ -413,6 +434,7 @@ export default function PromptDisplay({
          prompt.type !== PromptType.REACTIONGAME &&
          prompt.type !== PromptType.POPLOCK &&
          prompt.type !== PromptType.BATTLESHIP &&
+         prompt.type !== PromptType.WORDRACE &&
          isCurrentPlayer && (
           <motion.div
             initial={{ y: 50, opacity: 0 }}

@@ -468,6 +468,40 @@ const BATTLESHIP_PROMPTS: Partial<Prompt>[] = [
   }
 ];
 
+// Add this alongside other prompt arrays
+const WORDRACE_PROMPTS: Partial<Prompt>[] = [
+  {
+    type: PromptType.WORDRACE,
+    title: "Word Race",
+    prompt: "Find the 4-letter word before time runs out!",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    WordRaceOptions: {
+      style: 'wordle',
+      instructions: "Type a 4-letter word. First to find it wins!",
+      prize: "Winner gives out a drink, everyone else drinks!",
+      word: "HELM"  // From your word list
+    }
+  },
+  {
+    type: PromptType.WORDRACE,
+    title: "Word Race",
+    prompt: "Find the 4-letter word before time runs out!",
+    spiceLevel: 0,
+    drinkLevel: 2,
+    syncNeeded: true,
+    groupResponse: true,
+    WordRaceOptions: {
+      style: 'wordle',
+      instructions: "Type a 4-letter word. First to find it wins!",
+      prize: "Winner gives out shots, everyone else takes a shot!",
+      word: "SHOT"  // From your word list
+    }
+  }
+];
+
 // Single export statement
 export {
   TRUTH_PROMPTS,
@@ -478,5 +512,6 @@ export {
   TONGUE_TWISTER_PROMPTS,
   REACTION_PROMPTS,
   POPLOCK_PROMPTS,
-  BATTLESHIP_PROMPTS
+  BATTLESHIP_PROMPTS,
+  WORDRACE_PROMPTS
 };

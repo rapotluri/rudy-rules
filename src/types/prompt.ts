@@ -9,7 +9,8 @@ export enum PromptType {
   REACTIONGAME = 'REACTIONGAME',
   TIMED = 'TIMED',
   POPLOCK = 'POPLOCK',
-  BATTLESHIP = 'BATTLESHIP'
+  BATTLESHIP = 'BATTLESHIP',
+  WORDRACE = 'WORDRACE'
 }
 
 export interface VoteOption {
@@ -60,6 +61,16 @@ export interface BattleshipOptions {
   gameEnded?: boolean;
 }
 
+export interface WordRaceOptions {
+  style: 'wordle';
+  instructions: string;
+  prize: string;
+  word?: string;  // The target word
+  guesses?: Record<string, string>;  // Player guesses
+  winner?: string;  // ID of player who found the word
+  gameEnded?: boolean;
+}
+
 export interface Prompt {
   id: string;
   type: PromptType;
@@ -87,6 +98,7 @@ export interface Prompt {
   ReactionGameOptions?: ReactionGameOptions;
   PopLockOptions?: PopLockOptions;
   BattleshipOptions?: BattleshipOptions;
+  WordRaceOptions?: WordRaceOptions;
 }
 
 // Basic challenge library
