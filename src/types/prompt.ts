@@ -8,7 +8,8 @@ export enum PromptType {
   KEEP_THREE = 'KEEP_THREE',
   REACTIONGAME = 'REACTIONGAME',
   TIMED = 'TIMED',
-  POPLOCK = 'POPLOCK'
+  POPLOCK = 'POPLOCK',
+  BATTLESHIP = 'BATTLESHIP'
 }
 
 export interface VoteOption {
@@ -49,6 +50,16 @@ export interface PopLockOptions {
   gameEnded?: boolean;
 }
 
+export interface BattleshipOptions {
+  style: 'ships';
+  instructions: string;
+  prize: string;
+  ship?: {x: number, y: number};  // Current player's ship position
+  shots?: Record<string, {x: number, y: number}>;  // Each player's shot
+  hits?: string[];  // Players who hit the ship
+  gameEnded?: boolean;
+}
+
 export interface Prompt {
   id: string;
   type: PromptType;
@@ -75,6 +86,7 @@ export interface Prompt {
   timedOptions?: TimedPromptOptions;
   ReactionGameOptions?: ReactionGameOptions;
   PopLockOptions?: PopLockOptions;
+  BattleshipOptions?: BattleshipOptions;
 }
 
 // Basic challenge library

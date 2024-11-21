@@ -538,6 +538,59 @@ export const useRoom = () => {
     }
   };
 
+  const submitBattleshipMove = async (roomCode: string, playerId: string, move: string) => {
+    try {
+      const roomRef = doc(db, 'rooms', roomCode);
+      await runTransaction(db, async (transaction) => {
+        const roomDoc = await transaction.get(roomRef);
+        if (!roomDoc.exists()) throw new Error('Room not found');
+
+        const roomData = roomDoc.data() as Room;
+        if (!roomData.currentPrompt?.BattleshipOptions) return;
+
+        const [action, coords] = move.split(':');
+        const [x, y] = coords.split(',').map(Number);
+
+        if (action === 'place') {
+          // Handle ship placement
+          transaction.update(roomRef, {
+            'currentPrompt.BattleshipOptions.ship': { x, y },
+            updatedAt: serverTimestamp(),
+          });
+        } else if (action === 'shoot') {
+          // Handle shooting
+          const shots = roomData.currentPrompt.BattleshipOptions.shots || {};
+          const hits = roomData.currentPrompt.BattleshipOptions.hits || [];
+          const ship = roomData.currentPrompt.BattleshipOptions.ship;
+          
+          // Add shot to player's shots
+          const updatedShots = {
+            ...shots,
+            [playerId]: { x, y }
+          };
+
+          // Check if shot hit the ship
+          const isHit = ship && ship.x === x && ship.y === y;
+          const updatedHits = isHit ? [...hits, playerId] : hits;
+
+          // Game ends when all non-current players have taken their shot
+          const nonCurrentPlayers = roomData.players.filter(p => p.id !== roomData.currentTurn);
+          const allPlayersShot = nonCurrentPlayers.every(p => updatedShots[p.id]);
+
+          transaction.update(roomRef, {
+            'currentPrompt.BattleshipOptions.shots': updatedShots,
+            'currentPrompt.BattleshipOptions.hits': updatedHits,
+            'currentPrompt.BattleshipOptions.gameEnded': allPlayersShot,
+            updatedAt: serverTimestamp(),
+          });
+        }
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to submit move');
+      throw err;
+    }
+  };
+
   return {
     room,
     loading,
@@ -555,5 +608,6 @@ export const useRoom = () => {
     showTimedCategory,
     submitReactionTime,
     submitPopLockScore,
+    submitBattleshipMove,
   };
 }; 

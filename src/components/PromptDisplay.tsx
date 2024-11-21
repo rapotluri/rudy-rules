@@ -10,6 +10,7 @@ import KeepThreePrompt from './prompts/KeepThreePrompt';
 import TimedPrompt from './prompts/TimedPrompt';
 import ReactionPrompt from './minigames/ReactionGame';
 import PopLockGame from './minigames/PopLockGame';
+import BattleshipGame from './minigames/BattleshipGame';
 
 interface PromptDisplayProps {
   prompt: Prompt;
@@ -87,6 +88,12 @@ const promptThemes: Record<PromptType, {
     emoji: '🔒',
     garnish: '🔑'
   },
+  [PromptType.BATTLESHIP]: {
+    color: '#4169E1',  // Royal Blue
+    title: 'Battlesips',
+    emoji: '⛵',
+    garnish: '🌊'
+  }
 };
 
 const getTimedTheme = (prompt: Prompt) => {
@@ -191,6 +198,20 @@ export default function PromptDisplay({
         if (prompt.PopLockOptions?.style === 'poplock') {
           return (
             <PopLockGame
+              prompt={prompt}
+              currentPlayer={currentPlayer}
+              allPlayers={allPlayers}
+              isCurrentPlayer={isCurrentPlayer}
+              onComplete={onComplete}
+              onVote={onVote}
+            />
+          );
+        }
+        return null;
+      case PromptType.BATTLESHIP:
+        if (prompt.BattleshipOptions?.style === 'ships') {
+          return (
+            <BattleshipGame
               prompt={prompt}
               currentPlayer={currentPlayer}
               allPlayers={allPlayers}
@@ -391,6 +412,7 @@ export default function PromptDisplay({
          prompt.type !== PromptType.TIMED &&
          prompt.type !== PromptType.REACTIONGAME &&
          prompt.type !== PromptType.POPLOCK &&
+         prompt.type !== PromptType.BATTLESHIP &&
          isCurrentPlayer && (
           <motion.div
             initial={{ y: 50, opacity: 0 }}

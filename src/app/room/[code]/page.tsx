@@ -30,7 +30,8 @@ export default function RoomPage() {
     updateGameSettings, 
     kickPlayer,
     submitReactionTime,
-    submitPopLockScore
+    submitPopLockScore,
+    submitBattleshipMove
   } = useRoom();
 
   useEffect(() => {
@@ -60,6 +61,9 @@ export default function RoomPage() {
     } else if (room?.currentPrompt?.type === PromptType.POPLOCK) {
       // Handle Pop Lock game
       await submitPopLockScore(roomCode, playerId, optionId);
+    } else if (room?.currentPrompt?.type === PromptType.BATTLESHIP) {
+      // Handle Battleship game
+      await submitBattleshipMove(roomCode, playerId, optionId);
     } else {
       // Handle regular voting
       await submitVote(roomCode, playerId, optionId);

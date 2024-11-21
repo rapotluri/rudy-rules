@@ -436,6 +436,38 @@ const POPLOCK_PROMPTS: Partial<Prompt>[] = [
   }
 ];
 
+// Update the BATTLESHIP_PROMPTS
+const BATTLESHIP_PROMPTS: Partial<Prompt>[] = [
+  {
+    type: PromptType.BATTLESHIP,
+    title: "Battlesips",
+    prompt: "⛵ Current player places a ship, others try to sink it! Hit = Current player drinks, Miss = You drink!",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    BattleshipOptions: {
+      style: 'ships',
+      instructions: "Place your ship secretly, others will try to sink it!",
+      prize: "Hit = Ship captain drinks, Miss = Shooter drinks!"
+    }
+  },
+  {
+    type: PromptType.BATTLESHIP,
+    title: "Battleshots",
+    prompt: "⛵ Current player places a ship, others try to sink it! Hit = Current player takes a shot, Miss = You take a shot!",
+    spiceLevel: 0,
+    drinkLevel: 2,
+    syncNeeded: true,
+    groupResponse: true,
+    BattleshipOptions: {
+      style: 'ships',
+      instructions: "Place your ship secretly, others will try to sink it!",
+      prize: "Hit = Ship captain takes a shot, Miss = Shooter takes a shot!"
+    }
+  }
+];
+
 // Single export statement
 export {
   TRUTH_PROMPTS,
@@ -445,5 +477,6 @@ export {
   FAST_MONEY_PROMPTS,
   TONGUE_TWISTER_PROMPTS,
   REACTION_PROMPTS,
-  POPLOCK_PROMPTS
+  POPLOCK_PROMPTS,
+  BATTLESHIP_PROMPTS
 };
