@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import { db } from '@/lib/firebase';
 import { Room, Player, GameState } from '@/types/game';
 import { Prompt, PromptType } from '@/types/prompt';
-import { createNewPrompt } from '@/lib/promptLibrary';
+import { createNewPrompt, UNIQUE_PROMPT_TYPES } from '@/lib/promptLibrary';
 import { generateRoomCode } from '@/utils/roomCode';
 import {
   doc,
@@ -53,7 +53,10 @@ export const useRoom = () => {
         settings: {
           drinkLevel: 0,
           spiceLevel: 0
-        }
+        },
+        lastPromptTypes: [],
+        usedWords: [],
+        usedPrompts: []
       };
 
       await setDoc(doc(db, 'rooms', roomCode), newRoom);
@@ -126,12 +129,15 @@ export const useRoom = () => {
         // Randomly select first player
         const firstPlayer = roomData.players[Math.floor(Math.random() * roomData.players.length)];
 
-        // Create first challenge - pass the players array
+        // Create first challenge - pass empty arrays for lastPromptTypes and used words/prompts
         const firstPrompt = createNewPrompt(
           roomData.settings.spiceLevel,
           roomData.settings.drinkLevel,
           firstPlayer.id,
-          roomData.players
+          roomData.players,
+          [],  // No last prompt types yet
+          [],  // No used words yet
+          []   // No used prompts yet
         );
 
         transaction.update(roomRef, {
@@ -139,6 +145,10 @@ export const useRoom = () => {
           currentTurn: firstPlayer.id,
           currentPrompt: firstPrompt,
           roundNumber: 1,
+          lastPromptTypes: [firstPrompt.type],  // Initialize with first prompt type
+          usedWords: firstPrompt.WordRaceOptions?.word ? [firstPrompt.WordRaceOptions.word] : 
+                    firstPrompt.CharadesOptions?.word ? [firstPrompt.CharadesOptions.word] : [],
+          usedPrompts: firstPrompt.prompt ? [firstPrompt.prompt] : [],
           updatedAt: serverTimestamp(),
         });
       });
@@ -157,25 +167,20 @@ export const useRoom = () => {
 
         const roomData = roomDoc.data() as Room;
         
-        // Get used prompts from room data
-        const usedPrompts = roomData.usedPrompts || [];
-
-        // Create new prompt, avoiding used ones
+        // Create new prompt, avoiding last 4 prompt types and used content
         const newPrompt = createNewPrompt(
           roomData.settings.spiceLevel,
           roomData.settings.drinkLevel,
           roomData.currentTurn!,
           roomData.players,
-          usedPrompts // Pass used prompts to avoid repetition
+          roomData.lastPromptTypes || [],
+          roomData.usedWords || [],
+          roomData.usedPrompts || []
         );
-
-        // Add new prompt to used prompts
-        const updatedUsedPrompts = [...usedPrompts, newPrompt.prompt];
 
         transaction.update(roomRef, {
           currentPrompt: newPrompt,
           showPrompt: true,
-          usedPrompts: updatedUsedPrompts,
           updatedAt: serverTimestamp(),
         });
       });
@@ -192,10 +197,10 @@ export const useRoom = () => {
         const roomDoc = await transaction.get(roomRef);
         if (!roomDoc.exists()) throw new Error('Room not found');
 
-        const roomData = roomDoc.data() as Room;
+        const roomData = roomDoc.data() as Room & { usedPrompts?: string[] };
         if (!roomData.currentPrompt) return;
 
-        // Get next player (only from connected players)
+        // Get next player
         const connectedPlayers = roomData.players.filter(p => p.isConnected);
         if (connectedPlayers.length === 0) return;
 
@@ -203,12 +208,39 @@ export const useRoom = () => {
         const nextPlayerIndex = (currentPlayerIndex + 1) % connectedPlayers.length;
         const nextPlayer = connectedPlayers[nextPlayerIndex];
 
+        // Track used words if applicable
+        let usedWords = roomData.usedWords || [];
+        if (roomData.currentPrompt.WordRaceOptions?.word) {
+          usedWords.push(roomData.currentPrompt.WordRaceOptions.word);
+        }
+        if (roomData.currentPrompt.CharadesOptions?.word) {
+          usedWords.push(roomData.currentPrompt.CharadesOptions.word);
+        }
+
+        // Track used prompts if applicable
+        let usedPrompts = roomData.usedPrompts || [];
+        if (roomData.currentPrompt && 
+            UNIQUE_PROMPT_TYPES.includes(roomData.currentPrompt.type) && 
+            roomData.currentPrompt.prompt) {
+          usedPrompts.push(roomData.currentPrompt.prompt);
+        }
+
+        // Update last prompt types array
+        const lastPromptTypes = roomData.lastPromptTypes || [];
+        lastPromptTypes.push(roomData.currentPrompt.type);
+        if (lastPromptTypes.length > 4) {
+          lastPromptTypes.shift(); // Remove oldest prompt type
+        }
+
         // Update room state
         transaction.update(roomRef, {
           currentTurn: nextPlayer.id,
           currentPrompt: null,
           showPrompt: false,
           roundNumber: roomData.roundNumber + 1,
+          lastPromptTypes,
+          usedWords,
+          usedPrompts,
           updatedAt: serverTimestamp(),
         });
       });

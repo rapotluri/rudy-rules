@@ -78,7 +78,9 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
     spiceLevel: 0,
     drinkLevel: 1,
     groupResponse: true,
-    syncNeeded: true
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
   },
   {
     type: PromptType.VOTE,
@@ -87,7 +89,9 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
     spiceLevel: 0,
     drinkLevel: 1,
     groupResponse: true,
-    syncNeeded: true
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
   },
   {
     type: PromptType.VOTE,
@@ -96,7 +100,9 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
     spiceLevel: 1,
     drinkLevel: 1,
     groupResponse: true,
-    syncNeeded: true
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
   },
   {
     type: PromptType.VOTE,
@@ -105,7 +111,9 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
     spiceLevel: 0,
     drinkLevel: 1,
     groupResponse: true,
-    syncNeeded: true
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
   },
   {
     type: PromptType.VOTE,
@@ -114,7 +122,9 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
     spiceLevel: 1,
     drinkLevel: 1,
     groupResponse: true,
-    syncNeeded: true
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
   },
   {
     type: PromptType.VOTE,
@@ -123,7 +133,9 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
     spiceLevel: 0,
     drinkLevel: 1,
     groupResponse: true,
-    syncNeeded: true
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
   },
   {
     type: PromptType.VOTE,
@@ -132,7 +144,9 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
     spiceLevel: 0,
     drinkLevel: 1,
     groupResponse: true,
-    syncNeeded: true
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
   },
   {
     type: PromptType.VOTE,
@@ -141,7 +155,9 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
     spiceLevel: 0,
     drinkLevel: 1,
     groupResponse: true,
-    syncNeeded: true
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
   },
   {
     type: PromptType.VOTE,
@@ -150,7 +166,9 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
     spiceLevel: 0,
     drinkLevel: 1,
     groupResponse: true,
-    syncNeeded: true
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
   },
   {
     type: PromptType.VOTE,
@@ -159,7 +177,9 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
     spiceLevel: 0,
     drinkLevel: 1,
     groupResponse: true,
-    syncNeeded: true
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
   }
 ];
 
@@ -173,7 +193,8 @@ const TWO_OPTION_PROMPTS: Partial<Prompt>[] = [
       { id: "cold", text: "Extreme Cold", votes: [] }
     ],
     spiceLevel: 0,
-    drinkLevel: 1
+    drinkLevel: 1,
+    votingComplete: false
   },
   {
     type: PromptType.TWO_OPTION_VOTE,
@@ -184,7 +205,8 @@ const TWO_OPTION_PROMPTS: Partial<Prompt>[] = [
       { id: "under", text: "Underrated", votes: [] }
     ],
     spiceLevel: 0,
-    drinkLevel: 1
+    drinkLevel: 1,
+    votingComplete: false
   },
   {
     type: PromptType.TWO_OPTION_VOTE,
@@ -195,7 +217,8 @@ const TWO_OPTION_PROMPTS: Partial<Prompt>[] = [
       { id: "green", text: "🟢 Green Flag", votes: [] }
     ],
     spiceLevel: 1,
-    drinkLevel: 1
+    drinkLevel: 1,
+    votingComplete: false
   },
   {
     type: PromptType.TWO_OPTION_VOTE,
@@ -206,7 +229,8 @@ const TWO_OPTION_PROMPTS: Partial<Prompt>[] = [
       { id: "green", text: "🟢 Green Flag", votes: [] }
     ],
     spiceLevel: 1,
-    drinkLevel: 1
+    drinkLevel: 1,
+    votingComplete: false
   },
   {
     type: PromptType.TWO_OPTION_VOTE,
@@ -217,7 +241,8 @@ const TWO_OPTION_PROMPTS: Partial<Prompt>[] = [
       { id: "green", text: "🟢 Green Flag", votes: [] }
     ],
     spiceLevel: 1,
-    drinkLevel: 1
+    drinkLevel: 1,
+    votingComplete: false
   },
   {
     type: PromptType.TWO_OPTION_VOTE,
@@ -228,7 +253,8 @@ const TWO_OPTION_PROMPTS: Partial<Prompt>[] = [
       { id: "green", text: "🟢 Green Flag", votes: [] }
     ],
     spiceLevel: 2,
-    drinkLevel: 1
+    drinkLevel: 1,
+    votingComplete: false
   },
   {
     type: PromptType.TWO_OPTION_VOTE,
@@ -239,7 +265,8 @@ const TWO_OPTION_PROMPTS: Partial<Prompt>[] = [
       { id: "green", text: "🟢 Green Flag", votes: [] }
     ],
     spiceLevel: 1,
-    drinkLevel: 1
+    drinkLevel: 1,
+    votingComplete: false
   }
 ];
 
@@ -430,7 +457,7 @@ const POPLOCK_PROMPTS: Partial<Prompt>[] = [
       style: 'poplock',
       instructions: "Tap when the line hits the dot!",
       prize: "Winner gives out drinks, loser takes them!",
-      speed: 1,
+      speed: 3,
       targetScore: 7
     }
   }
@@ -633,7 +660,7 @@ const CHARADES_PROMPTS: Partial<Prompt>[] = [
     CharadesOptions: {
       style: 'charades',
       instructions: "Act out the word without speaking! Other players try to guess.",
-      timeLimit: 60,
+      timeLimit: 45,
       showWord: false,
       word: CHARADES_WORDS[0]
     }
