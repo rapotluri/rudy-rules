@@ -28,7 +28,8 @@ export default function RoomPage() {
     submitKeepThreeSelection, 
     showTimedCategory, 
     updateGameSettings, 
-    kickPlayer
+    kickPlayer,
+    submitReactionTime
   } = useRoom();
 
   useEffect(() => {
@@ -52,7 +53,11 @@ export default function RoomPage() {
     // Handle Keep Three selections
     if (room?.currentPrompt?.type === PromptType.KEEP_THREE) {
       await submitKeepThreeSelection(roomCode, optionId.split(','));
+    } else if (room?.currentPrompt?.type === PromptType.MINIGAME) {
+      // Handle reaction game
+      await submitReactionTime(roomCode, playerId, optionId);
     } else {
+      // Handle regular voting
       await submitVote(roomCode, playerId, optionId);
     }
   };

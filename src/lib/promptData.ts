@@ -369,6 +369,21 @@ const TONGUE_TWISTER_PROMPTS: Partial<Prompt>[] = [
   // Add more tongue twisters here
 ];
 
+const REACTION_PROMPTS: Partial<Prompt>[] = [
+  {
+    type: PromptType.MINIGAME,
+    title: "Reaction Test",
+    prompt: "Tap when the screen turns red",
+    minigameOptions: {
+      style: 'reaction',
+      instructions: "Tap when the screen turns red. The player with the slowest reaction time drinks!",
+      prize: "Slowest player drinks!"
+    },
+    spiceLevel: 0,
+    drinkLevel: 1
+  }
+];
+
 // Single export statement
 export {
   TRUTH_PROMPTS,
@@ -376,5 +391,6 @@ export {
   TWO_OPTION_PROMPTS,
   KEEP_THREE_PROMPTS,
   FAST_MONEY_PROMPTS,
-  TONGUE_TWISTER_PROMPTS
+  TONGUE_TWISTER_PROMPTS,
+  REACTION_PROMPTS
 };

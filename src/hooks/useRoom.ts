@@ -457,6 +457,45 @@ export const useRoom = () => {
     }
   };
 
+  const submitReactionTime = async (roomCode: string, playerId: string, reactionTime: string) => {
+    try {
+      const roomRef = doc(db, 'rooms', roomCode);
+      await runTransaction(db, async (transaction) => {
+        const roomDoc = await transaction.get(roomRef);
+        if (!roomDoc.exists()) throw new Error('Room not found');
+
+        const roomData = roomDoc.data() as Room;
+        if (!roomData.currentPrompt?.minigameOptions) return;
+
+        // If it's the 'start' signal, just set reactionStarted to true
+        if (reactionTime === 'start') {
+          transaction.update(roomRef, {
+            'currentPrompt.minigameOptions.reactionStarted': true,
+            updatedAt: serverTimestamp(),
+          });
+          return;
+        }
+
+        // Get current reaction times
+        const currentTimes = roomData.currentPrompt.minigameOptions.allReactionTimes || {};
+        
+        // Add this player's time
+        const updatedTimes = {
+          ...currentTimes,
+          [playerId]: parseInt(reactionTime)
+        };
+
+        transaction.update(roomRef, {
+          'currentPrompt.minigameOptions.allReactionTimes': updatedTimes,
+          updatedAt: serverTimestamp(),
+        });
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to submit reaction time');
+      throw err;
+    }
+  };
+
   return {
     room,
     loading,
@@ -472,5 +511,6 @@ export const useRoom = () => {
     updateGameSettings,
     kickPlayer,
     showTimedCategory,
+    submitReactionTime,
   };
 }; 

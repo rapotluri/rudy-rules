@@ -30,6 +30,14 @@ export interface TimedPromptOptions {
   style: 'fast_money' | 'tongue_twister';
 }
 
+export interface MinigameOptions {
+  style: 'reaction';
+  instructions: string;
+  prize: string;
+  reactionStarted?: boolean;
+  allReactionTimes?: Record<string, number>;
+}
+
 export interface Prompt {
   id: string;
   type: PromptType;
@@ -54,6 +62,7 @@ export interface Prompt {
   keepThreeOptions?: KeepThreeOptions;
   selectedOptions?: string[];
   timedOptions?: TimedPromptOptions;
+  minigameOptions?: MinigameOptions;
 }
 
 // Basic challenge library

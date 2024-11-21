@@ -8,6 +8,7 @@ import VotingPrompt from './prompts/VotingPrompt';
 import TwoOptionPrompt from './prompts/TwoOptionPrompt';
 import KeepThreePrompt from './prompts/KeepThreePrompt';
 import TimedPrompt from './prompts/TimedPrompt';
+import ReactionPrompt from './prompts/ReactionPrompt';
 
 interface PromptDisplayProps {
   prompt: Prompt;
@@ -165,6 +166,20 @@ export default function PromptDisplay({
             showTimedCategory={showTimedCategory}
           />
         );
+      case PromptType.MINIGAME:
+        if (prompt.minigameOptions?.style === 'reaction') {
+          return (
+            <ReactionPrompt
+              prompt={prompt}
+              currentPlayer={currentPlayer}
+              allPlayers={allPlayers}
+              isCurrentPlayer={isCurrentPlayer}
+              onComplete={onComplete}
+              onVote={onVote}
+            />
+          );
+        }
+        return null;
       default:
         return (
           <AnimatePresence>
@@ -348,11 +363,12 @@ export default function PromptDisplay({
         {/* Prompt Content */}
         {renderPromptContent()}
 
-        {/* Action Button (only for non-voting/non-timed prompts) */}
+        {/* Action Button (only for non-voting/non-timed/non-minigame prompts) */}
         {prompt.type !== PromptType.VOTE && 
          prompt.type !== PromptType.TWO_OPTION_VOTE && 
          prompt.type !== PromptType.KEEP_THREE &&
          prompt.type !== PromptType.TIMED &&
+         prompt.type !== PromptType.MINIGAME &&
          isCurrentPlayer && (
           <motion.div
             initial={{ y: 50, opacity: 0 }}
