@@ -26,6 +26,7 @@ export default function RoomPage() {
     completePrompt, 
     submitVote,
     submitKeepThreeSelection, 
+    showTimedCategory, 
     updateGameSettings, 
     kickPlayer
   } = useRoom();
@@ -205,6 +206,7 @@ export default function RoomPage() {
                     isCurrentPlayer={playerId === room.currentTurn}
                     onComplete={() => completePrompt(roomCode)}
                     onVote={handleVote}
+                    showTimedCategory={() => showTimedCategory(roomCode)}
                   />
                 ) : (
                   <TurnScreen

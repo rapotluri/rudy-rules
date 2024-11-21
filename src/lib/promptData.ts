@@ -1,7 +1,7 @@
 import { Prompt, PromptType } from '@/types/prompt';
 
 // Basic truth prompts from DrinkRoyale
-export const TRUTH_PROMPTS: Partial<Prompt>[] = [
+const TRUTH_PROMPTS: Partial<Prompt>[] = [
   {
     type: PromptType.TRUTH,
     title: "Truth",
@@ -70,7 +70,7 @@ export const TRUTH_PROMPTS: Partial<Prompt>[] = [
 ];
 
 // Add Voting Challenges
-export const VOTE_PROMPTS: Partial<Prompt>[] = [
+const VOTE_PROMPTS: Partial<Prompt>[] = [
   {
     type: PromptType.VOTE,
     title: "Most Likely To...",
@@ -163,7 +163,7 @@ export const VOTE_PROMPTS: Partial<Prompt>[] = [
   }
 ];
 
-export const TWO_OPTION_PROMPTS: Partial<Prompt>[] = [
+const TWO_OPTION_PROMPTS: Partial<Prompt>[] = [
   {
     type: PromptType.TWO_OPTION_VOTE,
     title: "Would You Rather",
@@ -243,7 +243,7 @@ export const TWO_OPTION_PROMPTS: Partial<Prompt>[] = [
   }
 ];
 
-export const KEEP_THREE_PROMPTS: Partial<Prompt>[] = [
+const KEEP_THREE_PROMPTS: Partial<Prompt>[] = [
   {
     type: PromptType.KEEP_THREE,
     title: "Keep 3",
@@ -305,3 +305,76 @@ export const KEEP_THREE_PROMPTS: Partial<Prompt>[] = [
     drinkLevel: 1
   }
 ];
+
+const FAST_MONEY_PROMPTS: Partial<Prompt>[] = [
+  {
+    type: PromptType.TIMED,
+    title: "Fast Money",
+    prompt: "List as many items as you can",
+    timedOptions: {
+      category: "Disney Movies",
+      instructions: "List as many Disney movies as you can. Give out that many sips, or drink if you can't name any!",
+      timeLimit: 15,
+      showCategory: false,
+      style: "fast_money"
+    },
+    spiceLevel: 0,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.TIMED,
+    title: "Fast Money",
+    prompt: "List as many items as you can",
+    timedOptions: {
+      category: "Alcoholic Drinks",
+      instructions: "List as many alcoholic drinks as you can. Give out that many sips, or drink if you can't name any!",
+      timeLimit: 15,
+      showCategory: false,
+      style: "fast_money"
+    },
+    spiceLevel: 0,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.TIMED,
+    title: "Fast Money",
+    prompt: "List as many items as you can",
+    timedOptions: {
+      category: "Fast Food Menu Items",
+      instructions: "List as many fast food menu items as you can. Give out that many sips, or drink if you can't name any!",
+      timeLimit: 15,
+      showCategory: false,
+      style: "fast_money"
+    },
+    spiceLevel: 0,
+    drinkLevel: 1
+  }
+];
+
+const TONGUE_TWISTER_PROMPTS: Partial<Prompt>[] = [
+  {
+    type: PromptType.TIMED,
+    title: "Tongue Twister",
+    prompt: "Say it 3 times fast",
+    timedOptions: {
+      category: "She sells seashells by the seashore",
+      instructions: "Say the tongue twister 3 times fast. Give out 3 sips if you succeed, drink if you fail!",
+      timeLimit: 15,
+      showCategory: false,
+      style: "tongue_twister"
+    },
+    spiceLevel: 0,
+    drinkLevel: 1
+  },
+  // Add more tongue twisters here
+];
+
+// Single export statement
+export {
+  TRUTH_PROMPTS,
+  VOTE_PROMPTS,
+  TWO_OPTION_PROMPTS,
+  KEEP_THREE_PROMPTS,
+  FAST_MONEY_PROMPTS,
+  TONGUE_TWISTER_PROMPTS
+};

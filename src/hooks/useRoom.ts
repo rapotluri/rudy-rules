@@ -436,6 +436,27 @@ export const useRoom = () => {
     }
   };
 
+  const showTimedCategory = async (roomCode: string) => {
+    try {
+      const roomRef = doc(db, 'rooms', roomCode);
+      await runTransaction(db, async (transaction) => {
+        const roomDoc = await transaction.get(roomRef);
+        if (!roomDoc.exists()) throw new Error('Room not found');
+
+        const roomData = roomDoc.data() as Room;
+        if (!roomData.currentPrompt?.timedOptions) return;
+
+        transaction.update(roomRef, {
+          'currentPrompt.timedOptions.showCategory': true,
+          updatedAt: serverTimestamp(),
+        });
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to show category');
+      throw err;
+    }
+  };
+
   return {
     room,
     loading,
@@ -449,6 +470,7 @@ export const useRoom = () => {
     submitKeepThreeSelection,
     subscribeToRoom,
     updateGameSettings,
-    kickPlayer
+    kickPlayer,
+    showTimedCategory,
   };
 }; 

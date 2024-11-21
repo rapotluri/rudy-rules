@@ -1,11 +1,21 @@
 import { Prompt, PromptType } from '@/types/prompt';
 import { Player } from '@/types/game';
-import { KEEP_THREE_PROMPTS, VOTE_PROMPTS } from './promptData';
+import { 
+  KEEP_THREE_PROMPTS, 
+  VOTE_PROMPTS, 
+  FAST_MONEY_PROMPTS, 
+  TONGUE_TWISTER_PROMPTS 
+} from './promptData';
 
 // Get prompts function
 export const getPrompts = (spiceLevel: number, drinkLevel: number, votingOnly = false) => {
-  // Return both Keep Three and Vote prompts for testing
-  const prompts = [...KEEP_THREE_PROMPTS, ...VOTE_PROMPTS];
+  // Return all prompt types
+  const prompts = [
+    ...KEEP_THREE_PROMPTS, 
+    ...VOTE_PROMPTS, 
+    ...FAST_MONEY_PROMPTS,
+    ...TONGUE_TWISTER_PROMPTS
+  ];
   
   return prompts.filter(prompt => 
     (prompt.spiceLevel || 0) <= spiceLevel && 
@@ -27,7 +37,7 @@ export const createNewPrompt = (
   
   // If all prompts have been used, reset the pool
   if (availablePrompts.length === 0) {
-    availablePrompts = [...KEEP_THREE_PROMPTS, ...VOTE_PROMPTS];
+    availablePrompts = [...TONGUE_TWISTER_PROMPTS];
   }
 
   // Get a random prompt from available ones
@@ -45,7 +55,7 @@ export const createNewPrompt = (
     completed: false,
     syncNeeded: true,
     groupResponse: template.type === PromptType.VOTE,
-    selectedOptions: [],  // Initialize empty array for Keep Three selections
+    selectedOptions: [],
   };
 
   // Add type-specific properties
@@ -60,6 +70,11 @@ export const createNewPrompt = (
       items: template.keepThreeOptions.items,
       category: template.keepThreeOptions.category,
       selectedOptions: []
+    };
+  } else if (template.type === PromptType.TIMED && template.timedOptions) {
+    basePrompt.timedOptions = {
+      ...template.timedOptions,
+      showCategory: false  // Initialize as false
     };
   }
 
