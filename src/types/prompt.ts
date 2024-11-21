@@ -6,8 +6,11 @@ export enum PromptType {
   VOTE = 'VOTE',
   TWO_OPTION_VOTE = 'TWO_OPTION_VOTE',
   KEEP_THREE = 'KEEP_THREE',
-  MINIGAME = 'MINIGAME',
-  TIMED = 'TIMED'
+  REACTIONGAME = 'REACTIONGAME',
+  TIMED = 'TIMED',
+  POPLOCK = 'POPLOCK',
+  BATTLESHIP = 'BATTLESHIP',
+  WORDRACE = 'WORDRACE'
 }
 
 export interface VoteOption {
@@ -30,12 +33,42 @@ export interface TimedPromptOptions {
   style: 'fast_money' | 'tongue_twister';
 }
 
-export interface MinigameOptions {
+export interface ReactionGameOptions {
   style: 'reaction';
   instructions: string;
   prize: string;
   reactionStarted?: boolean;
   allReactionTimes?: Record<string, number>;
+}
+
+export interface PopLockOptions {
+  style: 'poplock';
+  instructions: string;
+  prize: string;
+  speed?: number;
+  targetScore?: number;
+  scores?: Record<string, number>;
+  gameEnded?: boolean;
+}
+
+export interface BattleshipOptions {
+  style: 'ships';
+  instructions: string;
+  prize: string;
+  ship?: {x: number, y: number};  // Current player's ship position
+  shots?: Record<string, {x: number, y: number}>;  // Each player's shot
+  hits?: string[];  // Players who hit the ship
+  gameEnded?: boolean;
+}
+
+export interface WordRaceOptions {
+  style: 'wordle';
+  instructions: string;
+  prize: string;
+  word?: string;  // The target word
+  guesses?: Record<string, string>;  // Player guesses
+  winner?: string;  // ID of player who found the word
+  gameEnded?: boolean;
 }
 
 export interface Prompt {
@@ -62,7 +95,10 @@ export interface Prompt {
   keepThreeOptions?: KeepThreeOptions;
   selectedOptions?: string[];
   timedOptions?: TimedPromptOptions;
-  minigameOptions?: MinigameOptions;
+  ReactionGameOptions?: ReactionGameOptions;
+  PopLockOptions?: PopLockOptions;
+  BattleshipOptions?: BattleshipOptions;
+  WordRaceOptions?: WordRaceOptions;
 }
 
 // Basic challenge library

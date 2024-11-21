@@ -371,16 +371,134 @@ const TONGUE_TWISTER_PROMPTS: Partial<Prompt>[] = [
 
 const REACTION_PROMPTS: Partial<Prompt>[] = [
   {
-    type: PromptType.MINIGAME,
+    type: PromptType.REACTIONGAME,
     title: "Reaction Test",
     prompt: "Tap when the screen turns red",
-    minigameOptions: {
+    ReactionGameOptions: {
       style: 'reaction',
       instructions: "Tap when the screen turns red. The player with the slowest reaction time drinks!",
       prize: "Slowest player drinks!"
     },
     spiceLevel: 0,
     drinkLevel: 1
+  }
+];
+
+// Add this alongside your REACTION_PROMPTS
+const POPLOCK_PROMPTS: Partial<Prompt>[] = [
+  {
+    type: PromptType.POPLOCK,
+    title: "Pop the Lock",
+    prompt: "Tap when the line hits the dot! First to 5 wins!",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    PopLockOptions: {
+      style: 'poplock',
+      instructions: "Tap when the line hits the dot!",
+      prize: "Lowest score drinks!",
+      speed: 2,
+      targetScore: 5
+    }
+  },
+  {
+    type: PromptType.POPLOCK,
+    title: "Speed Lock",
+    prompt: "Tap when the line hits the dot! Watch out, it gets faster!",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    PopLockOptions: {
+      style: 'poplock',
+      instructions: "Tap when the line hits the dot!",
+      prize: "Lowest score drinks!",
+      speed: 1.5,
+      targetScore: 3
+    }
+  },
+  {
+    type: PromptType.POPLOCK,
+    title: "Master Lock",
+    prompt: "Tap when the line hits the dot! High stakes version!",
+    spiceLevel: 0,
+    drinkLevel: 2,
+    syncNeeded: true,
+    groupResponse: true,
+    PopLockOptions: {
+      style: 'poplock',
+      instructions: "Tap when the line hits the dot!",
+      prize: "Winner gives out drinks, loser takes them!",
+      speed: 1,
+      targetScore: 7
+    }
+  }
+];
+
+// Update the BATTLESHIP_PROMPTS
+const BATTLESHIP_PROMPTS: Partial<Prompt>[] = [
+  {
+    type: PromptType.BATTLESHIP,
+    title: "Battlesips",
+    prompt: "⛵ Current player places a ship, others try to sink it! Hit = Current player drinks, Miss = You drink!",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    BattleshipOptions: {
+      style: 'ships',
+      instructions: "Place your ship secretly, others will try to sink it!",
+      prize: "Hit = Ship captain drinks, Miss = Shooter drinks!"
+    }
+  },
+  {
+    type: PromptType.BATTLESHIP,
+    title: "Battleshots",
+    prompt: "⛵ Current player places a ship, others try to sink it! Hit = Current player takes a shot, Miss = You take a shot!",
+    spiceLevel: 0,
+    drinkLevel: 2,
+    syncNeeded: true,
+    groupResponse: true,
+    BattleshipOptions: {
+      style: 'ships',
+      instructions: "Place your ship secretly, others will try to sink it!",
+      prize: "Hit = Ship captain takes a shot, Miss = Shooter takes a shot!"
+    }
+  }
+];
+
+// Add this alongside other prompt arrays
+const WORDRACE_PROMPTS: Partial<Prompt>[] = [
+  {
+    type: PromptType.WORDRACE,
+    title: "Word Race",
+    prompt: "Find the 4-letter word before time runs out!",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    WordRaceOptions: {
+      style: 'wordle',
+      instructions: "Type a 4-letter word. First to find it wins!",
+      prize: "Winner gives out a drink, everyone else drinks!",
+      word: "HELM"  // From your word list
+    }
+  },
+  {
+    type: PromptType.WORDRACE,
+    title: "Word Race",
+    prompt: "Find the 4-letter word before time runs out!",
+    spiceLevel: 0,
+    drinkLevel: 2,
+    syncNeeded: true,
+    groupResponse: true,
+    WordRaceOptions: {
+      style: 'wordle',
+      instructions: "Type a 4-letter word. First to find it wins!",
+      prize: "Winner gives out shots, everyone else takes a shot!",
+      word: "SHOT"  // From your word list
+    }
   }
 ];
 
@@ -392,5 +510,8 @@ export {
   KEEP_THREE_PROMPTS,
   FAST_MONEY_PROMPTS,
   TONGUE_TWISTER_PROMPTS,
-  REACTION_PROMPTS
+  REACTION_PROMPTS,
+  POPLOCK_PROMPTS,
+  BATTLESHIP_PROMPTS,
+  WORDRACE_PROMPTS
 };

@@ -8,7 +8,10 @@ import VotingPrompt from './prompts/VotingPrompt';
 import TwoOptionPrompt from './prompts/TwoOptionPrompt';
 import KeepThreePrompt from './prompts/KeepThreePrompt';
 import TimedPrompt from './prompts/TimedPrompt';
-import ReactionPrompt from './prompts/ReactionPrompt';
+import ReactionPrompt from './minigames/ReactionGame';
+import PopLockGame from './minigames/PopLockGame';
+import BattleshipGame from './minigames/BattleshipGame';
+import WordRaceGame from './minigames/WordRaceGame';
 
 interface PromptDisplayProps {
   prompt: Prompt;
@@ -62,10 +65,10 @@ const promptThemes: Record<PromptType, {
     emoji: '⚖️',
     garnish: '🍊'
   },
-  [PromptType.MINIGAME]: {
+  [PromptType.REACTIONGAME]: {
     color: '#FF7F50',
     title: 'Mini Game',
-    emoji: '🎮',
+    emoji: '⚡',
     garnish: '🍓' // Strawberry
   },
   [PromptType.KEEP_THREE]: {
@@ -80,6 +83,24 @@ const promptThemes: Record<PromptType, {
     emoji: '⏱️',
     garnish: '🌶️'
   },
+  [PromptType.POPLOCK]: {
+    color: '#FF4D4D',  // Bright red
+    title: 'Pop the Lock',
+    emoji: '🔒',
+    garnish: '🔑'
+  },
+  [PromptType.BATTLESHIP]: {
+    color: '#4169E1',  // Royal Blue
+    title: 'Battlesips',
+    emoji: '⛵',
+    garnish: '🌊'
+  },
+  [PromptType.WORDRACE]: {
+    color: '#9370DB',  // Medium purple
+    title: 'Word Race',
+    emoji: '🔎',
+    garnish: '📝'
+  }
 };
 
 const getTimedTheme = (prompt: Prompt) => {
@@ -166,10 +187,52 @@ export default function PromptDisplay({
             showTimedCategory={showTimedCategory}
           />
         );
-      case PromptType.MINIGAME:
-        if (prompt.minigameOptions?.style === 'reaction') {
+      case PromptType.REACTIONGAME:
+        if (prompt.ReactionGameOptions?.style === 'reaction') {
           return (
             <ReactionPrompt
+              prompt={prompt}
+              currentPlayer={currentPlayer}
+              allPlayers={allPlayers}
+              isCurrentPlayer={isCurrentPlayer}
+              onComplete={onComplete}
+              onVote={onVote}
+            />
+          );
+        }
+        return null;
+      case PromptType.POPLOCK:
+        if (prompt.PopLockOptions?.style === 'poplock') {
+          return (
+            <PopLockGame
+              prompt={prompt}
+              currentPlayer={currentPlayer}
+              allPlayers={allPlayers}
+              isCurrentPlayer={isCurrentPlayer}
+              onComplete={onComplete}
+              onVote={onVote}
+            />
+          );
+        }
+        return null;
+      case PromptType.BATTLESHIP:
+        if (prompt.BattleshipOptions?.style === 'ships') {
+          return (
+            <BattleshipGame
+              prompt={prompt}
+              currentPlayer={currentPlayer}
+              allPlayers={allPlayers}
+              isCurrentPlayer={isCurrentPlayer}
+              onComplete={onComplete}
+              onVote={onVote}
+            />
+          );
+        }
+        return null;
+      case PromptType.WORDRACE:
+        if (prompt.WordRaceOptions?.style === 'wordle') {
+          return (
+            <WordRaceGame
               prompt={prompt}
               currentPlayer={currentPlayer}
               allPlayers={allPlayers}
@@ -368,7 +431,10 @@ export default function PromptDisplay({
          prompt.type !== PromptType.TWO_OPTION_VOTE && 
          prompt.type !== PromptType.KEEP_THREE &&
          prompt.type !== PromptType.TIMED &&
-         prompt.type !== PromptType.MINIGAME &&
+         prompt.type !== PromptType.REACTIONGAME &&
+         prompt.type !== PromptType.POPLOCK &&
+         prompt.type !== PromptType.BATTLESHIP &&
+         prompt.type !== PromptType.WORDRACE &&
          isCurrentPlayer && (
           <motion.div
             initial={{ y: 50, opacity: 0 }}

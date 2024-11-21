@@ -465,19 +465,19 @@ export const useRoom = () => {
         if (!roomDoc.exists()) throw new Error('Room not found');
 
         const roomData = roomDoc.data() as Room;
-        if (!roomData.currentPrompt?.minigameOptions) return;
+        if (!roomData.currentPrompt?.ReactionGameOptions) return;
 
         // If it's the 'start' signal, just set reactionStarted to true
         if (reactionTime === 'start') {
           transaction.update(roomRef, {
-            'currentPrompt.minigameOptions.reactionStarted': true,
+            'currentPrompt.ReactionGameOptions.reactionStarted': true,
             updatedAt: serverTimestamp(),
           });
           return;
         }
 
         // Get current reaction times
-        const currentTimes = roomData.currentPrompt.minigameOptions.allReactionTimes || {};
+        const currentTimes = roomData.currentPrompt.ReactionGameOptions.allReactionTimes || {};
         
         // Add this player's time
         const updatedTimes = {
@@ -486,12 +486,181 @@ export const useRoom = () => {
         };
 
         transaction.update(roomRef, {
-          'currentPrompt.minigameOptions.allReactionTimes': updatedTimes,
+          'currentPrompt.ReactionGameOptions.allReactionTimes': updatedTimes,
           updatedAt: serverTimestamp(),
         });
       });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to submit reaction time');
+      throw err;
+    }
+  };
+
+  const submitPopLockScore = async (roomCode: string, playerId: string, score: string) => {
+    try {
+      const roomRef = doc(db, 'rooms', roomCode);
+      await runTransaction(db, async (transaction) => {
+        const roomDoc = await transaction.get(roomRef);
+        if (!roomDoc.exists()) throw new Error('Room not found');
+
+        const roomData = roomDoc.data() as Room;
+        if (!roomData.currentPrompt?.PopLockOptions) return;
+
+        // Get current scores
+        const currentScores = roomData.currentPrompt.PopLockOptions.scores || {};
+        
+        // Initialize scores for all players if this is the first submission
+        if (Object.keys(currentScores).length === 0) {
+          roomData.players.forEach(player => {
+            currentScores[player.id] = 0;
+          });
+        }
+        
+        // Add this player's score
+        const updatedScores = {
+          ...currentScores,
+          [playerId]: parseInt(score)
+        };
+
+        // Check if game should end - only if someone reaches target score
+        const targetScore = roomData.currentPrompt.PopLockOptions.targetScore || 5;
+        const shouldEndGame = parseInt(score) >= targetScore;
+
+        transaction.update(roomRef, {
+          'currentPrompt.PopLockOptions.scores': updatedScores,
+          'currentPrompt.PopLockOptions.gameEnded': shouldEndGame,
+          updatedAt: serverTimestamp(),
+        });
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to submit score');
+      throw err;
+    }
+  };
+
+  const submitBattleshipMove = async (roomCode: string, playerId: string, move: string) => {
+    try {
+      const roomRef = doc(db, 'rooms', roomCode);
+      await runTransaction(db, async (transaction) => {
+        const roomDoc = await transaction.get(roomRef);
+        if (!roomDoc.exists()) throw new Error('Room not found');
+
+        const roomData = roomDoc.data() as Room;
+        if (!roomData.currentPrompt?.BattleshipOptions) return;
+
+        const [action, coords] = move.split(':');
+        const [x, y] = coords.split(',').map(Number);
+
+        if (action === 'place') {
+          // Handle ship placement
+          transaction.update(roomRef, {
+            'currentPrompt.BattleshipOptions.ship': { x, y },
+            updatedAt: serverTimestamp(),
+          });
+        } else if (action === 'shoot') {
+          // Handle shooting
+          const shots = roomData.currentPrompt.BattleshipOptions.shots || {};
+          const hits = roomData.currentPrompt.BattleshipOptions.hits || [];
+          const ship = roomData.currentPrompt.BattleshipOptions.ship;
+          
+          // Add shot to player's shots
+          const updatedShots = {
+            ...shots,
+            [playerId]: { x, y }
+          };
+
+          // Check if shot hit the ship
+          const isHit = ship && ship.x === x && ship.y === y;
+          const updatedHits = isHit ? [...hits, playerId] : hits;
+
+          // Game ends when all non-current players have taken their shot
+          const nonCurrentPlayers = roomData.players.filter(p => p.id !== roomData.currentTurn);
+          const allPlayersShot = nonCurrentPlayers.every(p => updatedShots[p.id]);
+
+          transaction.update(roomRef, {
+            'currentPrompt.BattleshipOptions.shots': updatedShots,
+            'currentPrompt.BattleshipOptions.hits': updatedHits,
+            'currentPrompt.BattleshipOptions.gameEnded': allPlayersShot,
+            updatedAt: serverTimestamp(),
+          });
+        }
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to submit move');
+      throw err;
+    }
+  };
+
+  const submitWordRaceGuess = async (roomCode: string, playerId: string, guess: string) => {
+    try {
+      const roomRef = doc(db, 'rooms', roomCode);
+      await runTransaction(db, async (transaction) => {
+        const roomDoc = await transaction.get(roomRef);
+        if (!roomDoc.exists()) throw new Error('Room not found');
+
+        const roomData = roomDoc.data() as Room;
+        if (!roomData.currentPrompt?.WordRaceOptions) {
+          console.error('No WordRaceOptions found in prompt');
+          return;
+        }
+
+        // Handle timeout
+        if (guess === 'timeout') {
+          console.log('Handling timeout');
+          transaction.update(roomRef, {
+            'currentPrompt.WordRaceOptions.gameEnded': true,
+            'currentPrompt.WordRaceOptions.winner': null,
+            updatedAt: serverTimestamp(),
+          });
+          return;
+        }
+
+        // Get current guesses and word
+        const guesses = roomData.currentPrompt.WordRaceOptions.guesses || {};
+        const word = roomData.currentPrompt.WordRaceOptions.word;
+        
+        console.log('Checking guess:', {
+          guess,
+          word,
+          currentGuesses: guesses
+        });
+
+        // Add this player's guess
+        const updatedGuesses = {
+          ...guesses,
+          [playerId]: guess
+        };
+
+        // Check if guess is correct
+        const isCorrect = word?.toLowerCase() === guess.toLowerCase();
+        
+        console.log('Guess result:', {
+          isCorrect,
+          playerId,
+          guess,
+          word
+        });
+
+        // If correct guess, set winner and end game immediately
+        if (isCorrect) {
+          console.log('Updating Firebase with correct guess');
+          await transaction.update(roomRef, {
+            'currentPrompt.WordRaceOptions.guesses': updatedGuesses,
+            'currentPrompt.WordRaceOptions.winner': playerId,
+            'currentPrompt.WordRaceOptions.gameEnded': true,
+            updatedAt: serverTimestamp(),
+          });
+        } else {
+          console.log('Updating Firebase with incorrect guess');
+          await transaction.update(roomRef, {
+            'currentPrompt.WordRaceOptions.guesses': updatedGuesses,
+            updatedAt: serverTimestamp(),
+          });
+        }
+      });
+    } catch (err) {
+      console.error('Error in submitWordRaceGuess:', err);
+      setError(err instanceof Error ? err.message : 'Failed to submit guess');
       throw err;
     }
   };
@@ -512,5 +681,8 @@ export const useRoom = () => {
     kickPlayer,
     showTimedCategory,
     submitReactionTime,
+    submitPopLockScore,
+    submitBattleshipMove,
+    submitWordRaceGuess,
   };
 }; 

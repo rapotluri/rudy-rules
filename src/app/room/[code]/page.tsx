@@ -29,7 +29,10 @@ export default function RoomPage() {
     showTimedCategory, 
     updateGameSettings, 
     kickPlayer,
-    submitReactionTime
+    submitReactionTime,
+    submitPopLockScore,
+    submitBattleshipMove,
+    submitWordRaceGuess
   } = useRoom();
 
   useEffect(() => {
@@ -53,11 +56,15 @@ export default function RoomPage() {
     // Handle Keep Three selections
     if (room?.currentPrompt?.type === PromptType.KEEP_THREE) {
       await submitKeepThreeSelection(roomCode, optionId.split(','));
-    } else if (room?.currentPrompt?.type === PromptType.MINIGAME) {
-      // Handle reaction game
+    } else if (room?.currentPrompt?.type === PromptType.REACTIONGAME) {
       await submitReactionTime(roomCode, playerId, optionId);
+    } else if (room?.currentPrompt?.type === PromptType.POPLOCK) {
+      await submitPopLockScore(roomCode, playerId, optionId);
+    } else if (room?.currentPrompt?.type === PromptType.BATTLESHIP) {
+      await submitBattleshipMove(roomCode, playerId, optionId);
+    } else if (room?.currentPrompt?.type === PromptType.WORDRACE) {
+      await submitWordRaceGuess(roomCode, playerId, optionId);
     } else {
-      // Handle regular voting
       await submitVote(roomCode, playerId, optionId);
     }
   };
