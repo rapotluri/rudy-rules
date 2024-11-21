@@ -26,8 +26,183 @@ const TRUTH_PROMPTS: Partial<Prompt>[] = [
   {
     type: PromptType.TRUTH,
     title: "Truth",
-    prompt: "Who is your celebrity crush?",
+    prompt: "Tits or ass?",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.TRUTH,
+    title: "Truth",
+    prompt: "Which player smells the best?",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.TRUTH,
+    title: "Truth",
+    prompt: "What's a song you'd put in a sex playlist?",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.TRUTH,
+    title: "Truth",
+    prompt: "What color is your underwear?",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.TRUTH,
+    title: "Truth",
+    prompt: "When is the last time you had sex?",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.TRUTH,
+    title: "Truth",
+    prompt: "Name a celebrity that you don't think is as attractive as people say",
     spiceLevel: 1,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.TRUTH,
+    title: "Truth",
+    prompt: "What non-physical trait is the most attractive?",
+    spiceLevel: 1,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.TRUTH,
+    title: "Truth",
+    prompt: "How much would you actually need to be paid for a sex tape?",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.TRUTH,
+    title: "Truth",
+    prompt: "What is the most times you've masturbated in one day?",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.TRUTH,
+    title: "Truth",
+    prompt: "Who do you think is the most attractive celebrity that is your gender?",
+    spiceLevel: 1,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.TRUTH,
+    title: "Truth",
+    prompt: "What's a sexual fantasy you'd roleplay?",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.TRUTH,
+    title: "Truth",
+    prompt: "If you could pick any two celebrities for a threesome, who would it be?",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.TRUTH,
+    title: "Truth",
+    prompt: "What is the most questionable thing you've masturbated to?",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.TRUTH,
+    title: "Truth",
+    prompt: "What is your favorite sex position?",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.TRUTH,
+    title: "Truth",
+    prompt: "Name your sexual awakening TV/Movie character - who was your first crush?",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.TRUTH,
+    title: "Truth",
+    prompt: "What's something you haven't tried in bed - but want to?",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.TRUTH,
+    title: "Truth",
+    prompt: "Describe your 'type'",
+    spiceLevel: 1,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.TRUTH,
+    title: "Truth",
+    prompt: "What is your strangest 'hear me out' celebrity crush?",
+    spiceLevel: 1,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.TRUTH,
+    title: "Truth",
+    prompt: "Do you prefer rough or gentle?",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.TRUTH,
+    title: "Truth",
+    prompt: "What is your favorite porn category?",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.TRUTH,
+    title: "Truth",
+    prompt: "Do you prefer morning sex or evening sex?",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.TRUTH,
+    title: "Truth",
+    prompt: "Would you rather have a threesome with an extra woman or extra man?",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.TRUTH,
+    title: "Truth",
+    prompt: "What is your LEAST favorite sex position?",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.TRUTH,
+    title: "Truth",
+    prompt: "Are you loud in bed?",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.TRUTH,
+    title: "Truth",
+    prompt: "What is the LEAST sexy thing you've heard someone say in the bedroom?",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.TRUTH,
+    title: "Truth",
+    prompt: "Do you have a clear answer for the best sex you've ever had?",
+    spiceLevel: 2,
     drinkLevel: 0
   },
   {
@@ -65,6 +240,80 @@ const TRUTH_PROMPTS: Partial<Prompt>[] = [
     type: PromptType.TRUTH,
     prompt: "What is your ideal date?",
     spiceLevel: 1,
+    drinkLevel: 0
+  }
+];
+
+// Add Dare prompts
+const DARE_PROMPTS: Partial<Prompt>[] = [
+  {
+    type: PromptType.DARE,
+    title: "Dare",
+    prompt: "Without taking anything off, unzip, unbutton, unhook, and untie everything you're wearing for the rest of the game",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.DARE,
+    title: "Dare",
+    prompt: "Give someone a wet willy",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.DARE,
+    title: "Dare",
+    prompt: "Trade an article of clothing with someone else",
+    spiceLevel: 2,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.DARE,
+    title: "Dare",
+    prompt: "Let someone give you a sharpie tattoo",
+    spiceLevel: 1,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.DARE,
+    title: "Dare",
+    prompt: "Let the players to your left and right pinch your nipples",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.DARE,
+    title: "Dare",
+    prompt: "Tap dance until your next turn",
+    spiceLevel: 1,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.DARE,
+    title: "Dare",
+    prompt: "Take a drink without using your hands",
+    spiceLevel: 0,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.DARE,
+    title: "Dare",
+    prompt: "Let someone sit on your lap and try to guess who it is while blindfolded",
+    spiceLevel: 2,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.DARE,
+    title: "Dare",
+    prompt: "Everyone puts a hand on you and the game continues. First player to remove their hand loses and takes a shot",
+    spiceLevel: 2,
+    drinkLevel: 2
+  },
+  {
+    type: PromptType.DARE,
+    title: "Dare",
+    prompt: "Kiss or Strip - Choose between kissing someone or losing 1 article of clothing",
+    spiceLevel: 2,
     drinkLevel: 0
   }
 ];
@@ -683,11 +932,246 @@ const CHARADES_PROMPTS: Partial<Prompt>[] = [
   }
 ];
 
+// Add Group Drink prompts
+const GROUP_DRINK_PROMPTS: Partial<Prompt>[] = [
+  // Mild prompts (spiceLevel: 0)
+  {
+    type: PromptType.GROUP_DRINK,
+    title: "Group Drink",
+    prompt: "Drink if you've ever had a bar tab over $100",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    groupResponse: true
+  },
+  {
+    type: PromptType.GROUP_DRINK,
+    title: "Group Drink",
+    prompt: "Drink if you've ever fired a gun<br>•​​ Drink double if you own one",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    groupResponse: true
+  },
+  {
+    type: PromptType.GROUP_DRINK,
+    title: "Group Drink",
+    prompt: "Drink if you've ever pissed yourself as an adult",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    groupResponse: true
+  },
+
+  // Medium prompts (spiceLevel: 1)
+  {
+    type: PromptType.GROUP_DRINK,
+    title: "Group Drink",
+    prompt: "Drink if you've been to a strip club",
+    spiceLevel: 1,
+    drinkLevel: 1,
+    groupResponse: true
+  },
+  {
+    type: PromptType.GROUP_DRINK,
+    title: "Group Drink",
+    prompt: "Drink if you've ever gone commando",
+    spiceLevel: 1,
+    drinkLevel: 1,
+    groupResponse: true
+  },
+
+  // Spicy prompts (spiceLevel: 2)
+  {
+    type: PromptType.GROUP_DRINK,
+    title: "Group Drink",
+    prompt: "Drink if you're eskimo brothers with a friend<br>•​​ Drink double if they're playing now",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true
+  },
+  {
+    type: PromptType.GROUP_DRINK,
+    title: "Group Drink",
+    prompt: "Drink if you've ever tasted cum",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true
+  },
+  {
+    type: PromptType.GROUP_DRINK,
+    title: "Group Drink",
+    prompt: "Drink if you've kissed someone here",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true
+  },
+  {
+    type: PromptType.GROUP_DRINK,
+    title: "Group Drink",
+    prompt: "Drink if you've had car sex",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true
+  },
+  {
+    type: PromptType.GROUP_DRINK,
+    title: "Group Drink",
+    prompt: "Drink if you've had shower sex",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true
+  },
+  {
+    type: PromptType.GROUP_DRINK,
+    title: "Group Drink",
+    prompt: "Drink if you've had a std",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true
+  },
+  {
+    type: PromptType.GROUP_DRINK,
+    title: "Group Drink",
+    prompt: "Drink if you've had a one night stand",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true
+  },
+  {
+    type: PromptType.GROUP_DRINK,
+    title: "Group Drink",
+    prompt: "Drink if you've been skinny dipping",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true
+  },
+  {
+    type: PromptType.GROUP_DRINK,
+    title: "Group Drink",
+    prompt: "Drink if you've faked an orgasm",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true
+  },
+  {
+    type: PromptType.GROUP_DRINK,
+    title: "Group Drink",
+    prompt: "Drink if you've tried anal",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true
+  },
+  {
+    type: PromptType.GROUP_DRINK,
+    title: "Group Drink",
+    prompt: "Drink if you've been walked in on",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true
+  },
+  {
+    type: PromptType.GROUP_DRINK,
+    title: "Group Drink",
+    prompt: "Drink if you've walked in on someone",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true
+  },
+  {
+    type: PromptType.GROUP_DRINK,
+    title: "Group Drink",
+    prompt: "Drink if you've gotten back with an ex",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true
+  },
+  {
+    type: PromptType.GROUP_DRINK,
+    title: "Group Drink",
+    prompt: "Drink if you've had a pregnancy scare",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true
+  },
+  {
+    type: PromptType.GROUP_DRINK,
+    title: "Group Drink",
+    prompt: "Drink if you have nudes saved",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true
+  },
+  {
+    type: PromptType.GROUP_DRINK,
+    title: "Group Drink",
+    prompt: "Drink if you've hooked up with someone and not known their name",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true
+  },
+  {
+    type: PromptType.GROUP_DRINK,
+    title: "Group Drink",
+    prompt: "Drink if you've had a finger up the ass",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true
+  },
+  {
+    type: PromptType.GROUP_DRINK,
+    title: "Group Drink",
+    prompt: "Drink if you own sex toys",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true
+  },
+  {
+    type: PromptType.GROUP_DRINK,
+    title: "Group Drink",
+    prompt: "Drink if you've ever masturbated more than twice in a day",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true
+  },
+  {
+    type: PromptType.GROUP_DRINK,
+    title: "Group Drink",
+    prompt: "Drink if you watched porn today",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true
+  },
+  {
+    type: PromptType.GROUP_DRINK,
+    title: "Group Drink",
+    prompt: "Drink if you're the player that masturbated most recently",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true
+  },
+  {
+    type: PromptType.GROUP_DRINK,
+    title: "Group Drink",
+    prompt: "Drink if you're the player that had sex most recently",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true
+  },
+  {
+    type: PromptType.GROUP_DRINK,
+    title: "Group Drink",
+    prompt: "Drink if you're the player in the longest current dry spell",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true
+  }
+];
+
 // Single export statement
 export {
   TRUTH_PROMPTS,
+  DARE_PROMPTS,
   VOTE_PROMPTS,
   TWO_OPTION_PROMPTS,
+  GROUP_DRINK_PROMPTS,
   KEEP_THREE_PROMPTS,
   FAST_MONEY_PROMPTS,
   TONGUE_TWISTER_PROMPTS,

@@ -9,8 +9,10 @@ import {
   CHARADES_WORDS,
   WORDRACE_WORDS,
   TRUTH_PROMPTS,
+  DARE_PROMPTS,
   VOTE_PROMPTS,
-  TWO_OPTION_PROMPTS
+  TWO_OPTION_PROMPTS,
+  GROUP_DRINK_PROMPTS
 } from './promptData';
 
 // Define reusable minigame types
@@ -31,10 +33,9 @@ export const UNIQUE_CONTENT_TYPES = [
 // Define types that need unique prompts (not just unique words)
 export const UNIQUE_PROMPT_TYPES = [
   PromptType.TRUTH,
+  PromptType.DARE,
   PromptType.VOTE,
-  PromptType.TWO_OPTION_VOTE,
-  //PromptType.DARE,  // For future
-  //PromptType.RULE   // For future
+  PromptType.TWO_OPTION_VOTE
 ];
 
 // Define prompt type default titles
@@ -70,8 +71,10 @@ export const getPrompts = (
     ...WORDRACE_PROMPTS,
     ...CHARADES_PROMPTS,
     ...TRUTH_PROMPTS,
+    ...DARE_PROMPTS,
     ...VOTE_PROMPTS,
-    ...TWO_OPTION_PROMPTS
+    ...TWO_OPTION_PROMPTS,
+    ...GROUP_DRINK_PROMPTS
   ];
   
   // Filter prompts based on difficulty levels
@@ -130,8 +133,10 @@ export const createNewPrompt = (
       ...WORDRACE_PROMPTS,
       ...CHARADES_PROMPTS,
       ...TRUTH_PROMPTS,
+      ...DARE_PROMPTS,
       ...VOTE_PROMPTS,
-      ...TWO_OPTION_PROMPTS
+      ...TWO_OPTION_PROMPTS,
+      ...GROUP_DRINK_PROMPTS
     ].filter(prompt => 
       (prompt.spiceLevel || 0) <= spiceLevel && 
       (prompt.drinkLevel || 0) <= drinkLevel
