@@ -6,6 +6,7 @@ import { Player } from '@/types/game';
 import { useEffect, useState } from 'react';
 import VotingPrompt from './prompts/VotingPrompt';
 import TwoOptionPrompt from './prompts/TwoOptionPrompt';
+import KeepThreePrompt from './prompts/KeepThreePrompt';
 
 interface PromptDisplayProps {
   prompt: Prompt;
@@ -63,7 +64,13 @@ const promptThemes: Record<PromptType, {
     title: 'Mini Game',
     emoji: '🎮',
     garnish: '🍓' // Strawberry
-  }
+  },
+  [PromptType.KEEP_THREE]: {
+    color: '#98FB98',  // Light green
+    title: 'Keep 3',
+    emoji: '🎯',
+    garnish: '🍀'  // Four leaf clover
+  },
 };
 
 export default function PromptDisplay({
@@ -104,6 +111,16 @@ export default function PromptDisplay({
             isCurrentPlayer={isCurrentPlayer}
             onVote={onVote!}
             onComplete={onComplete}
+          />
+        );
+      case PromptType.KEEP_THREE:
+        return (
+          <KeepThreePrompt
+            prompt={prompt}
+            currentPlayer={currentPlayer}
+            isCurrentPlayer={isCurrentPlayer}
+            onComplete={onComplete}
+            onVote={onVote}
           />
         );
       default:
@@ -290,6 +307,7 @@ export default function PromptDisplay({
         {/* Action Button (only for non-voting prompts) */}
         {prompt.type !== PromptType.VOTE && 
          prompt.type !== PromptType.TWO_OPTION_VOTE && 
+         prompt.type !== PromptType.KEEP_THREE && 
          isCurrentPlayer && (
           <motion.div
             initial={{ y: 50, opacity: 0 }}

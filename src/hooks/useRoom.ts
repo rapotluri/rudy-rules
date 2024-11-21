@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import { db } from '@/lib/firebase';
 import { Room, Player, GameState } from '@/types/game';
-import { Prompt } from '@/types/prompt';
+import { Prompt, PromptType } from '@/types/prompt';
 import { createNewPrompt } from '@/lib/promptLibrary';
 import { generateRoomCode } from '@/utils/roomCode';
 import {
@@ -362,7 +362,27 @@ export const useRoom = () => {
     }
   };
 
-  // Add vote handling
+  const submitKeepThreeSelection = async (roomCode: string, selectedItems: string[]) => {
+    try {
+      const roomRef = doc(db, 'rooms', roomCode);
+      await runTransaction(db, async (transaction) => {
+        const roomDoc = await transaction.get(roomRef);
+        if (!roomDoc.exists()) throw new Error('Room not found');
+
+        const roomData = roomDoc.data() as Room;
+        if (!roomData.currentPrompt || roomData.currentPrompt.type !== PromptType.KEEP_THREE) return;
+
+        transaction.update(roomRef, {
+          'currentPrompt.selectedOptions': selectedItems,
+          updatedAt: serverTimestamp(),
+        });
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to submit selection');
+      throw err;
+    }
+  };
+
   const submitVote = async (roomCode: string, playerId: string, optionId: string) => {
     try {
       const roomRef = doc(db, 'rooms', roomCode);
@@ -373,7 +393,7 @@ export const useRoom = () => {
         const roomData = roomDoc.data() as Room;
         if (!roomData.currentPrompt?.voteOptions) return;
 
-        // Update vote counts
+        // Original voting logic stays the same
         const updatedOptions = roomData.currentPrompt.voteOptions.map(option => {
           if (option.id === optionId) {
             const votes = option.votes.filter(v => v !== playerId);
@@ -426,6 +446,7 @@ export const useRoom = () => {
     startTurn,
     completePrompt,
     submitVote,
+    submitKeepThreeSelection,
     subscribeToRoom,
     updateGameSettings,
     kickPlayer

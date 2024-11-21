@@ -5,6 +5,7 @@ export enum PromptType {
   GROUP_DRINK = 'GROUP_DRINK',
   VOTE = 'VOTE',
   TWO_OPTION_VOTE = 'TWO_OPTION_VOTE',
+  KEEP_THREE = 'KEEP_THREE',
   MINIGAME = 'MINIGAME'
 }
 
@@ -12,6 +13,12 @@ export interface VoteOption {
   id: string;
   text: string;
   votes: string[];  // Array of player IDs who voted for this option
+}
+
+export interface KeepThreeOptions {
+  items: string[];
+  category: string;
+  selectedOptions?: string[];
 }
 
 export interface Prompt {
@@ -35,6 +42,8 @@ export interface Prompt {
     winner: VoteOption;
     loser: VoteOption;
   };
+  keepThreeOptions?: KeepThreeOptions;
+  selectedOptions?: string[];
 }
 
 // Basic challenge library

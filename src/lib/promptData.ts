@@ -185,5 +185,123 @@ export const TWO_OPTION_PROMPTS: Partial<Prompt>[] = [
     ],
     spiceLevel: 0,
     drinkLevel: 1
+  },
+  {
+    type: PromptType.TWO_OPTION_VOTE,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if your date still has their ex on social media?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 1,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.TWO_OPTION_VOTE,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they live with their parents at 25?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 1,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.TWO_OPTION_VOTE,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they don't drink alcohol?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 1,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.TWO_OPTION_VOTE,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they're still friends with all their exes?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 2,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.TWO_OPTION_VOTE,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they don't have any close friends?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 1,
+    drinkLevel: 1
+  }
+];
+
+export const KEEP_THREE_PROMPTS: Partial<Prompt>[] = [
+  {
+    type: PromptType.KEEP_THREE,
+    title: "Keep 3",
+    prompt: "Which 3 apps would you keep if you had to delete the rest?",
+    keepThreeOptions: {
+      category: "Apps",
+      items: [
+        "Instagram",
+        "TikTok",
+        "Snapchat",
+        "Twitter/X",
+        "WhatsApp",
+        "YouTube",
+        "Spotify",
+        "Netflix"
+      ]
+    },
+    spiceLevel: 0,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.KEEP_THREE,
+    title: "Keep 3",
+    prompt: "Which 3 fast food places would you keep if the rest disappeared?",
+    keepThreeOptions: {
+      category: "Fast Food",
+      items: [
+        "McDonald's",
+        "Burger King",
+        "Wendy's",
+        "Taco Bell",
+        "KFC",
+        "Subway",
+        "Chipotle",
+        "Five Guys"
+      ]
+    },
+    spiceLevel: 0,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.KEEP_THREE,
+    title: "Keep 3",
+    prompt: "Which 3 superpowers would you choose?",
+    keepThreeOptions: {
+      category: "Superpowers",
+      items: [
+        "Invisibility",
+        "Flight",
+        "Mind Reading",
+        "Time Travel",
+        "Super Strength",
+        "Teleportation",
+        "Healing",
+        "Shape Shifting"
+      ]
+    },
+    spiceLevel: 0,
+    drinkLevel: 1
   }
 ];

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRoom } from '@/hooks/useRoom';
 import { GameState } from '@/types/game';
+import { PromptType } from '@/types/prompt';
 import { motion } from 'framer-motion';
 import Layout from '@/components/Layout';
 import { useParams } from 'next/navigation';
@@ -24,6 +25,7 @@ export default function RoomPage() {
     startTurn, 
     completePrompt, 
     submitVote,
+    submitKeepThreeSelection, 
     updateGameSettings, 
     kickPlayer
   } = useRoom();
@@ -45,7 +47,13 @@ export default function RoomPage() {
 
   const handleVote = async (optionId: string) => {
     if (!roomCode || !playerId) return;
-    await submitVote(roomCode, playerId, optionId);
+    
+    // Handle Keep Three selections
+    if (room?.currentPrompt?.type === PromptType.KEEP_THREE) {
+      await submitKeepThreeSelection(roomCode, optionId.split(','));
+    } else {
+      await submitVote(roomCode, playerId, optionId);
+    }
   };
 
   const isKicked = playerId && room && !room.players.find(p => p.id === playerId);

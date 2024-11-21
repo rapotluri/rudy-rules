@@ -1,12 +1,11 @@
 import { Prompt, PromptType } from '@/types/prompt';
 import { Player } from '@/types/game';
-import { TRUTH_PROMPTS, VOTE_PROMPTS, TWO_OPTION_PROMPTS } from '@/lib/promptData';
+import { KEEP_THREE_PROMPTS, VOTE_PROMPTS } from './promptData';
 
 // Get prompts function
 export const getPrompts = (spiceLevel: number, drinkLevel: number, votingOnly = false) => {
-  const prompts = votingOnly 
-    ? [...VOTE_PROMPTS, ...TWO_OPTION_PROMPTS] 
-    : [...TRUTH_PROMPTS, ...VOTE_PROMPTS, ...TWO_OPTION_PROMPTS];
+  // Return both Keep Three and Vote prompts for testing
+  const prompts = [...KEEP_THREE_PROMPTS, ...VOTE_PROMPTS];
   
   return prompts.filter(prompt => 
     (prompt.spiceLevel || 0) <= spiceLevel && 
@@ -28,8 +27,7 @@ export const createNewPrompt = (
   
   // If all prompts have been used, reset the pool
   if (availablePrompts.length === 0) {
-    //availablePrompts = [...VOTE_PROMPTS, ...TWO_OPTION_PROMPTS];
-    availablePrompts = [...TWO_OPTION_PROMPTS];
+    availablePrompts = [...KEEP_THREE_PROMPTS, ...VOTE_PROMPTS];
   }
 
   // Get a random prompt from available ones
@@ -46,27 +44,24 @@ export const createNewPrompt = (
     drinkLevel: template.drinkLevel || drinkLevel,
     completed: false,
     syncNeeded: true,
-    groupResponse: true,
-    votingComplete: false
+    groupResponse: template.type === PromptType.VOTE,
+    selectedOptions: [],  // Initialize empty array for Keep Three selections
   };
 
   // Add type-specific properties
-  if (template.type === PromptType.TWO_OPTION_VOTE) {
-    return {
-      ...basePrompt,
-      voteOptions: template.voteOptions || [
-        { id: 'option1', text: 'Option 1', votes: [] },
-        { id: 'option2', text: 'Option 2', votes: [] }
-      ]
-    } as Prompt;
-  } else {
-    return {
-      ...basePrompt,
-      voteOptions: players.map(player => ({
-        id: player.id,
-        text: player.name,
-        votes: []
-      }))
-    } as Prompt;
+  if (template.type === PromptType.VOTE) {
+    basePrompt.voteOptions = players.map(player => ({
+      id: player.id,
+      text: player.name,
+      votes: []
+    }));
+  } else if (template.type === PromptType.KEEP_THREE && template.keepThreeOptions) {
+    basePrompt.keepThreeOptions = {
+      items: template.keepThreeOptions.items,
+      category: template.keepThreeOptions.category,
+      selectedOptions: []
+    };
   }
+
+  return basePrompt as Prompt;
 }; 
