@@ -32,7 +32,8 @@ export default function RoomPage() {
     submitReactionTime,
     submitPopLockScore,
     submitBattleshipMove,
-    submitWordRaceGuess
+    submitWordRaceGuess,
+    showCharadesWord
   } = useRoom();
 
   useEffect(() => {
@@ -219,6 +220,7 @@ export default function RoomPage() {
                     onComplete={() => completePrompt(roomCode)}
                     onVote={handleVote}
                     showTimedCategory={() => showTimedCategory(roomCode)}
+                    showCharadesWord={() => showCharadesWord(roomCode)}
                   />
                 ) : (
                   <TurnScreen

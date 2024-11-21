@@ -12,6 +12,7 @@ import ReactionPrompt from './minigames/ReactionGame';
 import PopLockGame from './minigames/PopLockGame';
 import BattleshipGame from './minigames/BattleshipGame';
 import WordRaceGame from './minigames/WordRaceGame';
+import CharadesPrompt from './prompts/CharadesPrompt';
 
 interface PromptDisplayProps {
   prompt: Prompt;
@@ -21,6 +22,7 @@ interface PromptDisplayProps {
   onComplete: () => void;
   onVote?: (optionId: string) => void;
   showTimedCategory?: () => void;
+  showCharadesWord?: () => void;
 }
 
 const promptThemes: Record<PromptType, { 
@@ -100,6 +102,12 @@ const promptThemes: Record<PromptType, {
     title: 'Word Race',
     emoji: '🔎',
     garnish: '📝'
+  },
+  [PromptType.CHARADES]: {
+    color: '#FF69B4',  // Pink
+    title: 'Charades',
+    emoji: '🎭',
+    garnish: '🎬'
   }
 };
 
@@ -132,7 +140,8 @@ export default function PromptDisplay({
   isCurrentPlayer,
   onComplete,
   onVote,
-  showTimedCategory
+  showTimedCategory,
+  showCharadesWord
 }: PromptDisplayProps) {
   const [showPrompt, setShowPrompt] = useState(false);
   const theme = prompt.type === PromptType.TIMED ? getTimedTheme(prompt) : promptThemes[prompt.type];
@@ -243,6 +252,17 @@ export default function PromptDisplay({
           );
         }
         return null;
+      case PromptType.CHARADES:
+        return (
+          <CharadesPrompt
+            prompt={prompt}
+            currentPlayer={currentPlayer}
+            isCurrentPlayer={isCurrentPlayer}
+            onComplete={onComplete}
+            onVote={onVote}
+            showTimedCategory={showCharadesWord}
+          />
+        );
       default:
         return (
           <AnimatePresence>
@@ -435,6 +455,7 @@ export default function PromptDisplay({
          prompt.type !== PromptType.POPLOCK &&
          prompt.type !== PromptType.BATTLESHIP &&
          prompt.type !== PromptType.WORDRACE &&
+         prompt.type !== PromptType.CHARADES &&
          isCurrentPlayer && (
           <motion.div
             initial={{ y: 50, opacity: 0 }}
@@ -449,7 +470,7 @@ export default function PromptDisplay({
               className="bg-white/10 text-white px-12 py-4 rounded-lg text-xl font-bold shadow-lg border-2"
               style={{ borderColor: theme.color }}
             >
-              Complete Prompt
+              End Turn
             </motion.button>
           </motion.div>
         )}

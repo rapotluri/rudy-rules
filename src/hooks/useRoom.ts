@@ -665,6 +665,27 @@ export const useRoom = () => {
     }
   };
 
+  const showCharadesWord = async (roomCode: string) => {
+    try {
+      const roomRef = doc(db, 'rooms', roomCode);
+      await runTransaction(db, async (transaction) => {
+        const roomDoc = await transaction.get(roomRef);
+        if (!roomDoc.exists()) throw new Error('Room not found');
+
+        const roomData = roomDoc.data() as Room;
+        if (!roomData.currentPrompt?.CharadesOptions) return;
+
+        transaction.update(roomRef, {
+          'currentPrompt.CharadesOptions.showWord': true,
+          updatedAt: serverTimestamp(),
+        });
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to show word');
+      throw err;
+    }
+  };
+
   return {
     room,
     loading,
@@ -684,5 +705,6 @@ export const useRoom = () => {
     submitPopLockScore,
     submitBattleshipMove,
     submitWordRaceGuess,
+    showCharadesWord,
   };
 }; 

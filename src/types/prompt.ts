@@ -10,7 +10,8 @@ export enum PromptType {
   TIMED = 'TIMED',
   POPLOCK = 'POPLOCK',
   BATTLESHIP = 'BATTLESHIP',
-  WORDRACE = 'WORDRACE'
+  WORDRACE = 'WORDRACE',
+  CHARADES = 'CHARADES'
 }
 
 export interface VoteOption {
@@ -71,6 +72,16 @@ export interface WordRaceOptions {
   gameEnded?: boolean;
 }
 
+export interface CharadesOptions {
+  style: 'charades';
+  instructions: string;
+  timeLimit: number;
+  word?: string;
+  category?: string;
+  showWord: boolean;
+  gameEnded?: boolean;
+}
+
 export interface Prompt {
   id: string;
   type: PromptType;
@@ -99,6 +110,7 @@ export interface Prompt {
   PopLockOptions?: PopLockOptions;
   BattleshipOptions?: BattleshipOptions;
   WordRaceOptions?: WordRaceOptions;
+  CharadesOptions?: CharadesOptions;
 }
 
 // Basic challenge library

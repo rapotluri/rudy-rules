@@ -1,20 +1,24 @@
 import { Prompt, PromptType } from '@/types/prompt';
 import { Player } from '@/types/game';
 import { 
-  REACTION_PROMPTS, 
-  POPLOCK_PROMPTS,
-  BATTLESHIP_PROMPTS,
-  WORDRACE_PROMPTS
+  //REACTION_PROMPTS, 
+  //POPLOCK_PROMPTS,
+  //BATTLESHIP_PROMPTS,
+ WORDRACE_PROMPTS,
+  //CHARADES_PROMPTS,
+  CHARADES_WORDS,
+  WORDRACE_WORDS
 } from './promptData';
 
 // Get prompts function
 export const getPrompts = (spiceLevel: number, drinkLevel: number, votingOnly = false) => {
   // Include all game prompts
   const prompts = [
-    ...REACTION_PROMPTS, 
-    ...POPLOCK_PROMPTS,
-    ...BATTLESHIP_PROMPTS,
-    ...WORDRACE_PROMPTS
+    //...REACTION_PROMPTS, 
+    //...POPLOCK_PROMPTS,
+    //...BATTLESHIP_PROMPTS,
+    ...WORDRACE_PROMPTS,
+    //...CHARADES_PROMPTS
   ];
   
   return prompts.filter(prompt => 
@@ -38,10 +42,11 @@ export const createNewPrompt = (
   // If all prompts have been used, reset the pool
   if (availablePrompts.length === 0) {
     availablePrompts = [
-      ...REACTION_PROMPTS, 
-      ...POPLOCK_PROMPTS,
-      ...BATTLESHIP_PROMPTS,
-      ...WORDRACE_PROMPTS
+      //...REACTION_PROMPTS, 
+      //...POPLOCK_PROMPTS,
+      //...BATTLESHIP_PROMPTS,
+      ...WORDRACE_PROMPTS,
+      //...CHARADES_PROMPTS
     ];
   }
 
@@ -70,38 +75,27 @@ export const createNewPrompt = (
   } else if (template.type === PromptType.BATTLESHIP) {
     basePrompt.BattleshipOptions = template.BattleshipOptions;
   } else if (template.type === PromptType.WORDRACE) {
-    // Pick a random word from your word list
-    const words = [
-      "HELM", "VAST", "WAKE", "YARD", "ZERO", "CHIP", "DUSK", "FERN",
-      
-      // Drinking related
-      "BEER", "SHOT", "WINE", "BREW", "SIPS", "PINT", "MEAD", "SAKE",
-      "BREW", "POUR", "GULP", "CHUG", "FIZZ", "FOAM", "BUZZ", "BARS",
-      
-      // Fun/Game related
-      "WILD", "DARE", "GAME", "PLAY", "SPIN", "FLIP", "LUCK", "RISK",
-      "BOLD", "COOL", "VIBE", "HYPE", "JUMP", "WINK", "GLOW", "NEON",
-      "DICE", "CARD", "TEAM", "RACE", "BEAT", "WINS", "LOSE", "DRAW",
-      
-      // Common 4-letter words
-      "TIME", "FIRE", "SAFE", "HOPE", "MIND", "SOFT", "SPOT", "LIME",
-      "DIVE", "GOAL", "FISH", "LOCK", "SOCK", "RATE", "CORE", "SHOW",
-      "LOVE", "LIST", "PAGE", "MILK", "WALK", "SPIN", "REST", "TWIN",
-      "FAST", "SLOW", "TALL", "TINY", "HUGE", "GOOD", "BEST", "COOL",
-      "DARK", "LIFE", "STAR", "MOON", "RAIN", "SNOW", "WIND", "WAVE",
-      
-      // Party related
-      "CLUB", "RAVE", "BASS", "BEAT", "SONG", "TUNE", "FUNK", "ROCK",
-      "MOVE", "SING", "LOUD", "WILD", "LATE", "NITE", "DAWN", "DUSK",
-      "GLOW", "VIBE", "HYPE", "CREW", "GANG", "TEAM", "PACK", "CREW"
-    ];
-    const randomWord = words[Math.floor(Math.random() * words.length)];
+    // Get random word from our words array
+    const randomWord = WORDRACE_WORDS[Math.floor(Math.random() * WORDRACE_WORDS.length)];
+    
     basePrompt.WordRaceOptions = {
       style: 'wordle',
       instructions: "Type a 4-letter word. First to find it wins!",
       prize: "Winner gives out a drink, everyone else drinks!",
       word: randomWord,
       guesses: {},
+      gameEnded: false
+    };
+  } else if (template.type === PromptType.CHARADES) {
+    // Get random word from our words array
+    const randomWord = CHARADES_WORDS[Math.floor(Math.random() * CHARADES_WORDS.length)];
+    
+    basePrompt.CharadesOptions = {
+      style: 'charades',
+      instructions: "Act out the word without speaking! Other players try to guess.",
+      timeLimit: template.CharadesOptions?.timeLimit || 45,
+      word: randomWord,
+      showWord: false,
       gameEnded: false
     };
   }

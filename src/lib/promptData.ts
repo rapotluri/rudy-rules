@@ -468,7 +468,35 @@ const BATTLESHIP_PROMPTS: Partial<Prompt>[] = [
   }
 ];
 
-// Add this alongside other prompt arrays
+// Add Word Race words array
+export const WORDRACE_WORDS = [
+  // Drinking/Party
+  "BEER", "SHOT", "WINE", "BREW", "SIPS", "PINT", "MALT", "POUR",
+  "GULP", "CHUG", "FOAM", "BUZZ", "BARS", "CLUB", "RAVE", "BASS",
+  "BEAT", "SONG", "TUNE", "FUNK", "ROCK", "WEED", "HIGH", "ROLL",
+  "TRIP", "DOPE", "FADE", "JUUL", "COKE", "LEAN", "SESH", "RAGE",
+  "YOLO", "TURN", "HOOK", "BODY", "TITS", "SEXY", "KISS", "LICK",
+  "SUCK", "BITE", "MOAN", "LOVE", "LUST", "WILD", "HARD", "SOFT",
+  
+  // Party Actions
+  "DARE", "PLAY", "SPIN", "FLIP", "LUCK", "RISK", "BOLD", "COOL",
+  "VIBE", "HYPE", "JUMP", "WINK", "GLOW", "NEON", "MOVE", "SING",
+  "LOUD", "LATE", "DARK", "GRND", "TASE", "BUMP", "SLAM", "BANG",
+  
+  // States/Feelings
+  "SICK", "FADE", "GONE", "LOST", "WOKE", "DEAD", "LIVE", "WILD",
+  "HYPE", "DUMB", "LAZY", "FINE", "CUTE", "HUNG", "HURT", "SORE",
+  
+  // Dating/Hookup
+  "DATE", "FLRT", "TIND", "SNAP", "SEND", "NUDE", "SEXT", "DTFF",
+  "WIFE", "BABE", "GIRL", "BOYS", "STUD", "MILF", "DILF", "THOT",
+  
+  // Party Places
+  "CLUB", "BARS", "ROOM", "BEDS", "BATH", "POOL", "YARD", "DORM",
+  "CAVE", "TRAP", "RAVE", "HOOD", "TOWN", "CRIB", "SPOT", "ZONE"
+];
+
+// Update WORDRACE_PROMPTS to use the word list
 const WORDRACE_PROMPTS: Partial<Prompt>[] = [
   {
     type: PromptType.WORDRACE,
@@ -482,7 +510,7 @@ const WORDRACE_PROMPTS: Partial<Prompt>[] = [
       style: 'wordle',
       instructions: "Type a 4-letter word. First to find it wins!",
       prize: "Winner gives out a drink, everyone else drinks!",
-      word: "HELM"  // From your word list
+      word: WORDRACE_WORDS[0]  // Default word, will be randomized in promptLibrary
     }
   },
   {
@@ -497,7 +525,133 @@ const WORDRACE_PROMPTS: Partial<Prompt>[] = [
       style: 'wordle',
       instructions: "Type a 4-letter word. First to find it wins!",
       prize: "Winner gives out shots, everyone else takes a shot!",
-      word: "SHOT"  // From your word list
+      word: WORDRACE_WORDS[0]  // Default word, will be randomized in promptLibrary
+    }
+  }
+];
+
+// Add charades words array
+export const CHARADES_WORDS = [
+  "Beer Pong",
+  "Hangover",
+  "Shot Glass",
+  "Bartender",
+  "Beer Belly",
+  "Drunk Text",
+  "Tequila Shot",
+  "Wine Tasting",
+  "Beer Goggles",
+  "Dance Floor",
+  "Last Call",
+  "Happy Hour",
+  "Pub Crawl",
+  "Cocktail",
+  "Drinking Game",
+  "DJ",
+  "Bouncer",
+  "Dance Battle",
+  "Selfie",
+  "Karaoke",
+  "Grinding",
+  "Twerking",
+  "Club Line",
+  "VIP Section",
+  "After Party",
+  "Walk of Shame",
+  "Drunk Eating",
+  "Drunk Crying",
+  "Flirting",
+  "Making Out",
+  "Passing Out",
+  "Throwing Up",
+  "Drunk Dancing",
+  "Drunk Texting",
+  "Pregaming",
+  "Beer Run",
+  "House Party",
+  "Drinking Contest",
+  "Flip Cup",
+  "Body Shots",
+  "Drunk Fight",
+  "Lost Phone",
+  "Drunk Food",
+  "Hangover Cure",
+  "Strip Club",
+  "69",
+  "Missionary",
+  "Doggy Style",
+  "Cowgirl",
+  "Reverse Cowgirl",
+  "Spooning",
+  "Netflix and Chill",
+  "Strip Tease",
+  "Lap Dance",
+  "Booty Call",
+  "Friends with Benefits",
+  "One Night Stand",
+  "Morning Wood",
+  "Walk of Shame",
+  "Sexting",
+  "Dry Humping",
+  "French Kiss",
+  "Hickey",
+  "Skinny Dipping",
+  "Seven Minutes in Heaven",
+  "Body Shot",
+  "Pole Dancing",
+  "Dirty Dancing",
+  "Motorboat",
+  "Handcuffs",
+  "Blindfold",
+  "Striptease",
+  "Bondage",
+  "Spanking",
+  "Foreplay",
+  "Make Out",
+  "Hook Up",
+  "Late Night Text",
+  "Dating App",
+  "Tinder Match",
+  "Dick Pic",
+  "Nudes",
+  "Thirst Trap",
+  "Sugar Daddy",
+  "Sugar Baby",
+  "Drunk Dial"
+];
+
+// Update CHARADES_PROMPTS to include a word from the list
+const CHARADES_PROMPTS: Partial<Prompt>[] = [
+  {
+    type: PromptType.CHARADES,
+    title: "Charades",
+    prompt: "Act out the word without speaking!",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    CharadesOptions: {
+      style: 'charades',
+      instructions: "Act out the word without speaking! Other players try to guess.",
+      timeLimit: 60,
+      showWord: false,
+      word: CHARADES_WORDS[0]
+    }
+  },
+  {
+    type: PromptType.CHARADES,
+    title: "Spicy Charades",
+    prompt: "Act out the word without speaking!",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    CharadesOptions: {
+      style: 'charades',
+      instructions: "Act out the word without speaking! Other players try to guess.",
+      timeLimit: 60,
+      showWord: false,
+      word: CHARADES_WORDS[0]
     }
   }
 ];
@@ -513,5 +667,6 @@ export {
   REACTION_PROMPTS,
   POPLOCK_PROMPTS,
   BATTLESHIP_PROMPTS,
-  WORDRACE_PROMPTS
+  WORDRACE_PROMPTS,
+  CHARADES_PROMPTS
 };
