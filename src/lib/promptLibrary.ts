@@ -208,7 +208,7 @@ export const createNewPrompt = (
       style: 'poplock' as const,  // Force the literal type
       instructions: template.PopLockOptions?.instructions || "Tap when the line hits the dot!",
       prize: template.PopLockOptions?.prize || "Lowest score drinks!",
-      speed: template.PopLockOptions?.speed || 2,
+      speed: template.PopLockOptions?.speed || 3,
       targetScore: template.PopLockOptions?.targetScore || 5,
       scores: {},
       gameEnded: false

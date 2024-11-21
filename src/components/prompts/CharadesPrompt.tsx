@@ -83,19 +83,26 @@ export default function CharadesPrompt({
         </motion.div>
       )}
 
-      {/* Word Display - only shown to current player */}
-      {showWord && isCurrentPlayer && (
+      {/* Word Display - shown to current player during game, shown to everyone after timer ends */}
+      {((showWord && isCurrentPlayer) || timerEnded) && (
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           className="text-4xl font-bold text-white text-center mb-12 max-w-xl mx-auto"
         >
-          {prompt.CharadesOptions?.word}
+          {timerEnded && !isCurrentPlayer ? (
+            <div>
+              <div className="text-xl text-gray-400 mb-2">The word was:</div>
+              <div className="text-emerald-400">{prompt.CharadesOptions?.word}</div>
+            </div>
+          ) : (
+            prompt.CharadesOptions?.word
+          )}
         </motion.div>
       )}
 
       {/* Timer - shown to everyone once word is revealed */}
-      {showWord && (
+      {showWord && !timerEnded && (
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
