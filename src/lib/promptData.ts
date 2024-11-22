@@ -315,6 +315,146 @@ const DARE_PROMPTS: Partial<Prompt>[] = [
     prompt: "Kiss or Strip - Choose between kissing someone or losing 1 article of clothing",
     spiceLevel: 2,
     drinkLevel: 0
+  },
+  {
+    type: PromptType.DARE,
+    title: "Dare",
+    prompt: "Get slapped by the player to your left",
+    spiceLevel: 1,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.DARE,
+    title: "Dare",
+    prompt: "Take a body shot",
+    spiceLevel: 2,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.DARE,
+    title: "Dare",
+    prompt: "Do 10 push ups",
+    spiceLevel: 0,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.DARE,
+    title: "Dare",
+    prompt: "Sit on someone's lap until your next turn",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.DARE,
+    title: "Dare",
+    prompt: "Either kiss or slap the player on your right",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.DARE,
+    title: "Dare",
+    prompt: "Let someone pour a drink into your mouth",
+    spiceLevel: 1,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.DARE,
+    title: "Dare",
+    prompt: "Let someone 'mama bird' a drink into your mouth",
+    spiceLevel: 2,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.DARE,
+    title: "Dare",
+    prompt: "Let the group give you a dare",
+    spiceLevel: 0,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.DARE,
+    title: "Dare",
+    prompt: "Attempt wall twerking",
+    spiceLevel: 1,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.DARE,
+    title: "Dare",
+    prompt: "Trade tops with someone",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.DARE,
+    title: "Dare",
+    prompt: "Lose 1 article of clothing",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.DARE,
+    title: "Dare",
+    prompt: "Do your best moan",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.DARE,
+    title: "Dare",
+    prompt: "Get spanked with a nearby object",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.DARE,
+    title: "Dare",
+    prompt: "Attempt doing the worm",
+    spiceLevel: 1,
+    drinkLevel: 2
+  },
+  {
+    type: PromptType.DARE,
+    title: "Dare",
+    prompt: "Give someone a lap dance",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.DARE,
+    title: "Dare",
+    prompt: "Let someone draw a sharpie tattoo on you",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.DARE,
+    title: "Dare",
+    prompt: "Take off your bra or drink if you don't have one",
+    spiceLevel: 2,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.DARE,
+    title: "Dare",
+    prompt: "Pick two players to kiss",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.DARE,
+    title: "Dare",
+    prompt: "Anyone who has kissed someone here must kiss them again",
+    spiceLevel: 2,
+    drinkLevel: 0
+  },
+  {
+    type: PromptType.DARE,
+    title: "Dare",
+    prompt: "Scoot your ass on the carpet like a dog, or take a shot",
+    spiceLevel: 2,
+    drinkLevel: 1
   }
 ];
 
@@ -429,15 +569,269 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
     syncNeeded: true,
     voteOptions: [],
     votingComplete: false
+  },
+  {
+    type: PromptType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who is most likely to be bad at sex?",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true,
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
+  },
+  {
+    type: PromptType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who is most likely to date within their friend group?",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true,
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
+  },
+  {
+    type: PromptType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who is most likely to win at beer pong?",
+    spiceLevel: 2,
+    drinkLevel: 2,
+    groupResponse: true,
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
+  },
+  {
+    type: PromptType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who is most likely to get whiskey dick?",
+    spiceLevel: 2,
+    drinkLevel: 2,
+    groupResponse: true,
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
+  },
+  {
+    type: PromptType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who is most likely to fake being drunk?",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true,
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
+  },
+  {
+    type: PromptType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who is most likely to cry when drunk?",
+    spiceLevel: 2,
+    drinkLevel: 2,
+    groupResponse: true,
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
+  },
+  {
+    type: PromptType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who is most likely to get a tattoo of their partner's name?",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true,
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
+  },
+  {
+    type: PromptType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who is most likely to give hickeys?",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true,
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
+  },
+  {
+    type: PromptType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who is most likely to get noise complaints because of sex?",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true,
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
+  },
+  {
+    type: PromptType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who is most likely to end a relationship because of bad sex?",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true,
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
+  },
+  {
+    type: PromptType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who is most likely to watch porn daily?",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true,
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
+  },
+  {
+    type: PromptType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who is most likely to be in an orgy?",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true,
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
+  },
+  {
+    type: PromptType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who is most likely to hook up in a bathroom?",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true,
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
+  },
+  {
+    type: PromptType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who is most likely to drunk text a crush?",
+    spiceLevel: 2,
+    drinkLevel: 2,
+    groupResponse: true,
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
+  },
+  {
+    type: PromptType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who is most likely to have the highest body count?",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true,
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
+  },
+  {
+    type: PromptType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who is most likely to lower their standards after some drinks?",
+    spiceLevel: 2,
+    drinkLevel: 2,
+    groupResponse: true,
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
+  },
+  {
+    type: PromptType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who is most likely to have watched porn most recently?",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true,
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
+  },
+  {
+    type: PromptType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who is most likely to have a one night stand tonight?",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true,
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
+  },
+  {
+    type: PromptType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who is most likely to have the most questionable search history?",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true,
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
+  },
+  {
+    type: PromptType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who is most likely to get free drinks at the bar?",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true,
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
+  },
+  {
+    type: PromptType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who is most likely to cry during sex?",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true,
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
+  },
+  {
+    type: PromptType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who is most likely to get back with an ex?",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true,
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
+  },
+  {
+    type: PromptType.VOTE,
+    title: "Most Likely To...",
+    prompt: "Who is most likely to be the loudest in bed?",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    groupResponse: true,
+    syncNeeded: true,
+    voteOptions: [],
+    votingComplete: false
   }
 ];
 
 // Separate Over/Under prompts
 const OVER_UNDER_PROMPTS: Partial<Prompt>[] = [
+  // Regular prompts (spiceLevel: 0)
   {
     type: PromptType.OVER_UNDER,
     title: "Over/Under",
-    prompt: "Is Taco Bell overrated or underrated?",
+    prompt: "Is McDonald's overrated or underrated?",
     voteOptions: [
       { id: "over", text: "Overrated", votes: [] },
       { id: "under", text: "Underrated", votes: [] }
@@ -457,6 +851,212 @@ const OVER_UNDER_PROMPTS: Partial<Prompt>[] = [
     spiceLevel: 0,
     drinkLevel: 1,
     votingComplete: false
+  },
+  {
+    type: PromptType.OVER_UNDER,
+    title: "Over/Under",
+    prompt: "Is pizza overrated or underrated?",
+    voteOptions: [
+      { id: "over", text: "Overrated", votes: [] },
+      { id: "under", text: "Underrated", votes: [] }
+    ],
+    spiceLevel: 0,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.OVER_UNDER,
+    title: "Over/Under",
+    prompt: "Are Crocs overrated or underrated?",
+    voteOptions: [
+      { id: "over", text: "Overrated", votes: [] },
+      { id: "under", text: "Underrated", votes: [] }
+    ],
+    spiceLevel: 0,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.OVER_UNDER,
+    title: "Over/Under",
+    prompt: "Is Lululemon overrated or underrated?",
+    voteOptions: [
+      { id: "over", text: "Overrated", votes: [] },
+      { id: "under", text: "Underrated", votes: [] }
+    ],
+    spiceLevel: 0,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.OVER_UNDER,
+    title: "Over/Under",
+    prompt: "Are tattoos overrated or underrated?",
+    voteOptions: [
+      { id: "over", text: "Overrated", votes: [] },
+      { id: "under", text: "Underrated", votes: [] }
+    ],
+    spiceLevel: 0,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+
+  // Spicy prompts (spiceLevel: 2)
+  {
+    type: PromptType.OVER_UNDER,
+    title: "Over/Under",
+    prompt: "Are MILFs and DILFs overrated or underrated?",
+    voteOptions: [
+      { id: "over", text: "Overrated", votes: [] },
+      { id: "under", text: "Underrated", votes: [] }
+    ],
+    spiceLevel: 2,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.OVER_UNDER,
+    title: "Over/Under",
+    prompt: "Is anal overrated or underrated?",
+    voteOptions: [
+      { id: "over", text: "Overrated", votes: [] },
+      { id: "under", text: "Underrated", votes: [] }
+    ],
+    spiceLevel: 2,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.OVER_UNDER,
+    title: "Over/Under",
+    prompt: "Is shower sex overrated or underrated?",
+    voteOptions: [
+      { id: "over", text: "Overrated", votes: [] },
+      { id: "under", text: "Underrated", votes: [] }
+    ],
+    spiceLevel: 2,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.OVER_UNDER,
+    title: "Over/Under",
+    prompt: "Are blondes overrated or underrated?",
+    voteOptions: [
+      { id: "over", text: "Overrated", votes: [] },
+      { id: "under", text: "Underrated", votes: [] }
+    ],
+    spiceLevel: 2,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.OVER_UNDER,
+    title: "Over/Under",
+    prompt: "Are nipple piercings overrated or underrated?",
+    voteOptions: [
+      { id: "over", text: "Overrated", votes: [] },
+      { id: "under", text: "Underrated", votes: [] }
+    ],
+    spiceLevel: 2,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.OVER_UNDER,
+    title: "Over/Under",
+    prompt: "Is missionary overrated or underrated?",
+    voteOptions: [
+      { id: "over", text: "Overrated", votes: [] },
+      { id: "under", text: "Underrated", votes: [] }
+    ],
+    spiceLevel: 2,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.OVER_UNDER,
+    title: "Over/Under",
+    prompt: "Is 69ing overrated or underrated?",
+    voteOptions: [
+      { id: "over", text: "Overrated", votes: [] },
+      { id: "under", text: "Underrated", votes: [] }
+    ],
+    spiceLevel: 2,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.OVER_UNDER,
+    title: "Over/Under",
+    prompt: "Is BDSM overrated or underrated?",
+    voteOptions: [
+      { id: "over", text: "Overrated", votes: [] },
+      { id: "under", text: "Underrated", votes: [] }
+    ],
+    spiceLevel: 2,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.OVER_UNDER,
+    title: "Over/Under",
+    prompt: "Is oral overrated or underrated?",
+    voteOptions: [
+      { id: "over", text: "Overrated", votes: [] },
+      { id: "under", text: "Underrated", votes: [] }
+    ],
+    spiceLevel: 2,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.OVER_UNDER,
+    title: "Over/Under",
+    prompt: "Are redheads overrated or underrated?",
+    voteOptions: [
+      { id: "over", text: "Overrated", votes: [] },
+      { id: "under", text: "Underrated", votes: [] }
+    ],
+    spiceLevel: 2,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.OVER_UNDER,
+    title: "Over/Under",
+    prompt: "Are brunettes overrated or underrated?",
+    voteOptions: [
+      { id: "over", text: "Overrated", votes: [] },
+      { id: "under", text: "Underrated", votes: [] }
+    ],
+    spiceLevel: 2,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.OVER_UNDER,
+    title: "Over/Under",
+    prompt: "Are tequila shots overrated or underrated?",
+    voteOptions: [
+      { id: "over", text: "Overrated", votes: [] },
+      { id: "under", text: "Underrated", votes: [] }
+    ],
+    spiceLevel: 2,
+    drinkLevel: 2,  // Higher drink level for alcohol-related prompts
+    votingComplete: false
+  },
+  {
+    type: PromptType.OVER_UNDER,
+    title: "Over/Under",
+    prompt: "Are espresso martinis overrated or underrated?",
+    voteOptions: [
+      { id: "over", text: "Overrated", votes: [] },
+      { id: "under", text: "Underrated", votes: [] }
+    ],
+    spiceLevel: 2,
+    drinkLevel: 2,  // Higher drink level for alcohol-related prompts
+    votingComplete: false
   }
 ];
 
@@ -465,7 +1065,7 @@ const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
   {
     type: PromptType.RED_FLAG,
     title: "Red Flag or Green Flag",
-    prompt: "Is it a red flag if your date still has their ex on social media?",
+    prompt: "Is it a red flag if they overthink anything & everything?",
     voteOptions: [
       { id: "red", text: "🚩 Red Flag", votes: [] },
       { id: "green", text: "🟢 Green Flag", votes: [] }
@@ -477,12 +1077,324 @@ const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
   {
     type: PromptType.RED_FLAG,
     title: "Red Flag or Green Flag",
-    prompt: "Is it a red flag if they live with their parents at 25?",
+    prompt: "Is it a red flag if they're overly confident?",
     voteOptions: [
       { id: "red", text: "🚩 Red Flag", votes: [] },
       { id: "green", text: "🟢 Green Flag", votes: [] }
     ],
     spiceLevel: 1,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.RED_FLAG,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they use 3-in-1 shampoo?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 1,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.RED_FLAG,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they never get jealous?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 1,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.RED_FLAG,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they own a squishmallow?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 1,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.RED_FLAG,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they have no social media?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 1,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.RED_FLAG,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they want to share locations?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 1,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.RED_FLAG,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they insist on splitting checks?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 1,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.RED_FLAG,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they own a lot of stuffed animals?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 1,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.RED_FLAG,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they ask for a prenup?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 1,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.RED_FLAG,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they're overly close with their mom?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 1,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.RED_FLAG,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they have a full sleeve tattoo?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 1,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.RED_FLAG,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they have a face tattoo?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 1,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.RED_FLAG,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they live with their parents?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 1,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.RED_FLAG,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they talk about exes frequently?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 2,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.RED_FLAG,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they never text while they're out at the bars?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 2,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.RED_FLAG,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they don't like PDA?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 1,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.RED_FLAG,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they have a best friend of the opposite gender?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 2,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.RED_FLAG,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they don't have a car, and you drive them to work?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 1,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.RED_FLAG,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they have a snapscore of 2 million?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 1,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.RED_FLAG,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they're still friends with all their exes?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 2,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.RED_FLAG,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they have a secret OnlyFans?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 2,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.RED_FLAG,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they're active on dating apps but 'just looking for friends'?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 2,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.RED_FLAG,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they have a body count over 50?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 2,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.RED_FLAG,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they want an open relationship?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 2,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.RED_FLAG,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they've cheated in past relationships?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 2,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.RED_FLAG,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they're into roleplay?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 2,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.RED_FLAG,
+    title: "Red Flag or Green Flag",
+    prompt: "Is it a red flag if they have a foot fetish?",
+    voteOptions: [
+      { id: "red", text: "🚩 Red Flag", votes: [] },
+      { id: "green", text: "🟢 Green Flag", votes: [] }
+    ],
+    spiceLevel: 2,
     drinkLevel: 1,
     votingComplete: false
   }
@@ -498,42 +1410,6 @@ const TWO_OPTION_PROMPTS: Partial<Prompt>[] = [
       { id: "cold", text: "Extreme Cold", votes: [] }
     ],
     spiceLevel: 0,
-    drinkLevel: 1,
-    votingComplete: false
-  },
-  {
-    type: PromptType.TWO_OPTION_VOTE,
-    title: "Red Flag or Green Flag",
-    prompt: "Is it a red flag if they don't drink alcohol?",
-    voteOptions: [
-      { id: "red", text: "🚩 Red Flag", votes: [] },
-      { id: "green", text: "🟢 Green Flag", votes: [] }
-    ],
-    spiceLevel: 1,
-    drinkLevel: 1,
-    votingComplete: false
-  },
-  {
-    type: PromptType.TWO_OPTION_VOTE,
-    title: "Red Flag or Green Flag",
-    prompt: "Is it a red flag if they're still friends with all their exes?",
-    voteOptions: [
-      { id: "red", text: "🚩 Red Flag", votes: [] },
-      { id: "green", text: "🟢 Green Flag", votes: [] }
-    ],
-    spiceLevel: 2,
-    drinkLevel: 1,
-    votingComplete: false
-  },
-  {
-    type: PromptType.TWO_OPTION_VOTE,
-    title: "Red Flag or Green Flag",
-    prompt: "Is it a red flag if they don't have any close friends?",
-    voteOptions: [
-      { id: "red", text: "🚩 Red Flag", votes: [] },
-      { id: "green", text: "🟢 Green Flag", votes: [] }
-    ],
-    spiceLevel: 1,
     drinkLevel: 1,
     votingComplete: false
   }
@@ -648,6 +1524,231 @@ const FAST_MONEY_PROMPTS: Partial<Prompt>[] = [
       timeLimit: 15,
       showCategory: false
     }
+  },
+  {
+    type: PromptType.FAST_MONEY,
+    title: "Fast Money",
+    prompt: "List as many items as you can",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    FastMoneyOptions: {
+      category: "Sex Positions",
+      instructions: "List as many sex positions as you can. Give out that many sips, or drink if you can't name any!",
+      timeLimit: 15,
+      showCategory: false
+    }
+  },
+  {
+    type: PromptType.FAST_MONEY,
+    title: "Fast Money",
+    prompt: "List as many items as you can",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    FastMoneyOptions: {
+      category: "Different Words for Penis",
+      instructions: "List as many slang terms for penis as you can. Give out that many sips, or drink if you can't name any!",
+      timeLimit: 15,
+      showCategory: false
+    }
+  },
+  {
+    type: PromptType.FAST_MONEY,
+    title: "Fast Money",
+    prompt: "List as many items as you can",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    FastMoneyOptions: {
+      category: "Different Words for Breasts",
+      instructions: "List as many slang terms for breasts as you can. Give out that many sips, or drink if you can't name any!",
+      timeLimit: 15,
+      showCategory: false
+    }
+  },
+  {
+    type: PromptType.FAST_MONEY,
+    title: "Fast Money",
+    prompt: "List as many items as you can",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    FastMoneyOptions: {
+      category: "Different Words for Sex",
+      instructions: "List as many slang terms for sex as you can. Give out that many sips, or drink if you can't name any!",
+      timeLimit: 15,
+      showCategory: false
+    }
+  },
+  {
+    type: PromptType.FAST_MONEY,
+    title: "Fast Money",
+    prompt: "List as many items as you can",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    FastMoneyOptions: {
+      category: "Fetishes/Kinks",
+      instructions: "List as many fetishes/kinks as you can. Give out that many sips, or drink if you can't name any!",
+      timeLimit: 15,
+      showCategory: false
+    }
+  },
+  {
+    type: PromptType.FAST_MONEY,
+    title: "Fast Money",
+    prompt: "List as many items as you can",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    FastMoneyOptions: {
+      category: "Different Words for Orgasm",
+      instructions: "List as many slang terms for orgasm as you can. Give out that many sips, or drink if you can't name any!",
+      timeLimit: 15,
+      showCategory: false
+    }
+  },
+  {
+    type: PromptType.FAST_MONEY,
+    title: "Fast Money",
+    prompt: "List as many items as you can",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    FastMoneyOptions: {
+      category: "Things You Suck",
+      instructions: "List as many things you can suck as you can. Give out that many sips, or drink if you can't name any!",
+      timeLimit: 15,
+      showCategory: false
+    }
+  },
+  {
+    type: PromptType.FAST_MONEY,
+    title: "Fast Money",
+    prompt: "List as many items as you can",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    FastMoneyOptions: {
+      category: "Hot Celebrities",
+      instructions: "List as many hot celebrities as you can. Give out that many sips, or drink if you can't name any!",
+      timeLimit: 15,
+      showCategory: false
+    }
+  },
+  {
+    type: PromptType.FAST_MONEY,
+    title: "Fast Money",
+    prompt: "List as many items as you can",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    FastMoneyOptions: {
+      category: "Sex Toys",
+      instructions: "List as many sex toys as you can. Give out that many sips, or drink if you can't name any!",
+      timeLimit: 15,
+      showCategory: false
+    }
+  },
+  {
+    type: PromptType.FAST_MONEY,
+    title: "Fast Money",
+    prompt: "List as many items as you can",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    FastMoneyOptions: {
+      category: "Different Words for Vagina",
+      instructions: "List as many slang terms for vagina as you can. Give out that many sips, or drink if you can't name any!",
+      timeLimit: 15,
+      showCategory: false
+    }
+  },
+  {
+    type: PromptType.FAST_MONEY,
+    title: "Fast Money",
+    prompt: "List as many items as you can",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    FastMoneyOptions: {
+      category: "Different Words for Testicles",
+      instructions: "List as many slang terms for testicles as you can. Give out that many sips, or drink if you can't name any!",
+      timeLimit: 15,
+      showCategory: false
+    }
+  },
+  {
+    type: PromptType.FAST_MONEY,
+    title: "Fast Money",
+    prompt: "List as many items as you can",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    FastMoneyOptions: {
+      category: "Different Words for Masturbating",
+      instructions: "List as many slang terms for masturbating as you can. Give out that many sips, or drink if you can't name any!",
+      timeLimit: 15,
+      showCategory: false
+    }
+  },
+  {
+    type: PromptType.FAST_MONEY,
+    title: "Fast Money",
+    prompt: "List as many items as you can",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    FastMoneyOptions: {
+      category: "Condom Alternatives",
+      instructions: "List as many condom alternatives as you can. Give out that many sips, or drink if you can't name any!",
+      timeLimit: 15,
+      showCategory: false
+    }
+  },
+  {
+    type: PromptType.FAST_MONEY,
+    title: "Fast Money",
+    prompt: "List as many items as you can",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    FastMoneyOptions: {
+      category: "Dildo Alternatives",
+      instructions: "List as many dildo alternatives as you can. Give out that many sips, or drink if you can't name any!",
+      timeLimit: 15,
+      showCategory: false
+    }
+  },
+  {
+    type: PromptType.FAST_MONEY,
+    title: "Fast Money",
+    prompt: "List as many items as you can",
+    spiceLevel: 2,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    FastMoneyOptions: {
+      category: "Porn Categories",
+      instructions: "List as many porn categories as you can. Give out that many sips, or drink if you can't name any!",
+      timeLimit: 15,
+      showCategory: false
+    }
   }
 ];
 
@@ -677,6 +1778,258 @@ const TONGUE_TWISTER_PROMPTS: Partial<Prompt>[] = [
     groupResponse: true,
     TongueTwisterOptions: {
       phrase: "Peter Piper picked a peck of pickled peppers",
+      instructions: "Say the tongue twister 3 times fast. Give out 3 sips if you succeed, drink if you fail!",
+      timeLimit: 15
+    }
+  },
+  {
+    type: PromptType.TONGUE_TWISTER,
+    title: "Tongue Twister",
+    prompt: "Say it 3 times fast",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    TongueTwisterOptions: {
+      phrase: "Sixth sick sheik's sixth sheep's sick",
+      instructions: "Say the tongue twister 3 times fast. Give out 3 sips if you succeed, drink if you fail!",
+      timeLimit: 15
+    }
+  },
+  {
+    type: PromptType.TONGUE_TWISTER,
+    title: "Tongue Twister",
+    prompt: "Say it 3 times fast",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    TongueTwisterOptions: {
+      phrase: "Wash an Irish wristwatch",
+      instructions: "Say the tongue twister 3 times fast. Give out 3 sips if you succeed, drink if you fail!",
+      timeLimit: 15
+    }
+  },
+  {
+    type: PromptType.TONGUE_TWISTER,
+    title: "Tongue Twister",
+    prompt: "Say it 3 times fast",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    TongueTwisterOptions: {
+      phrase: "Red leather yellow leather",
+      instructions: "Say the tongue twister 3 times fast. Give out 3 sips if you succeed, drink if you fail!",
+      timeLimit: 15
+    }
+  },
+  {
+    type: PromptType.TONGUE_TWISTER,
+    title: "Tongue Twister",
+    prompt: "Say it 3 times fast",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    TongueTwisterOptions: {
+      phrase: "Good blood bad blood",
+      instructions: "Say the tongue twister 3 times fast. Give out 3 sips if you succeed, drink if you fail!",
+      timeLimit: 15
+    }
+  },
+  {
+    type: PromptType.TONGUE_TWISTER,
+    title: "Tongue Twister",
+    prompt: "Say it 3 times fast",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    TongueTwisterOptions: {
+      phrase: "How can a clam cram in a clean cream can",
+      instructions: "Say the tongue twister 3 times fast. Give out 3 sips if you succeed, drink if you fail!",
+      timeLimit: 15
+    }
+  },
+  {
+    type: PromptType.TONGUE_TWISTER,
+    title: "Tongue Twister",
+    prompt: "Say it 3 times fast",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    TongueTwisterOptions: {
+      phrase: "New York I like unique New York",
+      instructions: "Say the tongue twister 3 times fast. Give out 3 sips if you succeed, drink if you fail!",
+      timeLimit: 15
+    }
+  },
+  {
+    type: PromptType.TONGUE_TWISTER,
+    title: "Tongue Twister",
+    prompt: "Say it 3 times fast",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    TongueTwisterOptions: {
+      phrase: "Six sleek swans swam swiftly southwards",
+      instructions: "Say the tongue twister 3 times fast. Give out 3 sips if you succeed, drink if you fail!",
+      timeLimit: 15
+    }
+  },
+  {
+    type: PromptType.TONGUE_TWISTER,
+    title: "Tongue Twister",
+    prompt: "Say it 3 times fast",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    TongueTwisterOptions: {
+      phrase: "Each Easter Eddie eats eighty Easter eggs",
+      instructions: "Say the tongue twister 3 times fast. Give out 3 sips if you succeed, drink if you fail!",
+      timeLimit: 15
+    }
+  },
+  {
+    type: PromptType.TONGUE_TWISTER,
+    title: "Tongue Twister",
+    prompt: "Say it 3 times fast",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    TongueTwisterOptions: {
+      phrase: "Selfish shellfish",
+      instructions: "Say the tongue twister 3 times fast. Give out 3 sips if you succeed, drink if you fail!",
+      timeLimit: 15
+    }
+  },
+  {
+    type: PromptType.TONGUE_TWISTER,
+    title: "Tongue Twister",
+    prompt: "Say it 3 times fast",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    TongueTwisterOptions: {
+      phrase: "Six Czech cricket critics",
+      instructions: "Say the tongue twister 3 times fast. Give out 3 sips if you succeed, drink if you fail!",
+      timeLimit: 15
+    }
+  },
+  {
+    type: PromptType.TONGUE_TWISTER,
+    title: "Tongue Twister",
+    prompt: "Say it 3 times fast",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    TongueTwisterOptions: {
+      phrase: "A proper copper coffee pot",
+      instructions: "Say the tongue twister 3 times fast. Give out 3 sips if you succeed, drink if you fail!",
+      timeLimit: 15
+    }
+  },
+  {
+    type: PromptType.TONGUE_TWISTER,
+    title: "Tongue Twister",
+    prompt: "Say it 3 times fast",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    TongueTwisterOptions: {
+      phrase: "Rubber baby buggy bumpers",
+      instructions: "Say the tongue twister 3 times fast. Give out 3 sips if you succeed, drink if you fail!",
+      timeLimit: 15
+    }
+  },
+  {
+    type: PromptType.TONGUE_TWISTER,
+    title: "Tongue Twister",
+    prompt: "Say it 3 times fast",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    TongueTwisterOptions: {
+      phrase: "Double bubble gum bubbles double",
+      instructions: "Say the tongue twister 3 times fast. Give out 3 sips if you succeed, drink if you fail!",
+      timeLimit: 15
+    }
+  },
+  {
+    type: PromptType.TONGUE_TWISTER,
+    title: "Tongue Twister",
+    prompt: "Say it 3 times fast",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    TongueTwisterOptions: {
+      phrase: "Pesky pixie pretty pesto",
+      instructions: "Say the tongue twister 3 times fast. Give out 3 sips if you succeed, drink if you fail!",
+      timeLimit: 15
+    }
+  },
+  {
+    type: PromptType.TONGUE_TWISTER,
+    title: "Tongue Twister",
+    prompt: "Say it 3 times fast",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    TongueTwisterOptions: {
+      phrase: "The excess taxes Texas taxes vexes us",
+      instructions: "Say the tongue twister 3 times fast. Give out 3 sips if you succeed, drink if you fail!",
+      timeLimit: 15
+    }
+  },
+  {
+    type: PromptType.TONGUE_TWISTER,
+    title: "Tongue Twister",
+    prompt: "Say it 3 times fast",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    TongueTwisterOptions: {
+      phrase: "Pad kid poured curd pulled cod",
+      instructions: "Say the tongue twister 3 times fast. Give out 3 sips if you succeed, drink if you fail!",
+      timeLimit: 15
+    }
+  },
+  {
+    type: PromptType.TONGUE_TWISTER,
+    title: "Tongue Twister",
+    prompt: "Say it 3 times fast",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    TongueTwisterOptions: {
+      phrase: "Scissor sizzle thistles sizzle",
+      instructions: "Say the tongue twister 3 times fast. Give out 3 sips if you succeed, drink if you fail!",
+      timeLimit: 15
+    }
+  },
+  {
+    type: PromptType.TONGUE_TWISTER,
+    title: "Tongue Twister",
+    prompt: "Say it 3 times fast",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    TongueTwisterOptions: {
+      phrase: "A loyal warrior will rarely worry",
       instructions: "Say the tongue twister 3 times fast. Give out 3 sips if you succeed, drink if you fail!",
       timeLimit: 15
     }
