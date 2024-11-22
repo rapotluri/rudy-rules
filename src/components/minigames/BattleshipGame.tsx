@@ -101,7 +101,7 @@ export default function BattleshipGame({
                   const shotHere = Object.entries(shots).find(([_, shot]) => 
                     shot.x === x && shot.y === y
                   );
-                  const isHit = shotHere && ship?.x === x && ship?.y === y;
+                  const isHit = gameEnded && shotHere && ship?.x === x && ship?.y === y;
 
                   return (
                     <motion.div

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Player } from '@/types/game';
 import { Prompt } from '@/types/prompt';
@@ -35,6 +35,7 @@ export default function WordRaceGame({
   const [currentGuess, setCurrentGuess] = useState('');
   const [timeLeft, setTimeLeft] = useState(60);
   const [localGuesses, setLocalGuesses] = useState<GuessWithFeedback[]>([]);
+  const [myGuessHistory, setMyGuessHistory] = useState<string[]>([]);
 
   const word = prompt.WordRaceOptions?.word || '';
   console.log('Target word:', word);
@@ -103,13 +104,22 @@ export default function WordRaceGame({
     return () => clearInterval(timer);
   }, [gameEnded, onVote]);
 
-  // Modified handleKeyPress to handle guesses better
-  const handleKeyPress = (key: string) => {
+  // Move guesses inside useEffect
+  useEffect(() => {
+    const guesses = prompt.WordRaceOptions?.guesses || {};
+    const myGuesses = Object.entries(guesses)
+      .filter(([playerId]) => playerId === currentPlayer.id)
+      .map(([_, guess]) => guess);
+    setMyGuessHistory(myGuesses);
+  }, [prompt.WordRaceOptions?.guesses, currentPlayer.id]);
+
+  // Wrap handleKeyPress in useCallback to prevent it from changing on every render
+  const handleKeyPress = useCallback((event: KeyboardEvent) => {
     if (gameEnded) return;
 
-    if (key === 'BACK') {
+    if (event.key === 'BACK') {
       setCurrentGuess(prev => prev.slice(0, -1));
-    } else if (key === 'ENTER' && currentGuess.length === 4) {
+    } else if (event.key === 'ENTER' && currentGuess.length === 4) {
       if (localGuesses.length >= 5) return;
       
       const guessWithFeedback = checkGuess(currentGuess);
@@ -122,10 +132,10 @@ export default function WordRaceGame({
       }
       
       setCurrentGuess('');
-    } else if (key !== 'ENTER' && currentGuess.length < 4) {
-      setCurrentGuess(prev => prev + key);
+    } else if (event.key !== 'ENTER' && currentGuess.length < 4) {
+      setCurrentGuess(prev => prev + event.key);
     }
-  };
+  }, [currentGuess, isCurrentPlayer, onVote]);
 
   // Add effect to handle game end state
   useEffect(() => {
@@ -136,21 +146,9 @@ export default function WordRaceGame({
 
   // Handle physical keyboard
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (gameEnded) return;
-
-      if (e.key === 'Backspace') {
-        handleKeyPress('BACK');
-      } else if (e.key === 'Enter' && currentGuess.length === 4) {
-        handleKeyPress('ENTER');
-      } else if (/^[A-Za-z]$/.test(e.key) && currentGuess.length < 4) {
-        handleKeyPress(e.key.toUpperCase());
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentGuess, gameEnded]);
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [handleKeyPress]);
 
   return (
     <div className="min-h-[60vh] max-h-[80vh] flex flex-col items-center justify-center p-4">
@@ -219,7 +217,7 @@ export default function WordRaceGame({
                     key={key}
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
-                    onClick={() => handleKeyPress(key)}
+                    onClick={() => handleKeyPress(new KeyboardEvent('keydown', { key: key }))}
                     className={`px-2 py-3 rounded font-bold text-xs
                       ${key.length > 1 ? 'px-4' : ''}
                       bg-white/20 hover:bg-white/30`}

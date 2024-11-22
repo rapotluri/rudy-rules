@@ -7,11 +7,13 @@ import { useEffect, useState } from 'react';
 import VotingPrompt from './prompts/VotingPrompt';
 import TwoOptionPrompt from './prompts/TwoOptionPrompt';
 import KeepThreePrompt from './prompts/KeepThreePrompt';
-import TimedPrompt from './prompts/TimedPrompt';
 import ReactionPrompt from './minigames/ReactionGame';
 import PopLockGame from './minigames/PopLockGame';
 import BattleshipGame from './minigames/BattleshipGame';
 import WordRaceGame from './minigames/WordRaceGame';
+import CharadesPrompt from './prompts/CharadesPrompt';
+import FastMoneyPrompt from './prompts/FastMoneyPrompt';
+import TongueTwisterPrompt from './prompts/TongueTwisterPrompt';
 
 interface PromptDisplayProps {
   prompt: Prompt;
@@ -21,6 +23,8 @@ interface PromptDisplayProps {
   onComplete: () => void;
   onVote?: (optionId: string) => void;
   showTimedCategory?: () => void;
+  showCharadesWord?: () => void;
+  endCharadesTimer?: () => void;
 }
 
 const promptThemes: Record<PromptType, { 
@@ -77,11 +81,17 @@ const promptThemes: Record<PromptType, {
     emoji: '🎯',
     garnish: '🍀'  // Four leaf clover
   },
-  [PromptType.TIMED]: {
-    color: '#FF6B6B',  // This will be overridden based on style
-    title: '',  // This will be overridden based on style
+  [PromptType.FAST_MONEY]: {
+    color: '#FF6B6B',  // Coral red
+    title: 'Fast Money',
     emoji: '⏱️',
-    garnish: '🌶️'
+    garnish: '💰'
+  },
+  [PromptType.TONGUE_TWISTER]: {
+    color: '#9370DB',  // Medium purple
+    title: 'Tongue Twister',
+    emoji: '👅',
+    garnish: '🗣️'
   },
   [PromptType.POPLOCK]: {
     color: '#FF4D4D',  // Bright red
@@ -100,29 +110,25 @@ const promptThemes: Record<PromptType, {
     title: 'Word Race',
     emoji: '🔎',
     garnish: '📝'
+  },
+  [PromptType.CHARADES]: {
+    color: '#FF69B4',  // Pink
+    title: 'Charades',
+    emoji: '🎭',
+    garnish: '🎬'
+  },
+  [PromptType.OVER_UNDER]: {
+    color: '#FF9933',
+    title: 'Over or Under',
+    emoji: '⚖️',
+    garnish: '🎯'
+  },
+  [PromptType.RED_FLAG]: {
+    color: '#FF4D4D',
+    title: 'Red Flag or Green Flag',
+    emoji: '🚩',
+    garnish: '🟢'
   }
-};
-
-const getTimedTheme = (prompt: Prompt) => {
-  const baseTheme = promptThemes[PromptType.TIMED];
-  
-  if (prompt.timedOptions?.style === 'fast_money') {
-    return {
-      ...baseTheme,
-      color: '#FF6B6B',  // Coral red
-      title: 'Fast Money',
-      emoji: '⏱️'
-    };
-  } else if (prompt.timedOptions?.style === 'tongue_twister') {
-    return {
-      ...baseTheme,
-      color: '#9370DB',  // Medium purple
-      title: 'Tongue Twister',
-      emoji: '👅'
-    };
-  }
-  
-  return baseTheme;
 };
 
 export default function PromptDisplay({
@@ -132,10 +138,12 @@ export default function PromptDisplay({
   isCurrentPlayer,
   onComplete,
   onVote,
-  showTimedCategory
+  showTimedCategory,
+  showCharadesWord,
+  endCharadesTimer
 }: PromptDisplayProps) {
   const [showPrompt, setShowPrompt] = useState(false);
-  const theme = prompt.type === PromptType.TIMED ? getTimedTheme(prompt) : promptThemes[prompt.type];
+  const theme = promptThemes[prompt.type];
 
   useEffect(() => {
     const timer = setTimeout(() => setShowPrompt(true), 500);
@@ -176,9 +184,20 @@ export default function PromptDisplay({
             onVote={onVote}
           />
         );
-      case PromptType.TIMED:
+      case PromptType.FAST_MONEY:
         return (
-          <TimedPrompt
+          <FastMoneyPrompt
+            prompt={prompt}
+            currentPlayer={currentPlayer}
+            isCurrentPlayer={isCurrentPlayer}
+            onComplete={onComplete}
+            onVote={onVote}
+            showTimedCategory={showTimedCategory}
+          />
+        );
+      case PromptType.TONGUE_TWISTER:
+        return (
+          <TongueTwisterPrompt
             prompt={prompt}
             currentPlayer={currentPlayer}
             isCurrentPlayer={isCurrentPlayer}
@@ -243,6 +262,30 @@ export default function PromptDisplay({
           );
         }
         return null;
+      case PromptType.CHARADES:
+        return (
+          <CharadesPrompt
+            prompt={prompt}
+            currentPlayer={currentPlayer}
+            isCurrentPlayer={isCurrentPlayer}
+            onComplete={onComplete}
+            onVote={onVote}
+            showTimedCategory={showCharadesWord}
+            endCharadesTimer={endCharadesTimer}
+          />
+        );
+      case PromptType.OVER_UNDER:
+      case PromptType.RED_FLAG:
+        return (
+          <TwoOptionPrompt
+            prompt={prompt}
+            currentPlayer={currentPlayer}
+            allPlayers={allPlayers}
+            isCurrentPlayer={isCurrentPlayer}
+            onVote={onVote!}
+            onComplete={onComplete}
+          />
+        );
       default:
         return (
           <AnimatePresence>
@@ -430,11 +473,15 @@ export default function PromptDisplay({
         {prompt.type !== PromptType.VOTE && 
          prompt.type !== PromptType.TWO_OPTION_VOTE && 
          prompt.type !== PromptType.KEEP_THREE &&
-         prompt.type !== PromptType.TIMED &&
+         prompt.type !== PromptType.FAST_MONEY &&
+         prompt.type !== PromptType.TONGUE_TWISTER &&
          prompt.type !== PromptType.REACTIONGAME &&
          prompt.type !== PromptType.POPLOCK &&
          prompt.type !== PromptType.BATTLESHIP &&
          prompt.type !== PromptType.WORDRACE &&
+         prompt.type !== PromptType.CHARADES &&
+         prompt.type !== PromptType.RED_FLAG &&
+         prompt.type !== PromptType.OVER_UNDER &&
          isCurrentPlayer && (
           <motion.div
             initial={{ y: 50, opacity: 0 }}
@@ -449,7 +496,7 @@ export default function PromptDisplay({
               className="bg-white/10 text-white px-12 py-4 rounded-lg text-xl font-bold shadow-lg border-2"
               style={{ borderColor: theme.color }}
             >
-              Complete Prompt
+              End Turn
             </motion.button>
           </motion.div>
         )}

@@ -26,13 +26,16 @@ export default function RoomPage() {
     completePrompt, 
     submitVote,
     submitKeepThreeSelection, 
-    showTimedCategory, 
+    showFastMoneyCategory, 
     updateGameSettings, 
     kickPlayer,
     submitReactionTime,
     submitPopLockScore,
     submitBattleshipMove,
-    submitWordRaceGuess
+    submitWordRaceGuess,
+    showCharadesWord,
+    showTongueTwisterPhrase,
+    endCharadesTimer
   } = useRoom();
 
   useEffect(() => {
@@ -50,10 +53,20 @@ export default function RoomPage() {
 
   const isHost = room?.players.find(p => p.id === playerId)?.isHost ?? false;
 
+  const handleStartTurn = async () => {
+    if (!roomCode) return;
+    await startTurn(roomCode);
+  };
+
+  const handleCompletePrompt = async () => {
+    if (!roomCode) return;
+    await completePrompt(roomCode);
+  };
+
   const handleVote = async (optionId: string) => {
     if (!roomCode || !playerId) return;
     
-    // Handle Keep Three selections
+    // Handle different prompt types
     if (room?.currentPrompt?.type === PromptType.KEEP_THREE) {
       await submitKeepThreeSelection(roomCode, optionId.split(','));
     } else if (room?.currentPrompt?.type === PromptType.REACTIONGAME) {
@@ -216,15 +229,23 @@ export default function RoomPage() {
                     currentPlayer={room.players.find(p => p.id === room.currentTurn)!}
                     allPlayers={room.players}
                     isCurrentPlayer={playerId === room.currentTurn}
-                    onComplete={() => completePrompt(roomCode)}
+                    onComplete={handleCompletePrompt}
                     onVote={handleVote}
-                    showTimedCategory={() => showTimedCategory(roomCode)}
+                    showTimedCategory={() => {
+                      if (room.currentPrompt?.type === PromptType.FAST_MONEY) {
+                        return showFastMoneyCategory(roomCode);
+                      } else if (room.currentPrompt?.type === PromptType.TONGUE_TWISTER) {
+                        return showTongueTwisterPhrase(roomCode);
+                      }
+                    }}
+                    showCharadesWord={() => showCharadesWord(roomCode)}
+                    endCharadesTimer={() => endCharadesTimer(roomCode)}
                   />
                 ) : (
                   <TurnScreen
                     currentPlayer={room.players.find(p => p.id === room.currentTurn)!}
                     isCurrentPlayer={playerId === room.currentTurn}
-                    onStartTurn={() => startTurn(roomCode)}
+                    onStartTurn={handleStartTurn}
                   />
                 )
               )}

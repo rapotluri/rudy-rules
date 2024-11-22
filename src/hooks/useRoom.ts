@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import { db } from '@/lib/firebase';
 import { Room, Player, GameState } from '@/types/game';
 import { Prompt, PromptType } from '@/types/prompt';
-import { createNewPrompt } from '@/lib/promptLibrary';
+import { createNewPrompt, UNIQUE_PROMPT_TYPES } from '@/lib/promptLibrary';
 import { generateRoomCode } from '@/utils/roomCode';
 import {
   doc,
@@ -53,7 +53,10 @@ export const useRoom = () => {
         settings: {
           drinkLevel: 0,
           spiceLevel: 0
-        }
+        },
+        lastPromptTypes: [],
+        usedWords: [],
+        usedPrompts: []
       };
 
       await setDoc(doc(db, 'rooms', roomCode), newRoom);
@@ -126,12 +129,15 @@ export const useRoom = () => {
         // Randomly select first player
         const firstPlayer = roomData.players[Math.floor(Math.random() * roomData.players.length)];
 
-        // Create first challenge - pass the players array
+        // Create first challenge - pass empty arrays for lastPromptTypes and used words/prompts
         const firstPrompt = createNewPrompt(
           roomData.settings.spiceLevel,
           roomData.settings.drinkLevel,
           firstPlayer.id,
-          roomData.players
+          roomData.players,
+          [],  // No last prompt types yet
+          [],  // No used words yet
+          []   // No used prompts yet
         );
 
         transaction.update(roomRef, {
@@ -139,6 +145,10 @@ export const useRoom = () => {
           currentTurn: firstPlayer.id,
           currentPrompt: firstPrompt,
           roundNumber: 1,
+          lastPromptTypes: [firstPrompt.type],  // Initialize with first prompt type
+          usedWords: firstPrompt.WordRaceOptions?.word ? [firstPrompt.WordRaceOptions.word] : 
+                    firstPrompt.CharadesOptions?.word ? [firstPrompt.CharadesOptions.word] : [],
+          usedPrompts: firstPrompt.prompt ? [firstPrompt.prompt] : [],
           updatedAt: serverTimestamp(),
         });
       });
@@ -157,25 +167,20 @@ export const useRoom = () => {
 
         const roomData = roomDoc.data() as Room;
         
-        // Get used prompts from room data
-        const usedPrompts = roomData.usedPrompts || [];
-
-        // Create new prompt, avoiding used ones
+        // Create new prompt, avoiding last 4 prompt types and used content
         const newPrompt = createNewPrompt(
           roomData.settings.spiceLevel,
           roomData.settings.drinkLevel,
           roomData.currentTurn!,
           roomData.players,
-          usedPrompts // Pass used prompts to avoid repetition
+          roomData.lastPromptTypes || [],
+          roomData.usedWords || [],
+          roomData.usedPrompts || []
         );
-
-        // Add new prompt to used prompts
-        const updatedUsedPrompts = [...usedPrompts, newPrompt.prompt];
 
         transaction.update(roomRef, {
           currentPrompt: newPrompt,
           showPrompt: true,
-          usedPrompts: updatedUsedPrompts,
           updatedAt: serverTimestamp(),
         });
       });
@@ -195,7 +200,7 @@ export const useRoom = () => {
         const roomData = roomDoc.data() as Room;
         if (!roomData.currentPrompt) return;
 
-        // Get next player (only from connected players)
+        // Get next player
         const connectedPlayers = roomData.players.filter(p => p.isConnected);
         if (connectedPlayers.length === 0) return;
 
@@ -203,12 +208,48 @@ export const useRoom = () => {
         const nextPlayerIndex = (currentPlayerIndex + 1) % connectedPlayers.length;
         const nextPlayer = connectedPlayers[nextPlayerIndex];
 
+        // Track used words if applicable
+        const usedWords = roomData.usedWords || [];
+        if (roomData.currentPrompt.WordRaceOptions?.word) {
+          usedWords.push(roomData.currentPrompt.WordRaceOptions.word);
+        }
+        if (roomData.currentPrompt.CharadesOptions?.word) {
+          usedWords.push(roomData.currentPrompt.CharadesOptions.word);
+        }
+        if (roomData.currentPrompt.FastMoneyOptions?.category) {
+          usedWords.push(roomData.currentPrompt.FastMoneyOptions.category);
+        }
+        if (roomData.currentPrompt.TongueTwisterOptions?.phrase) {
+          usedWords.push(roomData.currentPrompt.TongueTwisterOptions.phrase);
+        }
+        if (roomData.currentPrompt.keepThreeOptions?.category) {
+          usedWords.push(roomData.currentPrompt.keepThreeOptions.category);
+        }
+
+        // Track used prompts if applicable
+        const usedPrompts = roomData.usedPrompts || [];
+        if (roomData.currentPrompt && 
+            UNIQUE_PROMPT_TYPES.includes(roomData.currentPrompt.type) && 
+            roomData.currentPrompt.prompt) {
+          usedPrompts.push(roomData.currentPrompt.prompt);
+        }
+
+        // Update last prompt types array - now keeping last 7 types
+        const lastPromptTypes = roomData.lastPromptTypes || [];
+        lastPromptTypes.push(roomData.currentPrompt.type);
+        if (lastPromptTypes.length > 7) {
+          lastPromptTypes.shift(); // Remove oldest prompt type
+        }
+
         // Update room state
         transaction.update(roomRef, {
           currentTurn: nextPlayer.id,
           currentPrompt: null,
           showPrompt: false,
           roundNumber: roomData.roundNumber + 1,
+          lastPromptTypes,
+          usedWords,
+          usedPrompts,
           updatedAt: serverTimestamp(),
         });
       });
@@ -436,7 +477,7 @@ export const useRoom = () => {
     }
   };
 
-  const showTimedCategory = async (roomCode: string) => {
+  const showFastMoneyCategory = async (roomCode: string) => {
     try {
       const roomRef = doc(db, 'rooms', roomCode);
       await runTransaction(db, async (transaction) => {
@@ -444,10 +485,10 @@ export const useRoom = () => {
         if (!roomDoc.exists()) throw new Error('Room not found');
 
         const roomData = roomDoc.data() as Room;
-        if (!roomData.currentPrompt?.timedOptions) return;
+        if (!roomData.currentPrompt?.FastMoneyOptions) return;
 
         transaction.update(roomRef, {
-          'currentPrompt.timedOptions.showCategory': true,
+          'currentPrompt.FastMoneyOptions.showCategory': true,
           updatedAt: serverTimestamp(),
         });
       });
@@ -560,7 +601,7 @@ export const useRoom = () => {
         } else if (action === 'shoot') {
           // Handle shooting
           const shots = roomData.currentPrompt.BattleshipOptions.shots || {};
-          const hits = roomData.currentPrompt.BattleshipOptions.hits || [];
+          const pendingHits = roomData.currentPrompt.BattleshipOptions.pendingHits || [];
           const ship = roomData.currentPrompt.BattleshipOptions.ship;
           
           // Add shot to player's shots
@@ -571,18 +612,28 @@ export const useRoom = () => {
 
           // Check if shot hit the ship
           const isHit = ship && ship.x === x && ship.y === y;
-          const updatedHits = isHit ? [...hits, playerId] : hits;
+          const updatedPendingHits = isHit ? [...pendingHits, playerId] : pendingHits;
 
           // Game ends when all non-current players have taken their shot
           const nonCurrentPlayers = roomData.players.filter(p => p.id !== roomData.currentTurn);
           const allPlayersShot = nonCurrentPlayers.every(p => updatedShots[p.id]);
 
-          transaction.update(roomRef, {
-            'currentPrompt.BattleshipOptions.shots': updatedShots,
-            'currentPrompt.BattleshipOptions.hits': updatedHits,
-            'currentPrompt.BattleshipOptions.gameEnded': allPlayersShot,
-            updatedAt: serverTimestamp(),
-          });
+          // If game is ending, move pendingHits to hits
+          if (allPlayersShot) {
+            transaction.update(roomRef, {
+              'currentPrompt.BattleshipOptions.shots': updatedShots,
+              'currentPrompt.BattleshipOptions.hits': updatedPendingHits,
+              'currentPrompt.BattleshipOptions.pendingHits': [],
+              'currentPrompt.BattleshipOptions.gameEnded': true,
+              updatedAt: serverTimestamp(),
+            });
+          } else {
+            transaction.update(roomRef, {
+              'currentPrompt.BattleshipOptions.shots': updatedShots,
+              'currentPrompt.BattleshipOptions.pendingHits': updatedPendingHits,
+              updatedAt: serverTimestamp(),
+            });
+          }
         }
       });
     } catch (err) {
@@ -665,6 +716,69 @@ export const useRoom = () => {
     }
   };
 
+  const showCharadesWord = async (roomCode: string) => {
+    try {
+      const roomRef = doc(db, 'rooms', roomCode);
+      await runTransaction(db, async (transaction) => {
+        const roomDoc = await transaction.get(roomRef);
+        if (!roomDoc.exists()) throw new Error('Room not found');
+
+        const roomData = roomDoc.data() as Room;
+        if (!roomData.currentPrompt?.CharadesOptions) return;
+
+        transaction.update(roomRef, {
+          'currentPrompt.CharadesOptions.showWord': true,
+          updatedAt: serverTimestamp(),
+        });
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to show word');
+      throw err;
+    }
+  };
+
+  const showTongueTwisterPhrase = async (roomCode: string) => {
+    try {
+      const roomRef = doc(db, 'rooms', roomCode);
+      await runTransaction(db, async (transaction) => {
+        const roomDoc = await transaction.get(roomRef);
+        if (!roomDoc.exists()) throw new Error('Room not found');
+
+        const roomData = roomDoc.data() as Room;
+        if (!roomData.currentPrompt?.TongueTwisterOptions) return;
+
+        transaction.update(roomRef, {
+          'currentPrompt.TongueTwisterOptions.showPhrase': true,
+          updatedAt: serverTimestamp(),
+        });
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to show phrase');
+      throw err;
+    }
+  };
+
+  const endCharadesTimer = async (roomCode: string) => {
+    try {
+      const roomRef = doc(db, 'rooms', roomCode);
+      await runTransaction(db, async (transaction) => {
+        const roomDoc = await transaction.get(roomRef);
+        if (!roomDoc.exists()) throw new Error('Room not found');
+
+        const roomData = roomDoc.data() as Room;
+        if (!roomData.currentPrompt?.CharadesOptions) return;
+
+        transaction.update(roomRef, {
+          'currentPrompt.CharadesOptions.timerEnded': true,
+          updatedAt: serverTimestamp(),
+        });
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to end timer');
+      throw err;
+    }
+  };
+
   return {
     room,
     loading,
@@ -679,10 +793,13 @@ export const useRoom = () => {
     subscribeToRoom,
     updateGameSettings,
     kickPlayer,
-    showTimedCategory,
+    showFastMoneyCategory,
     submitReactionTime,
     submitPopLockScore,
     submitBattleshipMove,
     submitWordRaceGuess,
+    showCharadesWord,
+    showTongueTwisterPhrase,
+    endCharadesTimer,
   };
 }; 

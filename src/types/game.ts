@@ -1,4 +1,4 @@
-import type { Prompt } from './prompt';
+import type { Prompt, PromptType } from './prompt';
 
 export enum GameState {
   LOBBY = 'LOBBY',
@@ -35,5 +35,7 @@ export interface Room {
   createdAt: number;
   updatedAt: number;
   settings: GameSettings;
-  usedPrompts?: string[];
+  lastPromptTypes: PromptType[];
+  usedWords: string[];
+  usedPrompts: string[];
 } 
