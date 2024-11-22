@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { Prompt } from '@/types/prompt';
 import { Player } from '@/types/game';
 
-interface TimedPromptProps {
+interface TongueTwisterPromptProps {
   prompt: Prompt;
   currentPlayer: Player;
   isCurrentPlayer: boolean;
@@ -14,28 +14,22 @@ interface TimedPromptProps {
   showTimedCategory?: () => void;
 }
 
-export default function TimedPrompt({
+export default function TongueTwisterPrompt({
   prompt,
   currentPlayer,
   isCurrentPlayer,
   onComplete,
   onVote,
   showTimedCategory
-}: TimedPromptProps) {
-  const [timeLeft, setTimeLeft] = useState(prompt.timedOptions?.timeLimit || 15);
-  const [timerStarted, setTimerStarted] = useState(false);
+}: TongueTwisterPromptProps) {
+  const [timeLeft, setTimeLeft] = useState(prompt.TongueTwisterOptions?.timeLimit || 15);
   const [timerEnded, setTimerEnded] = useState(false);
 
-  const showCategory = prompt.timedOptions?.showCategory || false;
+  const showPhrase = prompt.TongueTwisterOptions?.showPhrase || false;
 
+  // Start timer when phrase is shown
   useEffect(() => {
-    if (showCategory && !timerStarted) {
-      setTimerStarted(true);
-    }
-  }, [showCategory, timerStarted]);
-
-  useEffect(() => {
-    if (timerStarted && !timerEnded) {
+    if (showPhrase && !timerEnded) {
       const timer = setInterval(() => {
         setTimeLeft((prev) => {
           if (prev <= 1) {
@@ -49,54 +43,45 @@ export default function TimedPrompt({
 
       return () => clearInterval(timer);
     }
-  }, [timerStarted, timerEnded]);
+  }, [showPhrase, timerEnded]);
 
-  const handleShowCategory = () => {
+  const handleShowPhrase = () => {
     if (showTimedCategory) {
       showTimedCategory();
     }
   };
 
-  const isFastMoney = prompt.title === "Fast Money";
-
   return (
     <div className="min-h-[60vh] max-h-[80vh] flex flex-col items-center justify-center p-4">
       {/* Instructions */}
-      {!showCategory && (
+      {!showPhrase && (
         <motion.div
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           className="text-center mb-16"
         >
           <div className="text-xl text-gray-300 max-w-xl mx-auto">
-            {isFastMoney ? (
-              <p>
-                List as many items from the category shown. Give out that many sips, 
-                or drink if you can't name any! Other players keep count.
-              </p>
-            ) : (
-              <p>
-                Say the tongue twister 3 times fast. Give out 3 sips if you succeed, 
-                drink if you fail! Other players judge.
-              </p>
-            )}
+            <p>
+              Say the tongue twister 3 times fast. Give out 3 sips if you succeed, 
+              drink if you fail! Other players judge.
+            </p>
           </div>
         </motion.div>
       )}
 
-      {/* Category Display */}
-      {showCategory && (
+      {/* Phrase Display - shown to everyone after button press */}
+      {showPhrase && (
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           className="text-4xl font-bold text-white text-center mb-12 max-w-xl mx-auto"
         >
-          {prompt.timedOptions?.category}
+          {prompt.TongueTwisterOptions?.phrase}
         </motion.div>
       )}
 
-      {/* Timer */}
-      {timerStarted && !timerEnded && (
+      {/* Timer - shown to everyone once phrase is revealed */}
+      {showPhrase && !timerEnded && (
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
@@ -123,16 +108,16 @@ export default function TimedPrompt({
       {/* Action Buttons */}
       {isCurrentPlayer && (
         <>
-          {!showCategory && (
+          {!showPhrase && (
             <motion.button
               initial={{ y: 50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={handleShowCategory}
+              onClick={handleShowPhrase}
               className="bg-white/10 text-white px-12 py-4 rounded-lg text-xl font-bold shadow-lg border-2 border-emerald-500"
             >
-              Show Category
+              Show Phrase
             </motion.button>
           )}
           {timerEnded && (

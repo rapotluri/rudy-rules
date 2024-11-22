@@ -197,7 +197,7 @@ export const useRoom = () => {
         const roomDoc = await transaction.get(roomRef);
         if (!roomDoc.exists()) throw new Error('Room not found');
 
-        const roomData = roomDoc.data() as Room & { usedPrompts?: string[] };
+        const roomData = roomDoc.data() as Room;
         if (!roomData.currentPrompt) return;
 
         // Get next player
@@ -216,6 +216,14 @@ export const useRoom = () => {
         if (roomData.currentPrompt.CharadesOptions?.word) {
           usedWords.push(roomData.currentPrompt.CharadesOptions.word);
         }
+        // Add Fast Money categories to usedWords
+        if (roomData.currentPrompt.FastMoneyOptions?.category) {
+          usedWords.push(roomData.currentPrompt.FastMoneyOptions.category);
+        }
+        // Add Tongue Twister phrases to usedWords
+        if (roomData.currentPrompt.TongueTwisterOptions?.phrase) {
+          usedWords.push(roomData.currentPrompt.TongueTwisterOptions.phrase);
+        }
 
         // Track used prompts if applicable
         let usedPrompts = roomData.usedPrompts || [];
@@ -225,10 +233,10 @@ export const useRoom = () => {
           usedPrompts.push(roomData.currentPrompt.prompt);
         }
 
-        // Update last prompt types array
+        // Update last prompt types array - now keeping last 7 types
         const lastPromptTypes = roomData.lastPromptTypes || [];
         lastPromptTypes.push(roomData.currentPrompt.type);
-        if (lastPromptTypes.length > 4) {
+        if (lastPromptTypes.length > 7) {
           lastPromptTypes.shift(); // Remove oldest prompt type
         }
 
@@ -468,7 +476,7 @@ export const useRoom = () => {
     }
   };
 
-  const showTimedCategory = async (roomCode: string) => {
+  const showFastMoneyCategory = async (roomCode: string) => {
     try {
       const roomRef = doc(db, 'rooms', roomCode);
       await runTransaction(db, async (transaction) => {
@@ -476,10 +484,10 @@ export const useRoom = () => {
         if (!roomDoc.exists()) throw new Error('Room not found');
 
         const roomData = roomDoc.data() as Room;
-        if (!roomData.currentPrompt?.timedOptions) return;
+        if (!roomData.currentPrompt?.FastMoneyOptions) return;
 
         transaction.update(roomRef, {
-          'currentPrompt.timedOptions.showCategory': true,
+          'currentPrompt.FastMoneyOptions.showCategory': true,
           updatedAt: serverTimestamp(),
         });
       });
@@ -592,7 +600,7 @@ export const useRoom = () => {
         } else if (action === 'shoot') {
           // Handle shooting
           const shots = roomData.currentPrompt.BattleshipOptions.shots || {};
-          const hits = roomData.currentPrompt.BattleshipOptions.hits || [];
+          const pendingHits = roomData.currentPrompt.BattleshipOptions.pendingHits || [];
           const ship = roomData.currentPrompt.BattleshipOptions.ship;
           
           // Add shot to player's shots
@@ -603,18 +611,28 @@ export const useRoom = () => {
 
           // Check if shot hit the ship
           const isHit = ship && ship.x === x && ship.y === y;
-          const updatedHits = isHit ? [...hits, playerId] : hits;
+          const updatedPendingHits = isHit ? [...pendingHits, playerId] : pendingHits;
 
           // Game ends when all non-current players have taken their shot
           const nonCurrentPlayers = roomData.players.filter(p => p.id !== roomData.currentTurn);
           const allPlayersShot = nonCurrentPlayers.every(p => updatedShots[p.id]);
 
-          transaction.update(roomRef, {
-            'currentPrompt.BattleshipOptions.shots': updatedShots,
-            'currentPrompt.BattleshipOptions.hits': updatedHits,
-            'currentPrompt.BattleshipOptions.gameEnded': allPlayersShot,
-            updatedAt: serverTimestamp(),
-          });
+          // If game is ending, move pendingHits to hits
+          if (allPlayersShot) {
+            transaction.update(roomRef, {
+              'currentPrompt.BattleshipOptions.shots': updatedShots,
+              'currentPrompt.BattleshipOptions.hits': updatedPendingHits,
+              'currentPrompt.BattleshipOptions.pendingHits': [],
+              'currentPrompt.BattleshipOptions.gameEnded': true,
+              updatedAt: serverTimestamp(),
+            });
+          } else {
+            transaction.update(roomRef, {
+              'currentPrompt.BattleshipOptions.shots': updatedShots,
+              'currentPrompt.BattleshipOptions.pendingHits': updatedPendingHits,
+              updatedAt: serverTimestamp(),
+            });
+          }
         }
       });
     } catch (err) {
@@ -718,6 +736,27 @@ export const useRoom = () => {
     }
   };
 
+  const showTongueTwisterPhrase = async (roomCode: string) => {
+    try {
+      const roomRef = doc(db, 'rooms', roomCode);
+      await runTransaction(db, async (transaction) => {
+        const roomDoc = await transaction.get(roomRef);
+        if (!roomDoc.exists()) throw new Error('Room not found');
+
+        const roomData = roomDoc.data() as Room;
+        if (!roomData.currentPrompt?.TongueTwisterOptions) return;
+
+        transaction.update(roomRef, {
+          'currentPrompt.TongueTwisterOptions.showPhrase': true,
+          updatedAt: serverTimestamp(),
+        });
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to show phrase');
+      throw err;
+    }
+  };
+
   return {
     room,
     loading,
@@ -732,11 +771,12 @@ export const useRoom = () => {
     subscribeToRoom,
     updateGameSettings,
     kickPlayer,
-    showTimedCategory,
+    showFastMoneyCategory,
     submitReactionTime,
     submitPopLockScore,
     submitBattleshipMove,
     submitWordRaceGuess,
     showCharadesWord,
+    showTongueTwisterPhrase,
   };
 }; 

@@ -7,7 +7,8 @@ export enum PromptType {
   TWO_OPTION_VOTE = 'TWO_OPTION_VOTE',
   KEEP_THREE = 'KEEP_THREE',
   REACTIONGAME = 'REACTIONGAME',
-  TIMED = 'TIMED',
+  FAST_MONEY = 'FAST_MONEY',
+  TONGUE_TWISTER = 'TONGUE_TWISTER',
   POPLOCK = 'POPLOCK',
   BATTLESHIP = 'BATTLESHIP',
   WORDRACE = 'WORDRACE',
@@ -26,12 +27,18 @@ export interface KeepThreeOptions {
   selectedOptions?: string[];
 }
 
-export interface TimedPromptOptions {
+export interface FastMoneyOptions {
   category?: string;
   instructions: string;
-  timeLimit: number;  // in seconds
-  showCategory: boolean;  // to control when to show category
-  style: 'fast_money' | 'tongue_twister';
+  timeLimit: number;
+  showCategory: boolean;
+}
+
+export interface TongueTwisterOptions {
+  phrase: string;
+  instructions: string;
+  timeLimit: number;
+  showPhrase?: boolean;
 }
 
 export interface ReactionGameOptions {
@@ -58,7 +65,8 @@ export interface BattleshipOptions {
   prize: string;
   ship?: {x: number, y: number};  // Current player's ship position
   shots?: Record<string, {x: number, y: number}>;  // Each player's shot
-  hits?: string[];  // Players who hit the ship
+  hits?: string[];  // Players who hit the ship (only shown at end)
+  pendingHits?: string[];  // Players who hit the ship (hidden until end)
   gameEnded?: boolean;
 }
 
@@ -105,7 +113,8 @@ export interface Prompt {
   };
   keepThreeOptions?: KeepThreeOptions;
   selectedOptions?: string[];
-  timedOptions?: TimedPromptOptions;
+  FastMoneyOptions?: FastMoneyOptions;
+  TongueTwisterOptions?: TongueTwisterOptions;
   ReactionGameOptions?: ReactionGameOptions;
   PopLockOptions?: PopLockOptions;
   BattleshipOptions?: BattleshipOptions;

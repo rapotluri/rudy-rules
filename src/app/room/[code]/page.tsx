@@ -26,14 +26,15 @@ export default function RoomPage() {
     completePrompt, 
     submitVote,
     submitKeepThreeSelection, 
-    showTimedCategory, 
+    showFastMoneyCategory, 
     updateGameSettings, 
     kickPlayer,
     submitReactionTime,
     submitPopLockScore,
     submitBattleshipMove,
     submitWordRaceGuess,
-    showCharadesWord
+    showCharadesWord,
+    showTongueTwisterPhrase
   } = useRoom();
 
   useEffect(() => {
@@ -229,7 +230,13 @@ export default function RoomPage() {
                     isCurrentPlayer={playerId === room.currentTurn}
                     onComplete={handleCompletePrompt}
                     onVote={handleVote}
-                    showTimedCategory={() => showTimedCategory(roomCode)}
+                    showTimedCategory={() => {
+                      if (room.currentPrompt?.type === PromptType.FAST_MONEY) {
+                        return showFastMoneyCategory(roomCode);
+                      } else if (room.currentPrompt?.type === PromptType.TONGUE_TWISTER) {
+                        return showTongueTwisterPhrase(roomCode);
+                      }
+                    }}
                     showCharadesWord={() => showCharadesWord(roomCode)}
                   />
                 ) : (

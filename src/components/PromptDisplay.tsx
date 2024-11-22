@@ -7,12 +7,13 @@ import { useEffect, useState } from 'react';
 import VotingPrompt from './prompts/VotingPrompt';
 import TwoOptionPrompt from './prompts/TwoOptionPrompt';
 import KeepThreePrompt from './prompts/KeepThreePrompt';
-import TimedPrompt from './prompts/TimedPrompt';
 import ReactionPrompt from './minigames/ReactionGame';
 import PopLockGame from './minigames/PopLockGame';
 import BattleshipGame from './minigames/BattleshipGame';
 import WordRaceGame from './minigames/WordRaceGame';
 import CharadesPrompt from './prompts/CharadesPrompt';
+import FastMoneyPrompt from './prompts/FastMoneyPrompt';
+import TongueTwisterPrompt from './prompts/TongueTwisterPrompt';
 
 interface PromptDisplayProps {
   prompt: Prompt;
@@ -79,11 +80,17 @@ const promptThemes: Record<PromptType, {
     emoji: '🎯',
     garnish: '🍀'  // Four leaf clover
   },
-  [PromptType.TIMED]: {
-    color: '#FF6B6B',  // This will be overridden based on style
-    title: '',  // This will be overridden based on style
+  [PromptType.FAST_MONEY]: {
+    color: '#FF6B6B',  // Coral red
+    title: 'Fast Money',
     emoji: '⏱️',
-    garnish: '🌶️'
+    garnish: '💰'
+  },
+  [PromptType.TONGUE_TWISTER]: {
+    color: '#9370DB',  // Medium purple
+    title: 'Tongue Twister',
+    emoji: '👅',
+    garnish: '🗣️'
   },
   [PromptType.POPLOCK]: {
     color: '#FF4D4D',  // Bright red
@@ -111,28 +118,6 @@ const promptThemes: Record<PromptType, {
   }
 };
 
-const getTimedTheme = (prompt: Prompt) => {
-  const baseTheme = promptThemes[PromptType.TIMED];
-  
-  if (prompt.timedOptions?.style === 'fast_money') {
-    return {
-      ...baseTheme,
-      color: '#FF6B6B',  // Coral red
-      title: 'Fast Money',
-      emoji: '⏱️'
-    };
-  } else if (prompt.timedOptions?.style === 'tongue_twister') {
-    return {
-      ...baseTheme,
-      color: '#9370DB',  // Medium purple
-      title: 'Tongue Twister',
-      emoji: '👅'
-    };
-  }
-  
-  return baseTheme;
-};
-
 export default function PromptDisplay({
   prompt,
   currentPlayer,
@@ -144,7 +129,7 @@ export default function PromptDisplay({
   showCharadesWord
 }: PromptDisplayProps) {
   const [showPrompt, setShowPrompt] = useState(false);
-  const theme = prompt.type === PromptType.TIMED ? getTimedTheme(prompt) : promptThemes[prompt.type];
+  const theme = promptThemes[prompt.type];
 
   useEffect(() => {
     const timer = setTimeout(() => setShowPrompt(true), 500);
@@ -185,9 +170,20 @@ export default function PromptDisplay({
             onVote={onVote}
           />
         );
-      case PromptType.TIMED:
+      case PromptType.FAST_MONEY:
         return (
-          <TimedPrompt
+          <FastMoneyPrompt
+            prompt={prompt}
+            currentPlayer={currentPlayer}
+            isCurrentPlayer={isCurrentPlayer}
+            onComplete={onComplete}
+            onVote={onVote}
+            showTimedCategory={showTimedCategory}
+          />
+        );
+      case PromptType.TONGUE_TWISTER:
+        return (
+          <TongueTwisterPrompt
             prompt={prompt}
             currentPlayer={currentPlayer}
             isCurrentPlayer={isCurrentPlayer}
@@ -450,7 +446,8 @@ export default function PromptDisplay({
         {prompt.type !== PromptType.VOTE && 
          prompt.type !== PromptType.TWO_OPTION_VOTE && 
          prompt.type !== PromptType.KEEP_THREE &&
-         prompt.type !== PromptType.TIMED &&
+         prompt.type !== PromptType.FAST_MONEY &&
+         prompt.type !== PromptType.TONGUE_TWISTER &&
          prompt.type !== PromptType.REACTIONGAME &&
          prompt.type !== PromptType.POPLOCK &&
          prompt.type !== PromptType.BATTLESHIP &&

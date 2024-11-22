@@ -12,7 +12,9 @@ import {
   DARE_PROMPTS,
   VOTE_PROMPTS,
   TWO_OPTION_PROMPTS,
-  GROUP_DRINK_PROMPTS
+  GROUP_DRINK_PROMPTS,
+  FAST_MONEY_PROMPTS,
+  TONGUE_TWISTER_PROMPTS
 } from './promptData';
 
 // Define reusable minigame types
@@ -27,7 +29,8 @@ export const REUSABLE_TYPES = [
 export const UNIQUE_CONTENT_TYPES = [
   PromptType.WORDRACE,
   PromptType.CHARADES,
-  PromptType.TIMED
+  PromptType.FAST_MONEY,
+  PromptType.TONGUE_TWISTER
 ];
 
 // Define types that need unique prompts (not just unique words)
@@ -48,7 +51,8 @@ const DEFAULT_TITLES: Record<PromptType, string> = {
   [PromptType.TWO_OPTION_VOTE]: 'Vote',
   [PromptType.KEEP_THREE]: 'Keep 3',
   [PromptType.REACTIONGAME]: 'Reaction Test',
-  [PromptType.TIMED]: 'Timed Challenge',
+  [PromptType.FAST_MONEY]: 'Fast Money',
+  [PromptType.TONGUE_TWISTER]: 'Tongue Twister',
   [PromptType.POPLOCK]: 'Pop the Lock',
   [PromptType.BATTLESHIP]: 'Battlesips',
   [PromptType.WORDRACE]: 'Word Race',
@@ -74,7 +78,9 @@ export const getPrompts = (
     ...DARE_PROMPTS,
     ...VOTE_PROMPTS,
     ...TWO_OPTION_PROMPTS,
-    ...GROUP_DRINK_PROMPTS
+    ...GROUP_DRINK_PROMPTS,
+    ...FAST_MONEY_PROMPTS,
+    ...TONGUE_TWISTER_PROMPTS
   ];
   
   // Filter prompts based on difficulty levels
@@ -83,7 +89,7 @@ export const getPrompts = (
     (prompt.drinkLevel || 0) <= drinkLevel
   );
 
-  // Don't repeat any of the last 4 prompt types
+  // Don't repeat any of the last 7 prompt types
   if (lastPromptTypes.length > 0) {
     availablePrompts = availablePrompts.filter(prompt => 
       !lastPromptTypes.includes(prompt.type || PromptType.DRINK)
@@ -136,7 +142,9 @@ export const createNewPrompt = (
       ...DARE_PROMPTS,
       ...VOTE_PROMPTS,
       ...TWO_OPTION_PROMPTS,
-      ...GROUP_DRINK_PROMPTS
+      ...GROUP_DRINK_PROMPTS,
+      ...FAST_MONEY_PROMPTS,
+      ...TONGUE_TWISTER_PROMPTS
     ].filter(prompt => 
       (prompt.spiceLevel || 0) <= spiceLevel && 
       (prompt.drinkLevel || 0) <= drinkLevel
@@ -256,6 +264,33 @@ export const createNewPrompt = (
       word: randomWord,
       showWord: false,
       gameEnded: false
+    };
+  } else if (template.type === PromptType.FAST_MONEY) {
+    // Get unused category
+    const availableCategories = template.FastMoneyOptions?.category ? 
+      [template.FastMoneyOptions.category].filter(cat => !usedWords.includes(cat)) : [];
+    const category = availableCategories.length > 0 
+      ? availableCategories[0]
+      : "Items";  // Default fallback
+
+    basePrompt.FastMoneyOptions = {
+      category: category,
+      instructions: template.FastMoneyOptions?.instructions || "List as many items as you can!",
+      timeLimit: template.FastMoneyOptions?.timeLimit || 15,
+      showCategory: false
+    };
+  } else if (template.type === PromptType.TONGUE_TWISTER) {
+    // Get unused phrase
+    const availablePhrases = template.TongueTwisterOptions?.phrase ? 
+      [template.TongueTwisterOptions.phrase].filter(phrase => !usedWords.includes(phrase)) : [];
+    const phrase = availablePhrases.length > 0 
+      ? availablePhrases[0]
+      : "She sells seashells";  // Default fallback
+
+    basePrompt.TongueTwisterOptions = {
+      phrase: phrase,
+      instructions: template.TongueTwisterOptions?.instructions || "Say it 3 times fast!",
+      timeLimit: template.TongueTwisterOptions?.timeLimit || 15
     };
   }
 

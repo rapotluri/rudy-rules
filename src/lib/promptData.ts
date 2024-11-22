@@ -582,67 +582,85 @@ const KEEP_THREE_PROMPTS: Partial<Prompt>[] = [
   }
 ];
 
+// Add Fast Money prompts
 const FAST_MONEY_PROMPTS: Partial<Prompt>[] = [
   {
-    type: PromptType.TIMED,
+    type: PromptType.FAST_MONEY,
     title: "Fast Money",
     prompt: "List as many items as you can",
-    timedOptions: {
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    FastMoneyOptions: {
       category: "Disney Movies",
       instructions: "List as many Disney movies as you can. Give out that many sips, or drink if you can't name any!",
       timeLimit: 15,
-      showCategory: false,
-      style: "fast_money"
-    },
-    spiceLevel: 0,
-    drinkLevel: 1
+      showCategory: false
+    }
   },
   {
-    type: PromptType.TIMED,
+    type: PromptType.FAST_MONEY,
     title: "Fast Money",
     prompt: "List as many items as you can",
-    timedOptions: {
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    FastMoneyOptions: {
       category: "Alcoholic Drinks",
       instructions: "List as many alcoholic drinks as you can. Give out that many sips, or drink if you can't name any!",
       timeLimit: 15,
-      showCategory: false,
-      style: "fast_money"
-    },
-    spiceLevel: 0,
-    drinkLevel: 1
+      showCategory: false
+    }
   },
   {
-    type: PromptType.TIMED,
+    type: PromptType.FAST_MONEY,
     title: "Fast Money",
     prompt: "List as many items as you can",
-    timedOptions: {
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    FastMoneyOptions: {
       category: "Fast Food Menu Items",
       instructions: "List as many fast food menu items as you can. Give out that many sips, or drink if you can't name any!",
       timeLimit: 15,
-      showCategory: false,
-      style: "fast_money"
-    },
-    spiceLevel: 0,
-    drinkLevel: 1
+      showCategory: false
+    }
   }
 ];
 
+// Add Tongue Twister prompts
 const TONGUE_TWISTER_PROMPTS: Partial<Prompt>[] = [
   {
-    type: PromptType.TIMED,
+    type: PromptType.TONGUE_TWISTER,
     title: "Tongue Twister",
     prompt: "Say it 3 times fast",
-    timedOptions: {
-      category: "She sells seashells by the seashore",
-      instructions: "Say the tongue twister 3 times fast. Give out 3 sips if you succeed, drink if you fail!",
-      timeLimit: 15,
-      showCategory: false,
-      style: "tongue_twister"
-    },
     spiceLevel: 0,
-    drinkLevel: 1
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    TongueTwisterOptions: {
+      phrase: "She sells seashells by the seashore",
+      instructions: "Say the tongue twister 3 times fast. Give out 3 sips if you succeed, drink if you fail!",
+      timeLimit: 15
+    }
   },
-  // Add more tongue twisters here
+  {
+    type: PromptType.TONGUE_TWISTER,
+    title: "Tongue Twister",
+    prompt: "Say it 3 times fast",
+    spiceLevel: 0,
+    drinkLevel: 1,
+    syncNeeded: true,
+    groupResponse: true,
+    TongueTwisterOptions: {
+      phrase: "Peter Piper picked a peck of pickled peppers",
+      instructions: "Say the tongue twister 3 times fast. Give out 3 sips if you succeed, drink if you fail!",
+      timeLimit: 15
+    }
+  }
 ];
 
 const REACTION_PROMPTS: Partial<Prompt>[] = [
