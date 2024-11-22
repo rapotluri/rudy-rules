@@ -24,6 +24,7 @@ interface PromptDisplayProps {
   onVote?: (optionId: string) => void;
   showTimedCategory?: () => void;
   showCharadesWord?: () => void;
+  endCharadesTimer?: () => void;
 }
 
 const promptThemes: Record<PromptType, { 
@@ -138,7 +139,8 @@ export default function PromptDisplay({
   onComplete,
   onVote,
   showTimedCategory,
-  showCharadesWord
+  showCharadesWord,
+  endCharadesTimer
 }: PromptDisplayProps) {
   const [showPrompt, setShowPrompt] = useState(false);
   const theme = promptThemes[prompt.type];
@@ -269,6 +271,7 @@ export default function PromptDisplay({
             onComplete={onComplete}
             onVote={onVote}
             showTimedCategory={showCharadesWord}
+            endCharadesTimer={endCharadesTimer}
           />
         );
       case PromptType.OVER_UNDER:

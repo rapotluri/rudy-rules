@@ -34,7 +34,8 @@ export default function RoomPage() {
     submitBattleshipMove,
     submitWordRaceGuess,
     showCharadesWord,
-    showTongueTwisterPhrase
+    showTongueTwisterPhrase,
+    endCharadesTimer
   } = useRoom();
 
   useEffect(() => {
@@ -238,6 +239,7 @@ export default function RoomPage() {
                       }
                     }}
                     showCharadesWord={() => showCharadesWord(roomCode)}
+                    endCharadesTimer={() => endCharadesTimer(roomCode)}
                   />
                 ) : (
                   <TurnScreen

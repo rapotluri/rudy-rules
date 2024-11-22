@@ -89,6 +89,7 @@ export interface CharadesOptions {
   word?: string;
   category?: string;
   showWord: boolean;
+  timerEnded?: boolean;
   gameEnded?: boolean;
 }
 

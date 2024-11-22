@@ -16,7 +16,8 @@ import {
   FAST_MONEY_PROMPTS,
   TONGUE_TWISTER_PROMPTS,
   RED_FLAG_PROMPTS,
-  OVER_UNDER_PROMPTS
+  OVER_UNDER_PROMPTS,
+  KEEP_THREE_PROMPTS
 } from './promptData';
 
 // Define reusable minigame types
@@ -35,7 +36,9 @@ export const UNIQUE_CONTENT_TYPES = [
   PromptType.FAST_MONEY,
   PromptType.TONGUE_TWISTER,
   PromptType.RED_FLAG,
-  PromptType.OVER_UNDER
+  PromptType.OVER_UNDER,
+  PromptType.KEEP_THREE,
+  PromptType.TWO_OPTION_VOTE
 ];
 
 // Define types that need unique prompts (not just unique words)
@@ -89,7 +92,9 @@ export const getPrompts = (
     ...OVER_UNDER_PROMPTS,
     ...GROUP_DRINK_PROMPTS,
     ...FAST_MONEY_PROMPTS,
-    ...TONGUE_TWISTER_PROMPTS
+    ...TONGUE_TWISTER_PROMPTS,
+    ...KEEP_THREE_PROMPTS,
+    ...TWO_OPTION_PROMPTS
   ];
   
   // Filter prompts based on difficulty levels
@@ -154,7 +159,8 @@ export const createNewPrompt = (
       ...OVER_UNDER_PROMPTS,
       ...GROUP_DRINK_PROMPTS,
       ...FAST_MONEY_PROMPTS,
-      ...TONGUE_TWISTER_PROMPTS
+      ...TONGUE_TWISTER_PROMPTS,
+      ...KEEP_THREE_PROMPTS
     ].filter(prompt => 
       (prompt.spiceLevel || 0) <= spiceLevel && 
       (prompt.drinkLevel || 0) <= drinkLevel
@@ -301,6 +307,13 @@ export const createNewPrompt = (
       phrase: phrase,
       instructions: template.TongueTwisterOptions?.instructions || "Say it 3 times fast!",
       timeLimit: template.TongueTwisterOptions?.timeLimit || 15
+    };
+  } else if (template.type === PromptType.KEEP_THREE) {
+    // Add Keep Three handling
+    basePrompt.keepThreeOptions = {
+      category: template.keepThreeOptions?.category || "Items",
+      items: template.keepThreeOptions?.items || [],
+      selectedOptions: []
     };
   }
 

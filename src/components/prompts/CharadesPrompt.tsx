@@ -12,6 +12,7 @@ interface CharadesPromptProps {
   onComplete: () => void;
   onVote?: (optionId: string) => void;
   showTimedCategory?: () => void;
+  endCharadesTimer?: () => void;
 }
 
 export default function CharadesPrompt({
@@ -20,12 +21,13 @@ export default function CharadesPrompt({
   isCurrentPlayer,
   onComplete,
   onVote,
-  showTimedCategory
+  showTimedCategory,
+  endCharadesTimer
 }: CharadesPromptProps) {
   const [timeLeft, setTimeLeft] = useState(prompt.CharadesOptions?.timeLimit || 30);
-  const [timerEnded, setTimerEnded] = useState(false);
 
   const showWord = prompt.CharadesOptions?.showWord || false;
+  const timerEnded = prompt.CharadesOptions?.timerEnded || false;
 
   // Start timer when word is shown
   useEffect(() => {
@@ -34,7 +36,9 @@ export default function CharadesPrompt({
         setTimeLeft((prev) => {
           if (prev <= 1) {
             clearInterval(timer);
-            setTimerEnded(true);
+            if (endCharadesTimer) {
+              endCharadesTimer();
+            }
             return 0;
           }
           return prev - 1;
@@ -43,11 +47,17 @@ export default function CharadesPrompt({
 
       return () => clearInterval(timer);
     }
-  }, [showWord, timerEnded]);
+  }, [showWord, timerEnded, endCharadesTimer]);
 
   const handleShowWord = () => {
     if (showTimedCategory) {
       showTimedCategory();
+    }
+  };
+
+  const handleEndTimer = () => {
+    if (endCharadesTimer) {
+      endCharadesTimer();
     }
   };
 
@@ -139,6 +149,18 @@ export default function CharadesPrompt({
               className="bg-white/10 text-white px-12 py-4 rounded-lg text-xl font-bold shadow-lg border-2 border-emerald-500"
             >
               Show Word
+            </motion.button>
+          )}
+          {showWord && !timerEnded && (
+            <motion.button
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleEndTimer}
+              className="bg-white/10 text-white px-12 py-4 rounded-lg text-xl font-bold shadow-lg border-2 border-emerald-500"
+            >
+              Someone Guessed It!
             </motion.button>
           )}
           {timerEnded && (
