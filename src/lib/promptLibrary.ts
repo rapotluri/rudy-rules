@@ -279,16 +279,13 @@ export const createNewPrompt = (
       gameEnded: false
     };
   } else if (template.type === PromptType.FAST_MONEY) {
-    // Get unused category
-    const availableCategories = template.FastMoneyOptions?.category ? 
-      [template.FastMoneyOptions.category].filter(cat => !usedWords.includes(cat)) : [];
-    const category = availableCategories.length > 0 
-      ? availableCategories[0]
-      : "Items";  // Default fallback
-
+    if (!template.FastMoneyOptions?.category) {
+      console.error('Fast Money prompt missing category:', template);
+    }
+    
     basePrompt.FastMoneyOptions = {
-      category: category,
-      instructions: template.FastMoneyOptions?.instructions || "List as many items as you can!",
+      category: template.FastMoneyOptions?.category!,  // Remove default value
+      instructions: template.FastMoneyOptions?.instructions || `List as many ${template.FastMoneyOptions?.category}s as you can!`,
       timeLimit: template.FastMoneyOptions?.timeLimit || 15,
       showCategory: false
     };

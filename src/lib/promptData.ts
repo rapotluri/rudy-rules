@@ -1484,13 +1484,13 @@ const FAST_MONEY_PROMPTS: Partial<Prompt>[] = [
     type: PromptType.FAST_MONEY,
     title: "Fast Money",
     prompt: "List as many items as you can",
-    spiceLevel: 0,
+    spiceLevel: 2,
     drinkLevel: 1,
     syncNeeded: true,
     groupResponse: true,
     FastMoneyOptions: {
-      category: "Disney Movies",
-      instructions: "List as many Disney movies as you can. Give out that many sips, or drink if you can't name any!",
+      category: "Sex Positions",  // This should be used
+      instructions: "List as many sex positions as you can. Give out that many sips, or drink if you can't name any!",
       timeLimit: 15,
       showCategory: false
     }
