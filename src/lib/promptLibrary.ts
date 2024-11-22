@@ -100,7 +100,7 @@ export const getPrompts = (
     (prompt.drinkLevel || 0) <= drinkLevel
   );
 
-  // Don't repeat any of the last 12 prompt types
+  // Don't repeat any of the last 13 prompt types
   if (lastPromptTypes.length > 0) {
     availablePrompts = availablePrompts.filter(prompt => 
       !lastPromptTypes.includes(prompt.type || PromptType.DRINK)

@@ -234,10 +234,10 @@ export const useRoom = () => {
           usedPrompts.push(roomData.currentPrompt.prompt);
         }
 
-        // Update last prompt types array - now keeping last 12 types
+        // Update last prompt types array - now keeping last 13 types
         const lastPromptTypes = roomData.lastPromptTypes || [];
         lastPromptTypes.push(roomData.currentPrompt.type);
-        if (lastPromptTypes.length > 12) {
+        if (lastPromptTypes.length > 13) {
           lastPromptTypes.shift(); // Remove oldest prompt type
         }
 

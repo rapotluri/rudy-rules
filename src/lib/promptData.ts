@@ -1415,6 +1415,7 @@ const TWO_OPTION_PROMPTS: Partial<Prompt>[] = [
   }
 ];
 
+// Add new Keep Three prompts with exactly 8 options each
 const KEEP_THREE_PROMPTS: Partial<Prompt>[] = [
   {
     type: PromptType.KEEP_THREE,
@@ -1439,26 +1440,6 @@ const KEEP_THREE_PROMPTS: Partial<Prompt>[] = [
   {
     type: PromptType.KEEP_THREE,
     title: "Keep 3",
-    prompt: "Which 3 fast food places would you keep if the rest disappeared?",
-    keepThreeOptions: {
-      category: "Fast Food",
-      items: [
-        "McDonald's",
-        "Burger King",
-        "Wendy's",
-        "Taco Bell",
-        "KFC",
-        "Subway",
-        "Chipotle",
-        "Five Guys"
-      ]
-    },
-    spiceLevel: 0,
-    drinkLevel: 1
-  },
-  {
-    type: PromptType.KEEP_THREE,
-    title: "Keep 3",
     prompt: "Which 3 superpowers would you choose?",
     keepThreeOptions: {
       category: "Superpowers",
@@ -1474,6 +1455,166 @@ const KEEP_THREE_PROMPTS: Partial<Prompt>[] = [
       ]
     },
     spiceLevel: 0,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.KEEP_THREE,
+    title: "Keep 3",
+    prompt: "Which 3 breakfast items would you keep if the rest disappeared?",
+    keepThreeOptions: {
+      category: "Breakfast Foods",
+      items: [
+        "Pancakes",
+        "Waffles",
+        "Eggs",
+        "Hashbrowns",
+        "Bagels",
+        "Toast",
+        "Bacon",
+        "Cereal"
+      ]
+    },
+    spiceLevel: 0,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.KEEP_THREE,
+    title: "Keep 3",
+    prompt: "Which 3 fast food places would you keep if the rest disappeared?",
+    keepThreeOptions: {
+      category: "Fast Food",
+      items: [
+        "McDonalds",
+        "Subway",
+        "Dominos",
+        "Hyderabad Biryani House",
+        "Burger King",
+        "Wendys",
+        "KFC",
+        "Pizza Hut"
+      ]
+    },
+    spiceLevel: 0,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.KEEP_THREE,
+    title: "Keep 3",
+    prompt: "Which 3 alcoholic drinks would you keep if the rest disappeared?",
+    keepThreeOptions: {
+      category: "Alcoholic Drinks",
+      items: [
+        "Wine",
+        "Beer",
+        "Vodka",
+        "Seltzers",
+        "Tequila",
+        "Rum",
+        "Whiskey",
+        "Cider"
+      ]
+    },
+    spiceLevel: 0,
+    drinkLevel: 2
+  },
+  {
+    type: PromptType.KEEP_THREE,
+    title: "Keep 3",
+    prompt: "Which 3 streaming services would you keep if the rest disappeared?",
+    keepThreeOptions: {
+      category: "Streaming Services",
+      items: [
+        "Hulu",
+        "Amazon Prime",
+        "Netflix",
+        "HBO Max",
+        "Disney+",
+        "YouTube",
+        "Paramount+",
+        "Apple TV+"
+      ]
+    },
+    spiceLevel: 0,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.KEEP_THREE,
+    title: "Keep 3",
+    prompt: "Which 3 sex positions would you keep if the rest disappeared?",
+    keepThreeOptions: {
+      category: "Sex Positions",
+      items: [
+        "Missionary",
+        "Doggy Style",
+        "Cowgirl",
+        "Reverse Cowgirl",
+        "69",
+        "Spooning",
+        "Standing",
+        "Chair"
+      ]
+    },
+    spiceLevel: 2,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.KEEP_THREE,
+    title: "Keep 3",
+    prompt: "Which 3 places to have sex would you keep if the rest disappeared?",
+    keepThreeOptions: {
+      category: "Places for Sex",
+      items: [
+        "Bed",
+        "Shower",
+        "Car",
+        "Beach",
+        "Pool",
+        "Hot Tub",
+        "Kitchen Counter",
+        "Couch"
+      ]
+    },
+    spiceLevel: 2,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.KEEP_THREE,
+    title: "Keep 3",
+    prompt: "Which 3 types of foreplay would you keep if the rest disappeared?",
+    keepThreeOptions: {
+      category: "Foreplay",
+      items: [
+        "Making Out",
+        "Oral",
+        "Fingering",
+        "Massage",
+        "Nipple Play",
+        "Dirty Talk",
+        "Strip Tease",
+        "Spanking"
+      ]
+    },
+    spiceLevel: 2,
+    drinkLevel: 1
+  },
+  {
+    type: PromptType.KEEP_THREE,
+    title: "Keep 3",
+    prompt: "Which 3 types of toys would you keep if the rest disappeared?",
+    keepThreeOptions: {
+      category: "Adult Toys",
+      items: [
+        "Vibrator",
+        "Dildo",
+        "Handcuffs",
+        "Blindfold",
+        "Whip",
+        "Paddle",
+        "Nipple Clamps",
+        "Cock Ring"
+      ]
+    },
+    spiceLevel: 2,
     drinkLevel: 1
   }
 ];
