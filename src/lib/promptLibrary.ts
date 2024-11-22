@@ -281,11 +281,18 @@ export const createNewPrompt = (
   } else if (template.type === PromptType.FAST_MONEY) {
     if (!template.FastMoneyOptions?.category) {
       console.error('Fast Money prompt missing category:', template);
+      basePrompt.FastMoneyOptions = {
+        category: "Items",
+        instructions: "List as many items as you can!",
+        timeLimit: template.FastMoneyOptions?.timeLimit || 15,
+        showCategory: false
+      };
+      return basePrompt;
     }
     
     basePrompt.FastMoneyOptions = {
-      category: template.FastMoneyOptions?.category!,  // Remove default value
-      instructions: template.FastMoneyOptions?.instructions || `List as many ${template.FastMoneyOptions?.category}s as you can!`,
+      category: template.FastMoneyOptions.category,
+      instructions: template.FastMoneyOptions?.instructions || `List as many ${template.FastMoneyOptions.category}s as you can!`,
       timeLimit: template.FastMoneyOptions?.timeLimit || 15,
       showCategory: false
     };

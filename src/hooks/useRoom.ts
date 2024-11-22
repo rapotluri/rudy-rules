@@ -650,14 +650,10 @@ export const useRoom = () => {
         if (!roomDoc.exists()) throw new Error('Room not found');
 
         const roomData = roomDoc.data() as Room;
-        if (!roomData.currentPrompt?.WordRaceOptions) {
-          console.error('No WordRaceOptions found in prompt');
-          return;
-        }
+        if (!roomData.currentPrompt?.WordRaceOptions) return;
 
         // Handle timeout
         if (guess === 'timeout') {
-          console.log('Handling timeout');
           transaction.update(roomRef, {
             'currentPrompt.WordRaceOptions.gameEnded': true,
             'currentPrompt.WordRaceOptions.winner': null,
@@ -669,12 +665,6 @@ export const useRoom = () => {
         // Get current guesses and word
         const guesses = roomData.currentPrompt.WordRaceOptions.guesses || {};
         const word = roomData.currentPrompt.WordRaceOptions.word;
-        
-        console.log('Checking guess:', {
-          guess,
-          word,
-          currentGuesses: guesses
-        });
 
         // Add this player's guess
         const updatedGuesses = {
@@ -684,17 +674,9 @@ export const useRoom = () => {
 
         // Check if guess is correct
         const isCorrect = word?.toLowerCase() === guess.toLowerCase();
-        
-        console.log('Guess result:', {
-          isCorrect,
-          playerId,
-          guess,
-          word
-        });
 
         // If correct guess, set winner and end game immediately
         if (isCorrect) {
-          console.log('Updating Firebase with correct guess');
           await transaction.update(roomRef, {
             'currentPrompt.WordRaceOptions.guesses': updatedGuesses,
             'currentPrompt.WordRaceOptions.winner': playerId,
@@ -702,7 +684,6 @@ export const useRoom = () => {
             updatedAt: serverTimestamp(),
           });
         } else {
-          console.log('Updating Firebase with incorrect guess');
           await transaction.update(roomRef, {
             'currentPrompt.WordRaceOptions.guesses': updatedGuesses,
             updatedAt: serverTimestamp(),
@@ -710,7 +691,6 @@ export const useRoom = () => {
         }
       });
     } catch (err) {
-      console.error('Error in submitWordRaceGuess:', err);
       setError(err instanceof Error ? err.message : 'Failed to submit guess');
       throw err;
     }
