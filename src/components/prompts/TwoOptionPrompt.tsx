@@ -168,7 +168,7 @@ export default function TwoOptionPrompt({
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={onComplete}
-          className="mt-8 bg-emerald-500 text-white px-8 py-3 rounded-xl font-semibold"
+          className="mt-8 bg-white/10 text-white px-12 py-4 rounded-lg text-xl font-bold shadow-lg border-2 border-emerald-500"
         >
           End Turn
         </motion.button>

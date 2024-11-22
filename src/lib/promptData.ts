@@ -432,21 +432,10 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   }
 ];
 
-const TWO_OPTION_PROMPTS: Partial<Prompt>[] = [
+// Separate Over/Under prompts
+const OVER_UNDER_PROMPTS: Partial<Prompt>[] = [
   {
-    type: PromptType.TWO_OPTION_VOTE,
-    title: "Would You Rather",
-    prompt: "Would you rather live in extreme heat or extreme cold?",
-    voteOptions: [
-      { id: "heat", text: "Extreme Heat", votes: [] },
-      { id: "cold", text: "Extreme Cold", votes: [] }
-    ],
-    spiceLevel: 0,
-    drinkLevel: 1,
-    votingComplete: false
-  },
-  {
-    type: PromptType.TWO_OPTION_VOTE,
+    type: PromptType.OVER_UNDER,
     title: "Over/Under",
     prompt: "Is Taco Bell overrated or underrated?",
     voteOptions: [
@@ -458,7 +447,23 @@ const TWO_OPTION_PROMPTS: Partial<Prompt>[] = [
     votingComplete: false
   },
   {
-    type: PromptType.TWO_OPTION_VOTE,
+    type: PromptType.OVER_UNDER,
+    title: "Over/Under",
+    prompt: "Are house parties overrated or underrated?",
+    voteOptions: [
+      { id: "over", text: "Overrated", votes: [] },
+      { id: "under", text: "Underrated", votes: [] }
+    ],
+    spiceLevel: 0,
+    drinkLevel: 1,
+    votingComplete: false
+  }
+];
+
+// Separate Red Flag prompts
+const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
+  {
+    type: PromptType.RED_FLAG,
     title: "Red Flag or Green Flag",
     prompt: "Is it a red flag if your date still has their ex on social media?",
     voteOptions: [
@@ -470,7 +475,7 @@ const TWO_OPTION_PROMPTS: Partial<Prompt>[] = [
     votingComplete: false
   },
   {
-    type: PromptType.TWO_OPTION_VOTE,
+    type: PromptType.RED_FLAG,
     title: "Red Flag or Green Flag",
     prompt: "Is it a red flag if they live with their parents at 25?",
     voteOptions: [
@@ -478,6 +483,21 @@ const TWO_OPTION_PROMPTS: Partial<Prompt>[] = [
       { id: "green", text: "🟢 Green Flag", votes: [] }
     ],
     spiceLevel: 1,
+    drinkLevel: 1,
+    votingComplete: false
+  }
+];
+
+const TWO_OPTION_PROMPTS: Partial<Prompt>[] = [
+  {
+    type: PromptType.TWO_OPTION_VOTE,
+    title: "Would You Rather",
+    prompt: "Would you rather live in extreme heat or extreme cold?",
+    voteOptions: [
+      { id: "heat", text: "Extreme Heat", votes: [] },
+      { id: "cold", text: "Extreme Cold", votes: [] }
+    ],
+    spiceLevel: 0,
     drinkLevel: 1,
     votingComplete: false
   },
@@ -1197,5 +1217,7 @@ export {
   POPLOCK_PROMPTS,
   BATTLESHIP_PROMPTS,
   WORDRACE_PROMPTS,
-  CHARADES_PROMPTS
+  CHARADES_PROMPTS,
+  OVER_UNDER_PROMPTS,
+  RED_FLAG_PROMPTS
 };

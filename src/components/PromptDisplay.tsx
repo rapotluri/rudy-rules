@@ -115,6 +115,18 @@ const promptThemes: Record<PromptType, {
     title: 'Charades',
     emoji: '🎭',
     garnish: '🎬'
+  },
+  [PromptType.OVER_UNDER]: {
+    color: '#FF9933',
+    title: 'Over or Under',
+    emoji: '⚖️',
+    garnish: '🎯'
+  },
+  [PromptType.RED_FLAG]: {
+    color: '#FF4D4D',
+    title: 'Red Flag or Green Flag',
+    emoji: '🚩',
+    garnish: '🟢'
   }
 };
 
@@ -257,6 +269,18 @@ export default function PromptDisplay({
             onComplete={onComplete}
             onVote={onVote}
             showTimedCategory={showCharadesWord}
+          />
+        );
+      case PromptType.OVER_UNDER:
+      case PromptType.RED_FLAG:
+        return (
+          <TwoOptionPrompt
+            prompt={prompt}
+            currentPlayer={currentPlayer}
+            allPlayers={allPlayers}
+            isCurrentPlayer={isCurrentPlayer}
+            onVote={onVote!}
+            onComplete={onComplete}
           />
         );
       default:
@@ -453,6 +477,8 @@ export default function PromptDisplay({
          prompt.type !== PromptType.BATTLESHIP &&
          prompt.type !== PromptType.WORDRACE &&
          prompt.type !== PromptType.CHARADES &&
+         prompt.type !== PromptType.RED_FLAG &&
+         prompt.type !== PromptType.OVER_UNDER &&
          isCurrentPlayer && (
           <motion.div
             initial={{ y: 50, opacity: 0 }}

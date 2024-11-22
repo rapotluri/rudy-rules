@@ -14,7 +14,9 @@ import {
   TWO_OPTION_PROMPTS,
   GROUP_DRINK_PROMPTS,
   FAST_MONEY_PROMPTS,
-  TONGUE_TWISTER_PROMPTS
+  TONGUE_TWISTER_PROMPTS,
+  RED_FLAG_PROMPTS,
+  OVER_UNDER_PROMPTS
 } from './promptData';
 
 // Define reusable minigame types
@@ -30,7 +32,10 @@ export const UNIQUE_CONTENT_TYPES = [
   PromptType.WORDRACE,
   PromptType.CHARADES,
   PromptType.FAST_MONEY,
-  PromptType.TONGUE_TWISTER
+  PromptType.FAST_MONEY,
+  PromptType.TONGUE_TWISTER,
+  PromptType.RED_FLAG,
+  PromptType.OVER_UNDER
 ];
 
 // Define types that need unique prompts (not just unique words)
@@ -38,7 +43,8 @@ export const UNIQUE_PROMPT_TYPES = [
   PromptType.TRUTH,
   PromptType.DARE,
   PromptType.VOTE,
-  PromptType.TWO_OPTION_VOTE
+  PromptType.RED_FLAG,
+  PromptType.OVER_UNDER
 ];
 
 // Define prompt type default titles
@@ -49,6 +55,8 @@ const DEFAULT_TITLES: Record<PromptType, string> = {
   [PromptType.GROUP_DRINK]: 'Group Drink',
   [PromptType.VOTE]: 'Vote',
   [PromptType.TWO_OPTION_VOTE]: 'Vote',
+  [PromptType.RED_FLAG]: 'Red Flag or Green Flag',
+  [PromptType.OVER_UNDER]: 'Over or Under',
   [PromptType.KEEP_THREE]: 'Keep 3',
   [PromptType.REACTIONGAME]: 'Reaction Test',
   [PromptType.FAST_MONEY]: 'Fast Money',
@@ -77,7 +85,8 @@ export const getPrompts = (
     ...TRUTH_PROMPTS,
     ...DARE_PROMPTS,
     ...VOTE_PROMPTS,
-    ...TWO_OPTION_PROMPTS,
+    ...RED_FLAG_PROMPTS,
+    ...OVER_UNDER_PROMPTS,
     ...GROUP_DRINK_PROMPTS,
     ...FAST_MONEY_PROMPTS,
     ...TONGUE_TWISTER_PROMPTS
@@ -141,7 +150,8 @@ export const createNewPrompt = (
       ...TRUTH_PROMPTS,
       ...DARE_PROMPTS,
       ...VOTE_PROMPTS,
-      ...TWO_OPTION_PROMPTS,
+      ...RED_FLAG_PROMPTS,
+      ...OVER_UNDER_PROMPTS,
       ...GROUP_DRINK_PROMPTS,
       ...FAST_MONEY_PROMPTS,
       ...TONGUE_TWISTER_PROMPTS
