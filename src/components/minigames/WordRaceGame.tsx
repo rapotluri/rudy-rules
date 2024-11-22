@@ -38,29 +38,20 @@ export default function WordRaceGame({
   const [myGuessHistory, setMyGuessHistory] = useState<string[]>([]);
 
   const word = prompt.WordRaceOptions?.word || '';
-  console.log('Target word:', word);
-
-  const guesses = prompt.WordRaceOptions?.guesses || {};
   const winner = prompt.WordRaceOptions?.winner;
   const gameEnded = prompt.WordRaceOptions?.gameEnded || false;
 
-  // Add debug logging for state changes
+  // Remove debug logging for state changes
   useEffect(() => {
-    console.log('Game state changed:', {
-      gameEnded,
-      winner,
-      word,
-      guesses
-    });
-  }, [gameEnded, winner, word, guesses]);
+    if (winner || (gameEnded && timeLeft === 0)) {
+      // Game end logic
+    }
+  }, [winner, gameEnded, timeLeft]);
 
-  // Updated checkGuess function with better logging
   const checkGuess = (guess: string): GuessWithFeedback => {
     const guessArray = guess.toLowerCase().split('');
     const wordArray = word.toLowerCase().split('');
     const feedback: ('correct' | 'present' | 'absent')[] = Array(4).fill('absent');
-    
-    console.log('Checking guess:', guess, 'against word:', word);
     
     // First pass: mark correct letters
     guessArray.forEach((letter, i) => {
@@ -82,7 +73,6 @@ export default function WordRaceGame({
       }
     });
 
-    console.log('Feedback:', feedback);
     return { word: guess, feedback };
   };
 
@@ -106,8 +96,8 @@ export default function WordRaceGame({
 
   // Move guesses inside useEffect
   useEffect(() => {
-    const guesses = prompt.WordRaceOptions?.guesses || {};
-    const myGuesses = Object.entries(guesses)
+    const currentGuesses = prompt.WordRaceOptions?.guesses || {};
+    const myGuesses = Object.entries(currentGuesses)
       .filter(([playerId]) => playerId === currentPlayer.id)
       .map(([_, guess]) => guess);
     setMyGuessHistory(myGuesses);
@@ -115,19 +105,15 @@ export default function WordRaceGame({
 
   // Wrap handleKeyPress in useCallback to prevent it from changing on every render
   const handleKeyPress = useCallback((event: KeyboardEvent) => {
-    if (gameEnded) return;
+    if (gameEnded || localGuesses.length >= 5) return;
 
     if (event.key === 'BACK') {
       setCurrentGuess(prev => prev.slice(0, -1));
     } else if (event.key === 'ENTER' && currentGuess.length === 4) {
-      if (localGuesses.length >= 5) return;
-      
       const guessWithFeedback = checkGuess(currentGuess);
       setLocalGuesses(prev => [...prev, guessWithFeedback]);
       
-      // Check if word is found
       if (currentGuess.toLowerCase() === word.toLowerCase()) {
-        console.log('Correct word found:', currentGuess);
         onVote?.(currentGuess.toLowerCase());
       }
       
@@ -135,12 +121,12 @@ export default function WordRaceGame({
     } else if (event.key !== 'ENTER' && currentGuess.length < 4) {
       setCurrentGuess(prev => prev + event.key);
     }
-  }, [currentGuess, isCurrentPlayer, onVote]);
+  }, [currentGuess, gameEnded, localGuesses.length, word, checkGuess, onVote]);
 
   // Add effect to handle game end state
   useEffect(() => {
     if (winner || (gameEnded && timeLeft === 0)) {
-      console.log('Game should end:', { winner, gameEnded, timeLeft });
+      // Game end logic
     }
   }, [winner, gameEnded, timeLeft]);
 

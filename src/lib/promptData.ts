@@ -1412,6 +1412,186 @@ const TWO_OPTION_PROMPTS: Partial<Prompt>[] = [
     spiceLevel: 0,
     drinkLevel: 1,
     votingComplete: false
+  },
+  {
+    type: PromptType.TWO_OPTION_VOTE,
+    title: "Would You Rather",
+    prompt: "Would you rather give up driving & riding in cars or only eat cole slaw?",
+    voteOptions: [
+      { id: "cars", text: "Give up cars", votes: [] },
+      { id: "slaw", text: "Only eat cole slaw", votes: [] }
+    ],
+    spiceLevel: 0,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.TWO_OPTION_VOTE,
+    title: "Would You Rather",
+    prompt: "Would you rather get catfished or stood up on a date?",
+    voteOptions: [
+      { id: "catfish", text: "Get catfished", votes: [] },
+      { id: "stood_up", text: "Get stood up", votes: [] }
+    ],
+    spiceLevel: 1,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.TWO_OPTION_VOTE,
+    title: "Would You Rather",
+    prompt: "Would you rather live in extreme heat or extreme cold?",
+    voteOptions: [
+      { id: "heat", text: "Extreme heat", votes: [] },
+      { id: "cold", text: "Extreme cold", votes: [] }
+    ],
+    spiceLevel: 0,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.TWO_OPTION_VOTE,
+    title: "Would You Rather",
+    prompt: "Would you rather give up music or tasting food?",
+    voteOptions: [
+      { id: "music", text: "Give up music", votes: [] },
+      { id: "taste", text: "Give up taste", votes: [] }
+    ],
+    spiceLevel: 0,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.TWO_OPTION_VOTE,
+    title: "Would You Rather",
+    prompt: "Would you rather fight prime Mike Tyson or 300 5yr olds?",
+    voteOptions: [
+      { id: "tyson", text: "Fight Tyson", votes: [] },
+      { id: "kids", text: "Fight 300 kids", votes: [] }
+    ],
+    spiceLevel: 0,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.TWO_OPTION_VOTE,
+    title: "Would You Rather",
+    prompt: "Would you rather tell your past self one thing or ask your future self one question?",
+    voteOptions: [
+      { id: "past", text: "Tell past self", votes: [] },
+      { id: "future", text: "Ask future self", votes: [] }
+    ],
+    spiceLevel: 0,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.TWO_OPTION_VOTE,
+    title: "Would You Rather",
+    prompt: "Would you rather get a free $10k or a 50/50 chance at $1 Million?",
+    voteOptions: [
+      { id: "sure", text: "Sure $10k", votes: [] },
+      { id: "chance", text: "50/50 at $1M", votes: [] }
+    ],
+    spiceLevel: 0,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.TWO_OPTION_VOTE,
+    title: "Would You Rather",
+    prompt: "Would you rather be born 100yrs ago or 100yrs in the future?",
+    voteOptions: [
+      { id: "past", text: "100yrs ago", votes: [] },
+      { id: "future", text: "100yrs ahead", votes: [] }
+    ],
+    spiceLevel: 0,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.TWO_OPTION_VOTE,
+    title: "Would You Rather",
+    prompt: "Would you rather go into a coma for 5 years or go $50k in debt right now?",
+    voteOptions: [
+      { id: "coma", text: "5yr coma", votes: [] },
+      { id: "debt", text: "$50k debt", votes: [] }
+    ],
+    spiceLevel: 0,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.TWO_OPTION_VOTE,
+    title: "Would You Rather",
+    prompt: "Would you rather have a pool or a hot tub?",
+    voteOptions: [
+      { id: "pool", text: "Pool", votes: [] },
+      { id: "hottub", text: "Hot tub", votes: [] }
+    ],
+    spiceLevel: 0,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.TWO_OPTION_VOTE,
+    title: "Would You Rather",
+    prompt: "Would you rather always be itchy or sticky?",
+    voteOptions: [
+      { id: "itchy", text: "Always itchy", votes: [] },
+      { id: "sticky", text: "Always sticky", votes: [] }
+    ],
+    spiceLevel: 0,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.TWO_OPTION_VOTE,
+    title: "Would You Rather",
+    prompt: "Would you rather be in a long distance relationship or open relationship?",
+    voteOptions: [
+      { id: "distance", text: "Long distance", votes: [] },
+      { id: "open", text: "Open relationship", votes: [] }
+    ],
+    spiceLevel: 2,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.TWO_OPTION_VOTE,
+    title: "Would You Rather",
+    prompt: "Would you rather always have morning breath or always have food in your teeth?",
+    voteOptions: [
+      { id: "breath", text: "Morning breath", votes: [] },
+      { id: "teeth", text: "Food in teeth", votes: [] }
+    ],
+    spiceLevel: 0,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.TWO_OPTION_VOTE,
+    title: "Would You Rather",
+    prompt: "Would you rather order a margarita on the rocks or blended?",
+    voteOptions: [
+      { id: "rocks", text: "On the rocks", votes: [] },
+      { id: "blended", text: "Blended", votes: [] }
+    ],
+    spiceLevel: 0,
+    drinkLevel: 1,
+    votingComplete: false
+  },
+  {
+    type: PromptType.TWO_OPTION_VOTE,
+    title: "Would You Rather",
+    prompt: "Would you rather never gain weight or never age?",
+    voteOptions: [
+      { id: "weight", text: "Never gain weight", votes: [] },
+      { id: "age", text: "Never age", votes: [] }
+    ],
+    spiceLevel: 0,
+    drinkLevel: 1,
+    votingComplete: false
   }
 ];
 
