@@ -462,7 +462,7 @@ const DARE_PROMPTS: Partial<Prompt>[] = [
 const VOTE_PROMPTS: Partial<Prompt>[] = [
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who is most likely to become a millionaire?",
     spiceLevel: 0,
     drinkLevel: 1,
@@ -473,7 +473,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who is most likely to become famous?",
     spiceLevel: 0,
     drinkLevel: 1,
@@ -484,7 +484,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who is most likely to get arrested?",
     spiceLevel: 1,
     drinkLevel: 1,
@@ -495,7 +495,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who would survive the longest in a zombie apocalypse?",
     spiceLevel: 0,
     drinkLevel: 1,
@@ -506,7 +506,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who would win in a fight?",
     spiceLevel: 1,
     drinkLevel: 1,
@@ -517,7 +517,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who would make the best superhero?",
     spiceLevel: 0,
     drinkLevel: 1,
@@ -528,7 +528,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who would be the first to survive on a desert island?",
     spiceLevel: 0,
     drinkLevel: 1,
@@ -539,7 +539,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who is most likely to become president?",
     spiceLevel: 0,
     drinkLevel: 1,
@@ -550,7 +550,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who is most likely to sleep through an important event?",
     spiceLevel: 0,
     drinkLevel: 1,
@@ -561,7 +561,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who would be the best stand-up comedian?",
     spiceLevel: 0,
     drinkLevel: 1,
@@ -572,7 +572,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who is most likely to be bad at sex?",
     spiceLevel: 2,
     drinkLevel: 1,
@@ -583,7 +583,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who is most likely to date within their friend group?",
     spiceLevel: 2,
     drinkLevel: 1,
@@ -594,7 +594,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who is most likely to win at beer pong?",
     spiceLevel: 2,
     drinkLevel: 2,
@@ -605,7 +605,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who is most likely to get whiskey dick?",
     spiceLevel: 2,
     drinkLevel: 2,
@@ -616,7 +616,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who is most likely to fake being drunk?",
     spiceLevel: 2,
     drinkLevel: 1,
@@ -627,7 +627,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who is most likely to cry when drunk?",
     spiceLevel: 2,
     drinkLevel: 2,
@@ -638,7 +638,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who is most likely to get a tattoo of their partner's name?",
     spiceLevel: 2,
     drinkLevel: 1,
@@ -649,7 +649,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who is most likely to give hickeys?",
     spiceLevel: 2,
     drinkLevel: 1,
@@ -660,7 +660,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who is most likely to get noise complaints because of sex?",
     spiceLevel: 2,
     drinkLevel: 1,
@@ -671,7 +671,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who is most likely to end a relationship because of bad sex?",
     spiceLevel: 2,
     drinkLevel: 1,
@@ -682,7 +682,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who is most likely to watch porn daily?",
     spiceLevel: 2,
     drinkLevel: 1,
@@ -693,7 +693,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who is most likely to be in an orgy?",
     spiceLevel: 2,
     drinkLevel: 1,
@@ -704,7 +704,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who is most likely to hook up in a bathroom?",
     spiceLevel: 2,
     drinkLevel: 1,
@@ -715,7 +715,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who is most likely to drunk text a crush?",
     spiceLevel: 2,
     drinkLevel: 2,
@@ -726,7 +726,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who is most likely to have the highest body count?",
     spiceLevel: 2,
     drinkLevel: 1,
@@ -737,7 +737,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who is most likely to lower their standards after some drinks?",
     spiceLevel: 2,
     drinkLevel: 2,
@@ -748,7 +748,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who is most likely to have watched porn most recently?",
     spiceLevel: 2,
     drinkLevel: 1,
@@ -759,7 +759,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who is most likely to have a one night stand tonight?",
     spiceLevel: 2,
     drinkLevel: 1,
@@ -770,7 +770,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who is most likely to have the most questionable search history?",
     spiceLevel: 2,
     drinkLevel: 1,
@@ -781,7 +781,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who is most likely to get free drinks at the bar?",
     spiceLevel: 2,
     drinkLevel: 1,
@@ -792,7 +792,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who is most likely to cry during sex?",
     spiceLevel: 2,
     drinkLevel: 1,
@@ -803,7 +803,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who is most likely to get back with an ex?",
     spiceLevel: 2,
     drinkLevel: 1,
@@ -814,7 +814,7 @@ const VOTE_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.VOTE,
-    title: "Most Likely To...",
+    title: "Most Likely...",
     prompt: "Who is most likely to be the loudest in bed?",
     spiceLevel: 2,
     drinkLevel: 1,
@@ -1064,7 +1064,7 @@ const OVER_UNDER_PROMPTS: Partial<Prompt>[] = [
 const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
   {
     type: PromptType.RED_FLAG,
-    title: "Red Flag or Green Flag",
+    title: "Red/Green Flag",
     prompt: "Is it a red flag if they overthink anything & everything?",
     voteOptions: [
       { id: "red", text: "🚩 Red Flag", votes: [] },
@@ -1076,7 +1076,7 @@ const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.RED_FLAG,
-    title: "Red Flag or Green Flag",
+    title: "Red/Green Flag",
     prompt: "Is it a red flag if they're overly confident?",
     voteOptions: [
       { id: "red", text: "🚩 Red Flag", votes: [] },
@@ -1088,7 +1088,7 @@ const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.RED_FLAG,
-    title: "Red Flag or Green Flag",
+    title: "Red/Green Flag",
     prompt: "Is it a red flag if they use 3-in-1 shampoo?",
     voteOptions: [
       { id: "red", text: "🚩 Red Flag", votes: [] },
@@ -1100,7 +1100,7 @@ const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.RED_FLAG,
-    title: "Red Flag or Green Flag",
+    title: "Red/Green Flag",
     prompt: "Is it a red flag if they never get jealous?",
     voteOptions: [
       { id: "red", text: "🚩 Red Flag", votes: [] },
@@ -1112,7 +1112,7 @@ const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.RED_FLAG,
-    title: "Red Flag or Green Flag",
+    title: "Red/Green Flag",
     prompt: "Is it a red flag if they own a squishmallow?",
     voteOptions: [
       { id: "red", text: "🚩 Red Flag", votes: [] },
@@ -1124,7 +1124,7 @@ const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.RED_FLAG,
-    title: "Red Flag or Green Flag",
+    title: "Red/Green Flag",
     prompt: "Is it a red flag if they have no social media?",
     voteOptions: [
       { id: "red", text: "🚩 Red Flag", votes: [] },
@@ -1136,7 +1136,7 @@ const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.RED_FLAG,
-    title: "Red Flag or Green Flag",
+    title: "Red/Green Flag",
     prompt: "Is it a red flag if they want to share locations?",
     voteOptions: [
       { id: "red", text: "🚩 Red Flag", votes: [] },
@@ -1148,7 +1148,7 @@ const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.RED_FLAG,
-    title: "Red Flag or Green Flag",
+    title: "Red/Green Flag",
     prompt: "Is it a red flag if they insist on splitting checks?",
     voteOptions: [
       { id: "red", text: "🚩 Red Flag", votes: [] },
@@ -1160,7 +1160,7 @@ const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.RED_FLAG,
-    title: "Red Flag or Green Flag",
+    title: "Red/Green Flag",
     prompt: "Is it a red flag if they own a lot of stuffed animals?",
     voteOptions: [
       { id: "red", text: "🚩 Red Flag", votes: [] },
@@ -1172,7 +1172,7 @@ const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.RED_FLAG,
-    title: "Red Flag or Green Flag",
+    title: "Red/Green Flag",
     prompt: "Is it a red flag if they ask for a prenup?",
     voteOptions: [
       { id: "red", text: "🚩 Red Flag", votes: [] },
@@ -1184,7 +1184,7 @@ const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.RED_FLAG,
-    title: "Red Flag or Green Flag",
+    title: "Red/Green Flag",
     prompt: "Is it a red flag if they're overly close with their mom?",
     voteOptions: [
       { id: "red", text: "🚩 Red Flag", votes: [] },
@@ -1196,7 +1196,7 @@ const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.RED_FLAG,
-    title: "Red Flag or Green Flag",
+    title: "Red/Green Flag",
     prompt: "Is it a red flag if they have a full sleeve tattoo?",
     voteOptions: [
       { id: "red", text: "🚩 Red Flag", votes: [] },
@@ -1208,7 +1208,7 @@ const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.RED_FLAG,
-    title: "Red Flag or Green Flag",
+    title: "Red/Green Flag",
     prompt: "Is it a red flag if they have a face tattoo?",
     voteOptions: [
       { id: "red", text: "🚩 Red Flag", votes: [] },
@@ -1220,7 +1220,7 @@ const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.RED_FLAG,
-    title: "Red Flag or Green Flag",
+    title: "Red/Green Flag",
     prompt: "Is it a red flag if they live with their parents?",
     voteOptions: [
       { id: "red", text: "🚩 Red Flag", votes: [] },
@@ -1232,7 +1232,7 @@ const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.RED_FLAG,
-    title: "Red Flag or Green Flag",
+    title: "Red/Green Flag",
     prompt: "Is it a red flag if they talk about exes frequently?",
     voteOptions: [
       { id: "red", text: "🚩 Red Flag", votes: [] },
@@ -1244,7 +1244,7 @@ const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.RED_FLAG,
-    title: "Red Flag or Green Flag",
+    title: "Red/Green Flag",
     prompt: "Is it a red flag if they never text while they're out at the bars?",
     voteOptions: [
       { id: "red", text: "🚩 Red Flag", votes: [] },
@@ -1256,7 +1256,7 @@ const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.RED_FLAG,
-    title: "Red Flag or Green Flag",
+    title: "Red/Green Flag",
     prompt: "Is it a red flag if they don't like PDA?",
     voteOptions: [
       { id: "red", text: "🚩 Red Flag", votes: [] },
@@ -1268,7 +1268,7 @@ const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.RED_FLAG,
-    title: "Red Flag or Green Flag",
+    title: "Red/Green Flag",
     prompt: "Is it a red flag if they have a best friend of the opposite gender?",
     voteOptions: [
       { id: "red", text: "🚩 Red Flag", votes: [] },
@@ -1280,7 +1280,7 @@ const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.RED_FLAG,
-    title: "Red Flag or Green Flag",
+    title: "Red/Green Flag",
     prompt: "Is it a red flag if they don't have a car, and you drive them to work?",
     voteOptions: [
       { id: "red", text: "🚩 Red Flag", votes: [] },
@@ -1292,7 +1292,7 @@ const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.RED_FLAG,
-    title: "Red Flag or Green Flag",
+    title: "Red/Green Flag",
     prompt: "Is it a red flag if they have a snapscore of 2 million?",
     voteOptions: [
       { id: "red", text: "🚩 Red Flag", votes: [] },
@@ -1304,7 +1304,7 @@ const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.RED_FLAG,
-    title: "Red Flag or Green Flag",
+    title: "Red/Green Flag",
     prompt: "Is it a red flag if they're still friends with all their exes?",
     voteOptions: [
       { id: "red", text: "🚩 Red Flag", votes: [] },
@@ -1316,7 +1316,7 @@ const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.RED_FLAG,
-    title: "Red Flag or Green Flag",
+    title: "Red/Green Flag",
     prompt: "Is it a red flag if they have a secret OnlyFans?",
     voteOptions: [
       { id: "red", text: "🚩 Red Flag", votes: [] },
@@ -1328,7 +1328,7 @@ const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.RED_FLAG,
-    title: "Red Flag or Green Flag",
+    title: "Red/Green Flag",
     prompt: "Is it a red flag if they're active on dating apps but 'just looking for friends'?",
     voteOptions: [
       { id: "red", text: "🚩 Red Flag", votes: [] },
@@ -1340,7 +1340,7 @@ const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.RED_FLAG,
-    title: "Red Flag or Green Flag",
+    title: "Red/Green Flag",
     prompt: "Is it a red flag if they have a body count over 50?",
     voteOptions: [
       { id: "red", text: "🚩 Red Flag", votes: [] },
@@ -1352,7 +1352,7 @@ const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.RED_FLAG,
-    title: "Red Flag or Green Flag",
+    title: "Red/Green Flag",
     prompt: "Is it a red flag if they want an open relationship?",
     voteOptions: [
       { id: "red", text: "🚩 Red Flag", votes: [] },
@@ -1364,7 +1364,7 @@ const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.RED_FLAG,
-    title: "Red Flag or Green Flag",
+    title: "Red/Green Flag",
     prompt: "Is it a red flag if they've cheated in past relationships?",
     voteOptions: [
       { id: "red", text: "🚩 Red Flag", votes: [] },
@@ -1376,7 +1376,7 @@ const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.RED_FLAG,
-    title: "Red Flag or Green Flag",
+    title: "Red/Green Flag",
     prompt: "Is it a red flag if they're into roleplay?",
     voteOptions: [
       { id: "red", text: "🚩 Red Flag", votes: [] },
@@ -1388,7 +1388,7 @@ const RED_FLAG_PROMPTS: Partial<Prompt>[] = [
   },
   {
     type: PromptType.RED_FLAG,
-    title: "Red Flag or Green Flag",
+    title: "Red/Green Flag",
     prompt: "Is it a red flag if they have a foot fetish?",
     voteOptions: [
       { id: "red", text: "🚩 Red Flag", votes: [] },
