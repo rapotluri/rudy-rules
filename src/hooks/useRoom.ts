@@ -209,7 +209,7 @@ export const useRoom = () => {
         const nextPlayer = connectedPlayers[nextPlayerIndex];
 
         // Track used words if applicable
-        let usedWords = roomData.usedWords || [];
+        const usedWords = roomData.usedWords || [];
         if (roomData.currentPrompt.WordRaceOptions?.word) {
           usedWords.push(roomData.currentPrompt.WordRaceOptions.word);
         }
@@ -227,7 +227,7 @@ export const useRoom = () => {
         }
 
         // Track used prompts if applicable
-        let usedPrompts = roomData.usedPrompts || [];
+        const usedPrompts = roomData.usedPrompts || [];
         if (roomData.currentPrompt && 
             UNIQUE_PROMPT_TYPES.includes(roomData.currentPrompt.type) && 
             roomData.currentPrompt.prompt) {
