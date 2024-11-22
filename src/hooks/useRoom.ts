@@ -216,13 +216,14 @@ export const useRoom = () => {
         if (roomData.currentPrompt.CharadesOptions?.word) {
           usedWords.push(roomData.currentPrompt.CharadesOptions.word);
         }
-        // Add Fast Money categories to usedWords
         if (roomData.currentPrompt.FastMoneyOptions?.category) {
           usedWords.push(roomData.currentPrompt.FastMoneyOptions.category);
         }
-        // Add Tongue Twister phrases to usedWords
         if (roomData.currentPrompt.TongueTwisterOptions?.phrase) {
           usedWords.push(roomData.currentPrompt.TongueTwisterOptions.phrase);
+        }
+        if (roomData.currentPrompt.keepThreeOptions?.category) {
+          usedWords.push(roomData.currentPrompt.keepThreeOptions.category);
         }
 
         // Track used prompts if applicable

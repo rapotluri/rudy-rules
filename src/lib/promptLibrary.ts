@@ -28,26 +28,23 @@ export const REUSABLE_TYPES = [
   PromptType.WORDRACE
 ];
 
-// Define types that can reuse template but need unique content
+// Define types that need unique content (words/phrases/categories)
 export const UNIQUE_CONTENT_TYPES = [
   PromptType.WORDRACE,
   PromptType.CHARADES,
   PromptType.FAST_MONEY,
-  PromptType.FAST_MONEY,
-  PromptType.TONGUE_TWISTER,
-  PromptType.RED_FLAG,
-  PromptType.OVER_UNDER,
-  PromptType.KEEP_THREE,
-  PromptType.TWO_OPTION_VOTE
+  PromptType.TONGUE_TWISTER
 ];
 
-// Define types that need unique prompts (not just unique words)
+// Define types that need unique prompts (questions/scenarios)
 export const UNIQUE_PROMPT_TYPES = [
   PromptType.TRUTH,
   PromptType.DARE,
   PromptType.VOTE,
+  PromptType.TWO_OPTION_VOTE,
   PromptType.RED_FLAG,
-  PromptType.OVER_UNDER
+  PromptType.OVER_UNDER,
+  PromptType.KEEP_THREE
 ];
 
 // Define prompt type default titles
@@ -309,9 +306,15 @@ export const createNewPrompt = (
       timeLimit: template.TongueTwisterOptions?.timeLimit || 15
     };
   } else if (template.type === PromptType.KEEP_THREE) {
-    // Add Keep Three handling
+    // Get unused category
+    const availableCategories = template.keepThreeOptions?.category ? 
+      [template.keepThreeOptions.category].filter(cat => !usedWords.includes(cat)) : [];
+    const category = availableCategories.length > 0 
+      ? availableCategories[0]
+      : "Items";  // Default fallback
+
     basePrompt.keepThreeOptions = {
-      category: template.keepThreeOptions?.category || "Items",
+      category: category,
       items: template.keepThreeOptions?.items || [],
       selectedOptions: []
     };
