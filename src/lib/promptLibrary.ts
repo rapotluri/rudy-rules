@@ -100,7 +100,7 @@ export const getPrompts = (
     (prompt.drinkLevel || 0) <= drinkLevel
   );
 
-  // Don't repeat any of the last 7 prompt types
+  // Don't repeat any of the last 13 prompt types
   if (lastPromptTypes.length > 0) {
     availablePrompts = availablePrompts.filter(prompt => 
       !lastPromptTypes.includes(prompt.type || PromptType.DRINK)
@@ -279,16 +279,13 @@ export const createNewPrompt = (
       gameEnded: false
     };
   } else if (template.type === PromptType.FAST_MONEY) {
-    // Get unused category
-    const availableCategories = template.FastMoneyOptions?.category ? 
-      [template.FastMoneyOptions.category].filter(cat => !usedWords.includes(cat)) : [];
-    const category = availableCategories.length > 0 
-      ? availableCategories[0]
-      : "Items";  // Default fallback
-
+    if (!template.FastMoneyOptions?.category) {
+      console.error('Fast Money prompt missing category:', template);
+    }
+    
     basePrompt.FastMoneyOptions = {
-      category: category,
-      instructions: template.FastMoneyOptions?.instructions || "List as many items as you can!",
+      category: template.FastMoneyOptions?.category!,  // Remove default value
+      instructions: template.FastMoneyOptions?.instructions || `List as many ${template.FastMoneyOptions?.category}s as you can!`,
       timeLimit: template.FastMoneyOptions?.timeLimit || 15,
       showCategory: false
     };
