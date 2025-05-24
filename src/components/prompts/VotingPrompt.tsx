@@ -85,7 +85,7 @@ export default function VotingPrompt({
   };
 
   return (
-    <div className="min-h-[60vh] max-h-[80vh] flex flex-col items-center justify-center p-4">
+    <div className="flex flex-col items-center justify-center p-4">
       {/* Timer */}
       {!votingEnded && (
         <motion.div

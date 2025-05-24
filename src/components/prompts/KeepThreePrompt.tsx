@@ -46,7 +46,7 @@ export default function KeepThreePrompt({
   };
 
   return (
-    <div className="min-h-[60vh] max-h-[80vh] flex flex-col items-center justify-center p-4">
+    <div className="flex flex-col items-center justify-center p-4">
       {/* Player Instruction - Updated logic */}
       <motion.div
         initial={{ y: -20, opacity: 0 }}

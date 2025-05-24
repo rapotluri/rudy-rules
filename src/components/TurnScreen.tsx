@@ -19,7 +19,7 @@ export default function TurnScreen({
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="min-h-[80vh] flex flex-col items-center justify-between p-4"
+      className="min-h-screen flex flex-col items-center justify-between p-4 overflow-y-auto"
     >
       {/* Player's Turn Text */}
       <div className="text-center mt-8">

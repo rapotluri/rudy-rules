@@ -37,6 +37,7 @@ export default function RoomPage() {
     showTongueTwisterPhrase,
     endCharadesTimer
   } = useRoom();
+  const [hostMenuOpen, setHostMenuOpen] = useState(false);
 
   useEffect(() => {
     const storedPlayerId = localStorage.getItem(`room_${roomCode}_player`);
@@ -156,15 +157,40 @@ export default function RoomPage() {
               <h1 className="text-2xl font-bold text-emerald-400">
                 Rudy&apos;s Rules
               </h1>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => navigator.clipboard.writeText(roomCode)}
-                className="bg-gray-800 text-white px-4 py-2 rounded-lg flex items-center space-x-2"
-              >
-                <span className="text-xl font-mono">{roomCode}</span>
-                <span className="text-sm text-gray-400">Click to copy</span>
-              </motion.button>
+              <div className="flex items-center gap-2 relative">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => navigator.clipboard.writeText(roomCode)}
+                  className="bg-gray-800 text-white px-4 py-2 rounded-lg flex items-center space-x-2"
+                >
+                  <span className="text-xl font-mono">{roomCode}</span>
+                  <span className="text-sm text-gray-400">Click to copy</span>
+                </motion.button>
+                {isHost && (
+                  <div className="relative">
+                    <button
+                      onClick={() => setHostMenuOpen((open) => !open)}
+                      className="ml-2 px-3 py-2 bg-emerald-600 text-white rounded-lg font-semibold shadow hover:bg-emerald-700 transition"
+                    >
+                      Host Options
+                    </button>
+                    {hostMenuOpen && (
+                      <div className="absolute right-0 mt-2 w-40 bg-white rounded shadow-lg z-50 border border-gray-200">
+                        <button
+                          onClick={() => {
+                            setHostMenuOpen(false);
+                            handleCompletePrompt();
+                          }}
+                          className="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100"
+                        >
+                          Skip Turn
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 

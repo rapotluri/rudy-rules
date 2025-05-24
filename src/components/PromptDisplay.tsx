@@ -341,7 +341,7 @@ export default function PromptDisplay({
   };
 
   return (
-    <div className="min-h-[80vh] flex flex-col items-center justify-between p-4 relative overflow-hidden">
+    <div className="min-h-screen flex flex-col items-center justify-between p-4 relative overflow-y-auto">
       {/* Animated Liquid Background */}
       <div className="absolute inset-0 z-0">
         <motion.div
