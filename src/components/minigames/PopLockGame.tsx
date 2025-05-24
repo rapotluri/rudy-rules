@@ -91,7 +91,7 @@ export default function PopLockGame({
     }));
 
   return (
-    <div className="min-h-[60vh] max-h-[80vh] flex flex-col items-center justify-center p-4">
+    <div className="flex flex-col items-center justify-center p-4">
       {/* Timer */}
       <div className="text-3xl text-white font-mono mb-8">
         {formatTime(timeLeft)}
@@ -136,14 +136,14 @@ export default function PopLockGame({
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center bg-black/20 backdrop-blur-sm rounded-xl p-6 w-full max-w-md"
+          className="text-center bg-black/20 backdrop-blur-sm rounded-xl p-6 w-full max-w-md flex flex-col"
         >
           <h3 className="text-2xl font-bold text-white mb-6">Results</h3>
           
-          {/* Results Table */}
-          <div className="overflow-hidden rounded-lg mb-8">
+          {/* Results Table - Now scrollable */}
+          <div className="overflow-y-auto max-h-[40vh] rounded-lg mb-8">
             <table className="w-full">
-              <thead>
+              <thead className="sticky top-0 bg-black/20 backdrop-blur-sm">
                 <tr className="bg-white/10">
                   <th className="py-3 text-left pl-4">Player</th>
                   <th className="py-3 text-right pr-4">Score</th>
@@ -186,7 +186,7 @@ export default function PopLockGame({
             {sortedResults[sortedResults.length - 1]?.player.name} drinks!
           </motion.div>
 
-          {/* End Turn Button */}
+          {/* End Turn Button - Now fixed at bottom */}
           {isCurrentPlayer && (
             <motion.button
               initial={{ opacity: 0, y: 20 }}

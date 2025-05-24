@@ -8,7 +8,7 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <div className="min-h-screen bg-black relative overflow-hidden">
+    <div className="min-h-screen bg-black relative overflow-y-auto">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
